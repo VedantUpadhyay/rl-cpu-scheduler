@@ -1,0 +1,27 @@
+Trace: /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/Project/data/alibaba2018/trace_train_filtered.csv
+  TraceEpisodeSampler5: 7,925,241 tasks loaded.
+  TraceEpisodeSampler5: 1,981,175 tasks loaded.
+
+============================================================
+Training seed=123
+============================================================
+ep    500 | avg_loss=0.0161 | avg_H=0.3333 | avg_MCT=20.70s | lambda_ent=0.28525
+ep   2000 | avg_loss=-0.0164 | avg_H=0.2828 | avg_MCT=21.86s | lambda_ent=0.24100
+ep   5000 | avg_loss=-0.0106 | avg_H=0.2717 | avg_MCT=22.41s | lambda_ent=0.15250
+ep  10000 | avg_loss=0.0267 | avg_H=0.3746 | avg_MCT=23.54s | lambda_ent=0.00500
+Saved → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/results/w10c_seed123_final.npz
+
+Seed 123: MCT(test,N=500)=22.54±17.57s  SRPT=48.8±29.5%  Wall=5.9min
+
+============================================================
+Training seed=456
+============================================================
+ep    500 | avg_loss=-0.0682 | avg_H=0.3183 | avg_MCT=20.83s | lambda_ent=0.28525
+ep   2000 | avg_loss=-0.1093 | avg_H=0.4499 | avg_MCT=25.94s | lambda_ent=0.24100
+ep   5000 | avg_loss=-0.0535 | avg_H=0.3361 | avg_MCT=22.16s | lambda_ent=0.15250
+ep  10000 | avg_loss=-0.0051 | avg_H=0.4280 | avg_MCT=22.84s | lambda_ent=0.00500
+Saved → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/results/w10c_seed456_final.npz
+
+Seed 456: MCT(test,N=500)=21.59±15.98s  SRPT=46.7±23.9%  Wall=5.4min
+
+Done. Results saved to /tmp/multiseed_results.json

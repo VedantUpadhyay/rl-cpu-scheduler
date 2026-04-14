@@ -1,0 +1,21 @@
+# Large data files
+data/
+*.tar.gz
+*.csv
+*.npz
+*.pt
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# OS files
+.DS_Store
+
+# Temp
+/tmp/
+
+# Jupyter
+.ipynb_checkpoints/
