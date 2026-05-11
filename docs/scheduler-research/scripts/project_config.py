@@ -1,6 +1,12 @@
 """Shared project configuration — import this in all scripts."""
 import os
 
+# ---------------------------------------------------------------------------
+# Scheduling window size — may be overridden at runtime via --n_processes
+# ---------------------------------------------------------------------------
+N_PROCESSES: int = 5   # default; scripts that accept --n_processes should use
+                        # their parsed value instead of importing this directly.
+
 # Base paths
 PROJECT_ROOT = os.path.expanduser(
     "~/Library/CloudStorage/OneDrive-Personal"

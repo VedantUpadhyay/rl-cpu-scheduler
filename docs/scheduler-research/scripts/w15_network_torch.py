@@ -65,8 +65,10 @@ class W15OmegaDQN(nn.Module):
     Invalid actions (arrived_flag == 0) are masked to -1e9.
     """
 
-    def __init__(self) -> None:
+    def __init__(self, n_processes: int = N_PROCESSES) -> None:
         super().__init__()
+        self.n_processes = n_processes
+        self.n_actions   = n_processes * N_QT
 
         self.W_Q = nn.ModuleList([nn.Linear(D_CAND, D_HEAD) for _ in range(N_HEADS)])
         self.W_K = nn.ModuleList([nn.Linear(D_CAND, D_HEAD) for _ in range(N_HEADS)])
@@ -96,9 +98,9 @@ class W15OmegaDQN(nn.Module):
             q_vals:  (batch, 15)  float32
         """
         batch     = state.shape[0]
-        omega_mct = 1.0 - omega_s                           # (batch,)
-        encs      = state.view(batch, N_PROCESSES, D_CAND)  # (batch, 5, 7)
-        valid     = encs[:, :, AFI] > 0.5                   # (batch, 5) bool
+        omega_mct = 1.0 - omega_s                                        # (batch,)
+        encs      = state.view(batch, self.n_processes, D_CAND)          # (batch, N, 7)
+        valid     = encs[:, :, AFI] > 0.5                                # (batch, N) bool
 
         # Multi-head attention with FiLM pre-attention Q modulation
         head_outputs = []
@@ -126,21 +128,21 @@ class W15OmegaDQN(nn.Module):
         context_cond = context_out * (1.0 + os_) + om_   # (batch, 5, 16)
 
         # MLP input: [cand_enc(7) | context_cond(16) | omega_s(1)] = 24
-        omega_feat = omega_s.view(batch, 1, 1).expand(batch, N_PROCESSES, 1)
-        mlp_in     = torch.cat([encs, context_cond, omega_feat], dim=-1)  # (batch, 5, 24)
+        omega_feat = omega_s.view(batch, 1, 1).expand(batch, self.n_processes, 1)
+        mlp_in     = torch.cat([encs, context_cond, omega_feat], dim=-1)  # (batch, N, 24)
 
-        # Per-candidate score → (batch, 5)
-        cand_scores = self.mlp(mlp_in).squeeze(-1)   # (batch, 5)
+        # Per-candidate score → (batch, N)
+        cand_scores = self.mlp(mlp_in).squeeze(-1)   # (batch, N)
 
-        # Expand to (batch, 15): same Q-value for all quanta of each task
+        # Expand to (batch, N*N_QT): same Q-value for all quanta of each task
         q_vals = (cand_scores.unsqueeze(-1)
-                             .expand(batch, N_PROCESSES, N_QT)
-                             .reshape(batch, N_ACTIONS))
+                             .expand(batch, self.n_processes, N_QT)
+                             .reshape(batch, self.n_actions))
 
         # Mask invalid actions
         invalid_mask = (~valid.unsqueeze(-1)
-                              .expand(batch, N_PROCESSES, N_QT)
-                              .reshape(batch, N_ACTIONS))
+                              .expand(batch, self.n_processes, N_QT)
+                              .reshape(batch, self.n_actions))
         q_vals = q_vals.masked_fill(invalid_mask, -1e9)
         return q_vals
 
@@ -161,10 +163,13 @@ class W15Trainer:
       save(path) / load(path)   — .pt extension (not .npz)
     """
 
-    def __init__(self, lr: float = LR, gamma: float = GAMMA,
+    def __init__(self, n_processes: int = N_PROCESSES,
+                 lr: float = LR, gamma: float = GAMMA,
                  grad_clip: float = GRAD_CLIP) -> None:
-        self.online = W15OmegaDQN().to(device)
-        self.target = W15OmegaDQN().to(device)
+        self.n_processes = n_processes
+        self.n_actions   = n_processes * N_QT
+        self.online = W15OmegaDQN(n_processes).to(device)
+        self.target = W15OmegaDQN(n_processes).to(device)
         self.target.load_state_dict(self.online.state_dict())
         self.target.eval()
 
@@ -186,7 +191,7 @@ class W15Trainer:
             s = torch.from_numpy(state_np).float().unsqueeze(0).to(device)
             o = torch.tensor([omega_s], dtype=torch.float32, device=device)
             q = self.online(s, o).squeeze(0).cpu().numpy()
-        mask = np.full(N_ACTIONS, -np.inf)
+        mask = np.full(self.n_actions, -np.inf)
         for a in valid_actions:
             mask[a] = q[a]
         return int(np.argmax(mask))

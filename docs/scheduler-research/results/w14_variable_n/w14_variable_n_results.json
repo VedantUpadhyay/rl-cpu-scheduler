@@ -1,0 +1,108 @@
+{
+  "config": {
+    "checkpoint": "/Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w14_omega/w14_seed123_final.npz",
+    "omega_s": 0.7,
+    "n_complete": 100,
+    "n_eval": 100,
+    "lambdas": [
+      0.03,
+      0.07,
+      0.09
+    ],
+    "seeds": [
+      42,
+      123,
+      456
+    ]
+  },
+  "fixed_n_reference": {
+    "w14_omega": {
+      "mct": 20.602,
+      "starve_pct": 32.5
+    },
+    "mlfq": {
+      "mct": 21.59,
+      "starve_pct": 36.0
+    }
+  },
+  "conditions": [
+    {
+      "lam": 0.03,
+      "is_mlfq": false,
+      "n_eval": 100,
+      "mct_mean": 14.577738415923207,
+      "mct_std": 2.8396511568059606,
+      "starve_pct": 100.0,
+      "mean_queue_depth": 1.4325220560318288,
+      "max_queue_depth": 8,
+      "ood_pct": 0.23065569048240023,
+      "total_completed": 10000,
+      "elapsed_s": 20.98481297492981
+    },
+    {
+      "lam": 0.03,
+      "is_mlfq": true,
+      "n_eval": 100,
+      "mct_mean": 14.621027568650627,
+      "mct_std": 2.748638788994432,
+      "starve_pct": 100.0,
+      "mean_queue_depth": 1.3801736747266466,
+      "max_queue_depth": 8,
+      "ood_pct": 0.2405352157503588,
+      "total_completed": 10000,
+      "elapsed_s": 0.2708399295806885
+    },
+    {
+      "lam": 0.07,
+      "is_mlfq": false,
+      "n_eval": 100,
+      "mct_mean": 31.774128230072655,
+      "mct_std": 13.05106395115112,
+      "starve_pct": 100.0,
+      "mean_queue_depth": 3.0275097280721606,
+      "max_queue_depth": 22,
+      "ood_pct": 13.83135930874194,
+      "total_completed": 10000,
+      "elapsed_s": 21.014951944351196
+    },
+    {
+      "lam": 0.07,
+      "is_mlfq": true,
+      "n_eval": 100,
+      "mct_mean": 31.00070089216426,
+      "mct_std": 12.175131685388827,
+      "starve_pct": 99.0,
+      "mean_queue_depth": 3.2432007767597093,
+      "max_queue_depth": 16,
+      "ood_pct": 17.880602741173355,
+      "total_completed": 10000,
+      "elapsed_s": 0.2809560298919678
+    },
+    {
+      "lam": 0.09,
+      "is_mlfq": false,
+      "n_eval": 100,
+      "mct_mean": 58.19214768933287,
+      "mct_std": 34.66712028726903,
+      "starve_pct": 100.0,
+      "mean_queue_depth": 5.9886993149614804,
+      "max_queue_depth": 36,
+      "ood_pct": 37.97441641419333,
+      "total_completed": 10000,
+      "elapsed_s": 21.14109706878662
+    },
+    {
+      "lam": 0.09,
+      "is_mlfq": true,
+      "n_eval": 100,
+      "mct_mean": 51.729583764900696,
+      "mct_std": 25.410877752186952,
+      "starve_pct": 83.0,
+      "mean_queue_depth": 6.3018144773018046,
+      "max_queue_depth": 31,
+      "ood_pct": 46.83571952570017,
+      "total_completed": 10000,
+      "elapsed_s": 0.31224799156188965
+    }
+  ]
+}

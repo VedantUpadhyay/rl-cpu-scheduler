@@ -1,0 +1,524 @@
+========================================================================
+W14-ω  Preference-Conditioned Attention DQN
+Seeds: [42, 123, 456]  N_episodes=30000  N_eval_pareto=200
+MLFQ target: MCT<21.59s  Starve<36.0%
+========================================================================
+
+Loading TRAIN trace: /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/data/alibaba2018/trace_train_filtered.csv
+  TraceEpisodeSampler5: 7,925,241 tasks loaded.
+Loading TEST trace: /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/data/alibaba2018/trace_test_filtered.csv
+  TraceEpisodeSampler5: 1,981,175 tasks loaded.
+
+
+========================================================================
+SEED 42
+========================================================================
+  ep    500 | ω_s=0.70 | loss=-0.0123 | H=0.3308 | MCT=20.92s | SRPT=63.2% | Starv=44.0% | grad_ratio=1.00
+  ep   1000 | ω_s=0.90 | loss=-0.0084 | H=0.3187 | MCT=21.21s | SRPT=59.7% | Starv=50.0% | grad_ratio=1.00
+  ep   1500 | ω_s=0.47 | loss=-0.0160 | H=0.3342 | MCT=22.00s | SRPT=62.7% | Starv=56.0% | grad_ratio=1.00
+  ep   2000 | ω_s=0.78 | loss=-0.0177 | H=0.3254 | MCT=22.06s | SRPT=59.2% | Starv=46.0% | grad_ratio=1.00
+  ep   2500 | ω_s=0.99 | loss=-0.0115 | H=0.3345 | MCT=21.85s | SRPT=58.8% | Starv=43.0% | grad_ratio=1.00
+  ep   3000 | ω_s=0.82 | loss=-0.0211 | H=0.3534 | MCT=19.48s | SRPT=61.4% | Starv=44.0% | grad_ratio=1.00
+  ep   3500 | ω_s=0.64 | loss=-0.0103 | H=0.3221 | MCT=20.43s | SRPT=60.3% | Starv=48.0% | grad_ratio=1.00
+  ep   4000 | ω_s=0.30 | loss=-0.0267 | H=0.3540 | MCT=20.10s | SRPT=60.7% | Starv=42.0% | grad_ratio=1.00
+  ep   4500 | ω_s=0.18 | loss=-0.0405 | H=0.3912 | MCT=20.48s | SRPT=61.1% | Starv=38.0% | grad_ratio=1.00
+  ep   5000 | ω_s=0.85 | loss=-0.0377 | H=0.3556 | MCT=23.22s | SRPT=58.2% | Starv=42.0% | grad_ratio=1.00
+  [checkpoint] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w14_omega/w14_seed42_ep5000.npz
+  ep   5500 | ω_s=0.80 | loss=-0.0441 | H=0.3881 | MCT=21.60s | SRPT=60.0% | Starv=48.0% | grad_ratio=1.00
+  ep   6000 | ω_s=1.00 | loss=-0.0465 | H=0.3719 | MCT=23.06s | SRPT=56.7% | Starv=43.0% | grad_ratio=1.00
+  ep   6500 | ω_s=0.24 | loss=-0.0444 | H=0.3328 | MCT=20.09s | SRPT=60.8% | Starv=47.0% | grad_ratio=1.00
+  ep   7000 | ω_s=0.93 | loss=-0.0503 | H=0.3788 | MCT=21.32s | SRPT=59.4% | Starv=39.0% | grad_ratio=1.00
+  ep   7500 | ω_s=0.82 | loss=-0.0536 | H=0.3707 | MCT=24.48s | SRPT=56.7% | Starv=43.0% | grad_ratio=1.00
+  ep   8000 | ω_s=0.06 | loss=-0.0483 | H=0.3538 | MCT=21.68s | SRPT=60.2% | Starv=35.0% | grad_ratio=1.00
+  ep   8500 | ω_s=0.46 | loss=-0.0553 | H=0.3852 | MCT=21.93s | SRPT=59.9% | Starv=36.0% | grad_ratio=1.00
+  ep   9000 | ω_s=0.09 | loss=-0.0539 | H=0.4016 | MCT=21.89s | SRPT=58.6% | Starv=46.0% | grad_ratio=1.00
+  ep   9500 | ω_s=0.31 | loss=-0.0704 | H=0.4588 | MCT=22.87s | SRPT=55.8% | Starv=50.0% | grad_ratio=1.00
+  ep  10000 | ω_s=0.05 | loss=-0.0524 | H=0.4093 | MCT=21.80s | SRPT=56.0% | Starv=46.0% | grad_ratio=1.00
+  [checkpoint] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w14_omega/w14_seed42_ep10000.npz
+  ep  10500 | ω_s=0.39 | loss=-0.0457 | H=0.3606 | MCT=20.95s | SRPT=57.1% | Starv=47.0% | grad_ratio=1.00
+  ep  11000 | ω_s=0.92 | loss=-0.0521 | H=0.4258 | MCT=19.17s | SRPT=57.9% | Starv=42.0% | grad_ratio=1.00
+  ep  11500 | ω_s=0.01 | loss=-0.0469 | H=0.4011 | MCT=20.08s | SRPT=59.0% | Starv=45.0% | grad_ratio=1.00
+  ep  12000 | ω_s=0.23 | loss=-0.0355 | H=0.3815 | MCT=22.84s | SRPT=57.2% | Starv=46.0% | grad_ratio=1.00
+  ep  12500 | ω_s=0.37 | loss=-0.0402 | H=0.3761 | MCT=24.30s | SRPT=55.4% | Starv=38.0% | grad_ratio=1.00
+  ep  13000 | ω_s=0.95 | loss=-0.0529 | H=0.4209 | MCT=21.97s | SRPT=57.6% | Starv=38.0% | grad_ratio=1.00
+  ep  13500 | ω_s=0.31 | loss=-0.0408 | H=0.3869 | MCT=22.91s | SRPT=56.8% | Starv=53.0% | grad_ratio=1.00
+  ep  14000 | ω_s=0.69 | loss=-0.0434 | H=0.3866 | MCT=19.71s | SRPT=56.2% | Starv=45.0% | grad_ratio=1.00
+  ep  14500 | ω_s=0.98 | loss=-0.0459 | H=0.4207 | MCT=20.76s | SRPT=56.9% | Starv=45.0% | grad_ratio=1.00
+  ep  15000 | ω_s=0.53 | loss=-0.0500 | H=0.4391 | MCT=21.64s | SRPT=59.0% | Starv=38.0% | grad_ratio=1.00
+  [checkpoint] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w14_omega/w14_seed42_ep15000.npz
+  ep  15500 | ω_s=0.97 | loss=-0.0422 | H=0.3774 | MCT=20.93s | SRPT=56.8% | Starv=49.0% | grad_ratio=1.00
+  ep  16000 | ω_s=0.65 | loss=-0.0352 | H=0.3688 | MCT=22.60s | SRPT=55.5% | Starv=55.0% | grad_ratio=1.00
+  ep  16500 | ω_s=1.00 | loss=-0.0358 | H=0.3802 | MCT=23.31s | SRPT=58.8% | Starv=40.0% | grad_ratio=1.00
+  ep  17000 | ω_s=0.82 | loss=-0.0332 | H=0.3744 | MCT=20.85s | SRPT=59.4% | Starv=50.0% | grad_ratio=1.00
+  ep  17500 | ω_s=0.05 | loss=-0.0422 | H=0.4251 | MCT=21.98s | SRPT=53.9% | Starv=43.0% | grad_ratio=1.00
+  ep  18000 | ω_s=0.28 | loss=-0.0325 | H=0.3965 | MCT=24.00s | SRPT=55.5% | Starv=44.0% | grad_ratio=1.00
+  ep  18500 | ω_s=0.96 | loss=-0.0339 | H=0.3880 | MCT=23.08s | SRPT=55.1% | Starv=43.0% | grad_ratio=1.00
+  ep  19000 | ω_s=0.32 | loss=-0.0318 | H=0.3898 | MCT=22.63s | SRPT=57.1% | Starv=42.0% | grad_ratio=1.00
+  ep  19500 | ω_s=0.96 | loss=-0.0272 | H=0.3720 | MCT=23.08s | SRPT=61.2% | Starv=34.0% | grad_ratio=1.00
+  ep  20000 | ω_s=0.61 | loss=-0.0316 | H=0.3808 | MCT=22.15s | SRPT=56.7% | Starv=40.0% | grad_ratio=1.00
+  [checkpoint] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w14_omega/w14_seed42_ep20000.npz
+  ep  20500 | ω_s=0.56 | loss=-0.0211 | H=0.3380 | MCT=22.81s | SRPT=56.7% | Starv=32.0% | grad_ratio=1.00
+  ep  21000 | ω_s=0.40 | loss=-0.0257 | H=0.4109 | MCT=24.21s | SRPT=55.8% | Starv=30.0% | grad_ratio=1.00
+  ep  21500 | ω_s=0.00 | loss=-0.0273 | H=0.4271 | MCT=21.23s | SRPT=55.9% | Starv=47.0% | grad_ratio=1.00
+  ep  22000 | ω_s=0.17 | loss=-0.0237 | H=0.3940 | MCT=21.48s | SRPT=56.6% | Starv=38.0% | grad_ratio=1.00
+  ep  22500 | ω_s=0.31 | loss=-0.0174 | H=0.3666 | MCT=22.19s | SRPT=57.6% | Starv=40.0% | grad_ratio=1.00
+  ep  23000 | ω_s=0.19 | loss=-0.0178 | H=0.3963 | MCT=20.65s | SRPT=56.0% | Starv=39.0% | grad_ratio=1.00
+  ep  23500 | ω_s=0.34 | loss=-0.0154 | H=0.4018 | MCT=18.92s | SRPT=54.3% | Starv=44.0% | grad_ratio=1.00
+  ep  24000 | ω_s=0.12 | loss=-0.0189 | H=0.4530 | MCT=22.98s | SRPT=52.1% | Starv=36.0% | grad_ratio=1.00
+  ep  24500 | ω_s=0.56 | loss=-0.0136 | H=0.3779 | MCT=20.68s | SRPT=56.6% | Starv=33.0% | grad_ratio=1.00
+  ep  25000 | ω_s=0.02 | loss=-0.0160 | H=0.4426 | MCT=20.55s | SRPT=57.4% | Starv=41.0% | grad_ratio=1.00
+  [checkpoint] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w14_omega/w14_seed42_ep25000.npz
+  ep  25500 | ω_s=0.54 | loss=-0.0154 | H=0.4310 | MCT=19.90s | SRPT=54.9% | Starv=34.0% | grad_ratio=1.00
+  ep  26000 | ω_s=0.56 | loss=-0.0115 | H=0.3874 | MCT=23.76s | SRPT=58.4% | Starv=36.0% | grad_ratio=1.00
+  ep  26500 | ω_s=0.93 | loss=-0.0128 | H=0.4273 | MCT=22.65s | SRPT=59.0% | Starv=40.0% | grad_ratio=1.00
+  ep  27000 | ω_s=0.99 | loss=-0.0062 | H=0.3731 | MCT=18.83s | SRPT=58.4% | Starv=41.0% | grad_ratio=1.00
+  ep  27500 | ω_s=0.09 | loss=-0.0072 | H=0.4361 | MCT=20.98s | SRPT=57.4% | Starv=31.0% | grad_ratio=1.00
+  ep  28000 | ω_s=0.00 | loss=-0.0049 | H=0.4090 | MCT=23.20s | SRPT=52.9% | Starv=30.0% | grad_ratio=1.00
+  ep  28500 | ω_s=0.84 | loss=-0.0033 | H=0.3761 | MCT=18.48s | SRPT=58.9% | Starv=38.0% | grad_ratio=1.00
+  ep  29000 | ω_s=0.40 | loss=0.0019 | H=0.3916 | MCT=18.49s | SRPT=56.9% | Starv=39.0% | grad_ratio=1.00
+  ep  29500 | ω_s=0.04 | loss=0.0039 | H=0.4132 | MCT=19.52s | SRPT=57.4% | Starv=33.0% | grad_ratio=1.00
+  ep  30000 | ω_s=0.46 | loss=0.0043 | H=0.3865 | MCT=20.96s | SRPT=55.2% | Starv=43.0% | grad_ratio=1.00
+  [checkpoint] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w14_omega/w14_seed42_ep30000.npz
+
+  Training complete — 38.6 min
+  Final checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w14_omega/w14_seed42_final.npz
+
+  Evaluating Pareto frontier (N=200 per omega point)...
+    ω_s=0.0: MCT=21.30s  Starve=30.5%  VRFI=0.503  ★ DOMINATES MLFQ
+    ω_s=0.1: MCT=21.11s  Starve=35.5%  VRFI=0.492  ★ DOMINATES MLFQ
+    ω_s=0.2: MCT=21.36s  Starve=37.5%  VRFI=0.484  
+    ω_s=0.3: MCT=21.71s  Starve=41.5%  VRFI=0.499  
+    ω_s=0.4: MCT=22.14s  Starve=49.0%  VRFI=0.507  
+    ω_s=0.5: MCT=22.26s  Starve=48.0%  VRFI=0.503  
+    ω_s=0.6: MCT=22.09s  Starve=50.0%  VRFI=0.503  
+    ω_s=0.7: MCT=22.03s  Starve=49.0%  VRFI=0.506  
+    ω_s=0.8: MCT=22.04s  Starve=49.0%  VRFI=0.490  
+    ω_s=0.9: MCT=21.72s  Starve=44.0%  VRFI=0.449  
+    ω_s=1.0: MCT=21.54s  Starve=44.0%  VRFI=0.428  
+
+========================================================================
+SEED 123
+========================================================================
+  ep    500 | ω_s=0.89 | loss=0.1846 | H=0.2935 | MCT=19.75s | SRPT=66.4% | Starv=45.0% | grad_ratio=1.00
+  ep   1000 | ω_s=0.13 | loss=0.1349 | H=0.2889 | MCT=21.30s | SRPT=64.9% | Starv=53.0% | grad_ratio=1.00
+  ep   1500 | ω_s=0.75 | loss=0.1941 | H=0.3100 | MCT=22.17s | SRPT=62.0% | Starv=42.0% | grad_ratio=1.00
+  ep   2000 | ω_s=0.74 | loss=0.2027 | H=0.3304 | MCT=23.25s | SRPT=61.6% | Starv=42.0% | grad_ratio=1.00
+  ep   2500 | ω_s=0.86 | loss=0.2348 | H=0.2870 | MCT=22.66s | SRPT=61.7% | Starv=44.0% | grad_ratio=1.00
+  ep   3000 | ω_s=0.47 | loss=0.1896 | H=0.3124 | MCT=22.07s | SRPT=60.2% | Starv=45.0% | grad_ratio=1.00
+  ep   3500 | ω_s=0.01 | loss=0.1965 | H=0.3249 | MCT=21.02s | SRPT=60.4% | Starv=31.0% | grad_ratio=1.00
+  ep   4000 | ω_s=0.15 | loss=0.1506 | H=0.3384 | MCT=20.30s | SRPT=60.8% | Starv=38.0% | grad_ratio=1.00
+  ep   4500 | ω_s=0.98 | loss=0.1561 | H=0.3315 | MCT=23.30s | SRPT=59.4% | Starv=39.0% | grad_ratio=1.00
+  ep   5000 | ω_s=0.06 | loss=0.1581 | H=0.2912 | MCT=23.41s | SRPT=61.7% | Starv=47.0% | grad_ratio=1.00
+  [checkpoint] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w14_omega/w14_seed123_ep5000.npz
+  ep   5500 | ω_s=0.01 | loss=0.1679 | H=0.3021 | MCT=20.99s | SRPT=61.1% | Starv=39.0% | grad_ratio=1.00
+  ep   6000 | ω_s=0.18 | loss=0.0803 | H=0.3951 | MCT=21.59s | SRPT=58.5% | Starv=44.0% | grad_ratio=1.00
+  ep   6500 | ω_s=0.05 | loss=0.1036 | H=0.3337 | MCT=22.35s | SRPT=58.4% | Starv=48.0% | grad_ratio=1.00
+  ep   7000 | ω_s=0.00 | loss=0.1003 | H=0.3687 | MCT=21.54s | SRPT=55.7% | Starv=44.0% | grad_ratio=1.00
+  ep   7500 | ω_s=0.93 | loss=0.0847 | H=0.3693 | MCT=21.48s | SRPT=58.6% | Starv=44.0% | grad_ratio=1.00
+  ep   8000 | ω_s=0.09 | loss=0.0820 | H=0.3932 | MCT=21.42s | SRPT=56.9% | Starv=38.0% | grad_ratio=1.00
+  ep   8500 | ω_s=0.52 | loss=0.0653 | H=0.3905 | MCT=22.08s | SRPT=56.2% | Starv=38.0% | grad_ratio=1.00
+  ep   9000 | ω_s=0.44 | loss=0.0741 | H=0.3736 | MCT=20.86s | SRPT=57.4% | Starv=35.0% | grad_ratio=1.00
+  ep   9500 | ω_s=0.68 | loss=0.0626 | H=0.3564 | MCT=23.28s | SRPT=53.0% | Starv=51.0% | grad_ratio=1.00
+  ep  10000 | ω_s=0.32 | loss=0.0517 | H=0.4664 | MCT=21.78s | SRPT=53.6% | Starv=49.0% | grad_ratio=1.00
+  [checkpoint] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w14_omega/w14_seed123_ep10000.npz
+  ep  10500 | ω_s=0.93 | loss=0.0407 | H=0.3722 | MCT=22.63s | SRPT=58.9% | Starv=46.0% | grad_ratio=1.00
+  ep  11000 | ω_s=0.61 | loss=0.0314 | H=0.4091 | MCT=20.59s | SRPT=56.7% | Starv=43.0% | grad_ratio=1.00
+  ep  11500 | ω_s=0.79 | loss=0.0512 | H=0.4171 | MCT=20.35s | SRPT=53.8% | Starv=42.0% | grad_ratio=1.00
+  ep  12000 | ω_s=0.54 | loss=0.0629 | H=0.4066 | MCT=20.00s | SRPT=56.1% | Starv=31.0% | grad_ratio=1.00
+  ep  12500 | ω_s=0.32 | loss=0.0316 | H=0.4399 | MCT=23.28s | SRPT=53.3% | Starv=36.0% | grad_ratio=1.00
+  ep  13000 | ω_s=0.98 | loss=0.0102 | H=0.4279 | MCT=24.27s | SRPT=56.4% | Starv=39.0% | grad_ratio=1.00
+  ep  13500 | ω_s=0.63 | loss=0.0058 | H=0.3941 | MCT=21.39s | SRPT=59.3% | Starv=33.0% | grad_ratio=1.00
+  ep  14000 | ω_s=0.04 | loss=0.0313 | H=0.3659 | MCT=20.25s | SRPT=58.8% | Starv=33.0% | grad_ratio=1.00
+  ep  14500 | ω_s=0.98 | loss=0.0264 | H=0.4177 | MCT=19.52s | SRPT=54.7% | Starv=44.0% | grad_ratio=1.00
+  ep  15000 | ω_s=0.58 | loss=0.0182 | H=0.4422 | MCT=23.03s | SRPT=48.1% | Starv=49.0% | grad_ratio=1.00
+  [checkpoint] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w14_omega/w14_seed123_ep15000.npz
+  ep  15500 | ω_s=0.94 | loss=0.0372 | H=0.4289 | MCT=20.97s | SRPT=55.2% | Starv=41.0% | grad_ratio=1.00
+  ep  16000 | ω_s=0.65 | loss=0.0201 | H=0.4290 | MCT=21.84s | SRPT=56.8% | Starv=46.0% | grad_ratio=1.00
+  ep  16500 | ω_s=0.96 | loss=0.0103 | H=0.4663 | MCT=19.49s | SRPT=52.4% | Starv=38.0% | grad_ratio=1.00
+  ep  17000 | ω_s=0.02 | loss=0.0045 | H=0.4202 | MCT=21.79s | SRPT=54.9% | Starv=40.0% | grad_ratio=1.00
+  ep  17500 | ω_s=0.38 | loss=0.0190 | H=0.3782 | MCT=17.90s | SRPT=59.0% | Starv=49.0% | grad_ratio=1.00
+  ep  18000 | ω_s=0.87 | loss=0.0112 | H=0.4001 | MCT=19.91s | SRPT=58.8% | Starv=44.0% | grad_ratio=1.00
+  ep  18500 | ω_s=0.00 | loss=0.0198 | H=0.3915 | MCT=23.34s | SRPT=55.2% | Starv=37.0% | grad_ratio=1.00
+  ep  19000 | ω_s=0.99 | loss=0.0173 | H=0.3699 | MCT=22.11s | SRPT=56.4% | Starv=40.0% | grad_ratio=1.00
+  ep  19500 | ω_s=0.96 | loss=0.0139 | H=0.3971 | MCT=21.83s | SRPT=57.7% | Starv=51.0% | grad_ratio=1.00
+  ep  20000 | ω_s=0.15 | loss=0.0225 | H=0.3698 | MCT=23.70s | SRPT=53.4% | Starv=49.0% | grad_ratio=1.00
+  [checkpoint] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w14_omega/w14_seed123_ep20000.npz
+  ep  20500 | ω_s=0.15 | loss=0.0248 | H=0.4143 | MCT=19.81s | SRPT=57.5% | Starv=44.0% | grad_ratio=1.00
+  ep  21000 | ω_s=0.04 | loss=0.0183 | H=0.4181 | MCT=20.70s | SRPT=58.7% | Starv=37.0% | grad_ratio=1.00
+  ep  21500 | ω_s=0.99 | loss=0.0143 | H=0.3795 | MCT=20.70s | SRPT=60.5% | Starv=38.0% | grad_ratio=1.00
+  ep  22000 | ω_s=0.86 | loss=0.0183 | H=0.3604 | MCT=21.02s | SRPT=56.3% | Starv=39.0% | grad_ratio=1.00
+  ep  22500 | ω_s=0.96 | loss=0.0053 | H=0.4274 | MCT=22.04s | SRPT=59.0% | Starv=37.0% | grad_ratio=1.00
+  ep  23000 | ω_s=0.22 | loss=0.0129 | H=0.4162 | MCT=20.48s | SRPT=55.4% | Starv=29.0% | grad_ratio=1.00
+  ep  23500 | ω_s=0.90 | loss=0.0166 | H=0.3773 | MCT=21.91s | SRPT=57.4% | Starv=36.0% | grad_ratio=1.00
+  ep  24000 | ω_s=0.99 | loss=0.0052 | H=0.3861 | MCT=20.20s | SRPT=59.6% | Starv=29.0% | grad_ratio=1.00
+  ep  24500 | ω_s=0.43 | loss=0.0098 | H=0.4205 | MCT=24.63s | SRPT=54.5% | Starv=37.0% | grad_ratio=1.00
+  ep  25000 | ω_s=0.57 | loss=0.0215 | H=0.3922 | MCT=21.41s | SRPT=57.1% | Starv=47.0% | grad_ratio=1.00
+  [checkpoint] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w14_omega/w14_seed123_ep25000.npz
+  ep  25500 | ω_s=0.31 | loss=0.0090 | H=0.3987 | MCT=20.58s | SRPT=56.5% | Starv=37.0% | grad_ratio=1.00
+  ep  26000 | ω_s=0.60 | loss=0.0221 | H=0.3432 | MCT=21.58s | SRPT=56.6% | Starv=39.0% | grad_ratio=1.00
+  ep  26500 | ω_s=0.08 | loss=0.0182 | H=0.3639 | MCT=22.49s | SRPT=56.0% | Starv=36.0% | grad_ratio=1.00
+  ep  27000 | ω_s=0.99 | loss=0.0150 | H=0.3628 | MCT=21.91s | SRPT=60.2% | Starv=28.0% | grad_ratio=1.00
+  ep  27500 | ω_s=0.89 | loss=0.0163 | H=0.3466 | MCT=20.32s | SRPT=60.0% | Starv=35.0% | grad_ratio=1.00
+  ep  28000 | ω_s=0.56 | loss=0.0231 | H=0.3344 | MCT=19.35s | SRPT=60.5% | Starv=32.0% | grad_ratio=1.00
+  ep  28500 | ω_s=0.17 | loss=0.0194 | H=0.3525 | MCT=21.11s | SRPT=59.3% | Starv=35.0% | grad_ratio=1.00
+  ep  29000 | ω_s=0.91 | loss=0.0217 | H=0.3920 | MCT=22.42s | SRPT=53.4% | Starv=34.0% | grad_ratio=1.00
+  ep  29500 | ω_s=0.00 | loss=0.0254 | H=0.3589 | MCT=19.43s | SRPT=56.0% | Starv=36.0% | grad_ratio=1.00
+  ep  30000 | ω_s=0.66 | loss=0.0341 | H=0.3423 | MCT=19.09s | SRPT=61.0% | Starv=32.0% | grad_ratio=1.00
+  [checkpoint] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w14_omega/w14_seed123_ep30000.npz
+
+  Training complete — 99.0 min
+  Final checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w14_omega/w14_seed123_final.npz
+
+  Evaluating Pareto frontier (N=200 per omega point)...
+    ω_s=0.0: MCT=20.51s  Starve=44.0%  VRFI=0.481  
+    ω_s=0.1: MCT=20.57s  Starve=42.0%  VRFI=0.483  
+    ω_s=0.2: MCT=21.03s  Starve=43.0%  VRFI=0.492  
+    ω_s=0.3: MCT=20.75s  Starve=39.5%  VRFI=0.488  
+    ω_s=0.4: MCT=20.71s  Starve=39.5%  VRFI=0.489  
+    ω_s=0.5: MCT=20.73s  Starve=38.0%  VRFI=0.491  
+    ω_s=0.6: MCT=20.49s  Starve=35.0%  VRFI=0.492  ★ DOMINATES MLFQ
+    ω_s=0.7: MCT=20.60s  Starve=32.5%  VRFI=0.488  ★ DOMINATES MLFQ
+    ω_s=0.8: MCT=20.43s  Starve=34.5%  VRFI=0.503  ★ DOMINATES MLFQ
+    ω_s=0.9: MCT=20.45s  Starve=38.5%  VRFI=0.505  
+    ω_s=1.0: MCT=20.36s  Starve=38.5%  VRFI=0.494  
+
+========================================================================
+SEED 456
+========================================================================
+  ep    500 | ω_s=0.26 | loss=-0.0733 | H=0.3128 | MCT=21.26s | SRPT=63.1% | Starv=49.0% | grad_ratio=1.00
+  ep   1000 | ω_s=0.20 | loss=-0.0849 | H=0.3133 | MCT=21.25s | SRPT=64.1% | Starv=53.0% | grad_ratio=1.00
+  ep   1500 | ω_s=0.66 | loss=-0.0844 | H=0.2997 | MCT=20.16s | SRPT=70.7% | Starv=49.0% | grad_ratio=1.02
+  ep   2000 | ω_s=0.32 | loss=-0.0807 | H=0.2887 | MCT=21.11s | SRPT=67.8% | Starv=53.0% | grad_ratio=1.02
+  ep   2500 | ω_s=0.15 | loss=-0.0819 | H=0.2975 | MCT=22.03s | SRPT=64.4% | Starv=47.0% | grad_ratio=0.97
+  ep   3000 | ω_s=0.54 | loss=-0.0771 | H=0.2849 | MCT=21.12s | SRPT=66.6% | Starv=51.0% | grad_ratio=1.04
+  ep   3500 | ω_s=0.51 | loss=-0.0806 | H=0.3034 | MCT=21.32s | SRPT=65.8% | Starv=49.0% | grad_ratio=0.98
+  ep   4000 | ω_s=0.17 | loss=-0.0728 | H=0.2793 | MCT=23.34s | SRPT=65.5% | Starv=48.0% | grad_ratio=0.94
+  ep   4500 | ω_s=0.78 | loss=-0.0780 | H=0.3052 | MCT=21.82s | SRPT=60.1% | Starv=46.0% | grad_ratio=1.01
+  ep   5000 | ω_s=0.80 | loss=-0.0966 | H=0.3848 | MCT=20.40s | SRPT=60.6% | Starv=42.0% | grad_ratio=1.26
+  [checkpoint] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w14_omega/w14_seed456_ep5000.npz
+  ep   5500 | ω_s=0.53 | loss=-0.0877 | H=0.3565 | MCT=20.69s | SRPT=63.8% | Starv=42.0% | grad_ratio=0.98
+  ep   6000 | ω_s=0.41 | loss=-0.0799 | H=0.3318 | MCT=21.80s | SRPT=59.2% | Starv=38.0% | grad_ratio=1.03
+  ep   6500 | ω_s=0.12 | loss=-0.0976 | H=0.4129 | MCT=23.34s | SRPT=56.7% | Starv=42.0% | grad_ratio=1.05
+  ep   7000 | ω_s=0.61 | loss=-0.0929 | H=0.4017 | MCT=21.22s | SRPT=53.4% | Starv=40.0% | grad_ratio=0.99
+  ep   7500 | ω_s=0.02 | loss=-0.0942 | H=0.4158 | MCT=21.08s | SRPT=54.0% | Starv=43.0% | grad_ratio=0.99
+  ep   8000 | ω_s=0.96 | loss=-0.0897 | H=0.4047 | MCT=21.00s | SRPT=58.5% | Starv=43.0% | grad_ratio=0.98
+  ep   8500 | ω_s=0.15 | loss=-0.0906 | H=0.4186 | MCT=23.57s | SRPT=55.9% | Starv=52.0% | grad_ratio=1.01
+  ep   9000 | ω_s=0.42 | loss=-0.0842 | H=0.3976 | MCT=21.60s | SRPT=57.6% | Starv=54.0% | grad_ratio=0.99
+  ep   9500 | ω_s=0.78 | loss=-0.0725 | H=0.3504 | MCT=19.45s | SRPT=63.3% | Starv=43.0% | grad_ratio=1.05
+  ep  10000 | ω_s=0.78 | loss=-0.0782 | H=0.3873 | MCT=22.10s | SRPT=57.5% | Starv=44.0% | grad_ratio=1.00
+  [checkpoint] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w14_omega/w14_seed456_ep10000.npz
+  ep  10500 | ω_s=0.02 | loss=-0.0770 | H=0.3907 | MCT=21.56s | SRPT=57.8% | Starv=34.0% | grad_ratio=0.98
+  ep  11000 | ω_s=0.88 | loss=-0.0789 | H=0.4178 | MCT=21.67s | SRPT=53.6% | Starv=48.0% | grad_ratio=1.01
+  ep  11500 | ω_s=0.21 | loss=-0.0755 | H=0.4043 | MCT=19.80s | SRPT=57.8% | Starv=39.0% | grad_ratio=0.98
+  ep  12000 | ω_s=0.69 | loss=-0.0790 | H=0.4351 | MCT=22.84s | SRPT=55.2% | Starv=29.0% | grad_ratio=1.02
+  ep  12500 | ω_s=0.54 | loss=-0.0811 | H=0.4572 | MCT=22.45s | SRPT=56.7% | Starv=47.0% | grad_ratio=0.90
+  ep  13000 | ω_s=0.60 | loss=-0.0810 | H=0.4700 | MCT=21.61s | SRPT=52.0% | Starv=50.0% | grad_ratio=1.06
+  ep  13500 | ω_s=0.15 | loss=-0.0767 | H=0.4581 | MCT=21.00s | SRPT=50.2% | Starv=53.0% | grad_ratio=0.97
+  ep  14000 | ω_s=0.27 | loss=-0.0725 | H=0.4458 | MCT=22.88s | SRPT=52.9% | Starv=60.0% | grad_ratio=1.04
+  ep  14500 | ω_s=0.17 | loss=-0.0663 | H=0.4205 | MCT=20.79s | SRPT=59.5% | Starv=48.0% | grad_ratio=1.01
+  ep  15000 | ω_s=0.55 | loss=-0.0646 | H=0.4231 | MCT=21.93s | SRPT=55.0% | Starv=38.0% | grad_ratio=1.05
+  [checkpoint] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w14_omega/w14_seed456_ep15000.npz
+  ep  15500 | ω_s=0.08 | loss=-0.0627 | H=0.4238 | MCT=21.73s | SRPT=56.4% | Starv=44.0% | grad_ratio=0.98
+  ep  16000 | ω_s=0.77 | loss=-0.0607 | H=0.4241 | MCT=24.74s | SRPT=54.6% | Starv=45.0% | grad_ratio=0.99
+  ep  16500 | ω_s=0.19 | loss=-0.0613 | H=0.4438 | MCT=20.79s | SRPT=57.1% | Starv=50.0% | grad_ratio=1.10
+  ep  17000 | ω_s=0.03 | loss=-0.0533 | H=0.4084 | MCT=20.73s | SRPT=55.0% | Starv=46.0% | grad_ratio=0.98
+  ep  17500 | ω_s=0.93 | loss=-0.0612 | H=0.4778 | MCT=23.67s | SRPT=56.1% | Starv=35.0% | grad_ratio=0.97
+  ep  18000 | ω_s=0.99 | loss=-0.0511 | H=0.4141 | MCT=21.48s | SRPT=53.6% | Starv=56.0% | grad_ratio=0.99
+  ep  18500 | ω_s=0.41 | loss=-0.0491 | H=0.4143 | MCT=23.22s | SRPT=55.4% | Starv=58.0% | grad_ratio=1.01
+  ep  19000 | ω_s=0.02 | loss=-0.0474 | H=0.4177 | MCT=22.93s | SRPT=55.6% | Starv=54.0% | grad_ratio=0.93
+  ep  19500 | ω_s=0.08 | loss=-0.0417 | H=0.3844 | MCT=21.88s | SRPT=55.3% | Starv=53.0% | grad_ratio=0.98
+  ep  20000 | ω_s=0.03 | loss=-0.0442 | H=0.4262 | MCT=19.55s | SRPT=61.6% | Starv=49.0% | grad_ratio=0.76
+  [checkpoint] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w14_omega/w14_seed456_ep20000.npz
+  ep  20500 | ω_s=0.03 | loss=-0.0389 | H=0.3936 | MCT=21.83s | SRPT=55.9% | Starv=53.0% | grad_ratio=1.04
+  ep  21000 | ω_s=1.00 | loss=-0.0383 | H=0.4075 | MCT=21.03s | SRPT=57.0% | Starv=50.0% | grad_ratio=0.97
+  ep  21500 | ω_s=0.96 | loss=-0.0321 | H=0.3602 | MCT=19.06s | SRPT=56.8% | Starv=49.0% | grad_ratio=1.03
+  ep  22000 | ω_s=0.21 | loss=-0.0330 | H=0.3922 | MCT=18.54s | SRPT=59.1% | Starv=35.0% | grad_ratio=0.88
+  ep  22500 | ω_s=0.75 | loss=-0.0372 | H=0.4700 | MCT=22.96s | SRPT=48.4% | Starv=34.0% | grad_ratio=1.10
+  ep  23000 | ω_s=0.12 | loss=-0.0338 | H=0.4546 | MCT=20.22s | SRPT=56.5% | Starv=58.0% | grad_ratio=1.09
+  ep  23500 | ω_s=0.04 | loss=-0.0301 | H=0.4344 | MCT=20.33s | SRPT=54.9% | Starv=50.0% | grad_ratio=1.10
+  ep  24000 | ω_s=1.00 | loss=-0.0282 | H=0.4370 | MCT=19.80s | SRPT=52.9% | Starv=50.0% | grad_ratio=1.01
+  ep  24500 | ω_s=0.39 | loss=-0.0213 | H=0.3585 | MCT=21.20s | SRPT=56.2% | Starv=49.0% | grad_ratio=0.95
+  ep  25000 | ω_s=0.03 | loss=-0.0240 | H=0.4393 | MCT=21.54s | SRPT=50.8% | Starv=47.0% | grad_ratio=0.94
+  [checkpoint] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w14_omega/w14_seed456_ep25000.npz
+  ep  25500 | ω_s=0.81 | loss=-0.0214 | H=0.4346 | MCT=22.95s | SRPT=52.7% | Starv=54.0% | grad_ratio=0.99
+  ep  26000 | ω_s=0.91 | loss=-0.0194 | H=0.4332 | MCT=21.47s | SRPT=60.0% | Starv=34.0% | grad_ratio=0.95
+  ep  26500 | ω_s=0.49 | loss=-0.0160 | H=0.4020 | MCT=24.36s | SRPT=57.2% | Starv=36.0% | grad_ratio=0.98
+  ep  27000 | ω_s=0.06 | loss=-0.0129 | H=0.3700 | MCT=21.40s | SRPT=56.3% | Starv=41.0% | grad_ratio=0.92
+  ep  27500 | ω_s=0.97 | loss=-0.0125 | H=0.4174 | MCT=19.88s | SRPT=54.0% | Starv=50.0% | grad_ratio=1.02
+  ep  28000 | ω_s=0.01 | loss=-0.0097 | H=0.3871 | MCT=22.13s | SRPT=55.1% | Starv=48.0% | grad_ratio=1.12
+  ep  28500 | ω_s=0.16 | loss=-0.0079 | H=0.3892 | MCT=21.09s | SRPT=59.6% | Starv=38.0% | grad_ratio=1.10
+  ep  29000 | ω_s=1.00 | loss=-0.0058 | H=0.3794 | MCT=21.14s | SRPT=57.0% | Starv=36.0% | grad_ratio=0.96
+  ep  29500 | ω_s=0.26 | loss=-0.0045 | H=0.4342 | MCT=22.85s | SRPT=55.1% | Starv=36.0% | grad_ratio=1.06
+  ep  30000 | ω_s=0.94 | loss=-0.0022 | H=0.3941 | MCT=22.34s | SRPT=59.3% | Starv=46.0% | grad_ratio=0.94
+  [checkpoint] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w14_omega/w14_seed456_ep30000.npz
+
+  Training complete — 139.0 min
+  Final checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w14_omega/w14_seed456_final.npz
+
+  Evaluating Pareto frontier (N=200 per omega point)...
+    ω_s=0.0: MCT=22.14s  Starve=38.0%  VRFI=0.466  
+    ω_s=0.1: MCT=22.15s  Starve=39.0%  VRFI=0.464  
+    ω_s=0.2: MCT=22.12s  Starve=39.5%  VRFI=0.459  
+    ω_s=0.3: MCT=22.15s  Starve=40.5%  VRFI=0.453  
+    ω_s=0.4: MCT=22.06s  Starve=41.0%  VRFI=0.445  
+    ω_s=0.5: MCT=22.01s  Starve=41.0%  VRFI=0.437  
+    ω_s=0.6: MCT=22.03s  Starve=41.0%  VRFI=0.434  
+    ω_s=0.7: MCT=22.02s  Starve=43.5%  VRFI=0.422  
+    ω_s=0.8: MCT=22.02s  Starve=42.5%  VRFI=0.500  
+    ω_s=0.9: MCT=22.09s  Starve=29.0%  VRFI=0.580  
+    ω_s=1.0: MCT=21.78s  Starve=16.5%  VRFI=0.573  
+
+
+Best seed: 123 (MCT at ω_s=0.0: 20.51s)
+
+Running MLFQ benchmark (N=200, seed=999)...
+  MLFQ: MCT=20.29s  Starve=34.5%  VRFI=0.394
+
+
+========================================================================
+PARETO FRONTIER TABLE  (best seed, N=200 eval per omega)
+========================================================================
+
+ omega_s   MCT (mean)   Starvation%    VRFI   SRPT%  Dominates MLFQ?
+-----------------------------------------------------------------
+    MLFQ       20.29s         34.5%   0.394   59.0%  ← reference
+     0.0       20.51s         44.0%   0.481   59.0%  no
+     0.1       20.57s         42.0%   0.483   59.5%  no
+     0.2       21.03s         43.0%   0.492   57.6%  no
+     0.3       20.75s         39.5%   0.488   58.4%  no
+     0.4       20.71s         39.5%   0.489   58.0%  no
+     0.5       20.73s         38.0%   0.491   57.6%  no
+     0.6       20.49s         35.0%   0.492   57.3%  no
+     0.7       20.60s         32.5%   0.488   57.1%  no
+     0.8       20.43s         34.5%   0.503   57.6%  no
+     0.9       20.45s         38.5%   0.505   56.8%  no
+     1.0       20.36s         38.5%   0.494   55.3%  no
+
+  ASCII Pareto Frontier (W14-ω)
+  Y: MCT (↑=32s → ↓=15s)   X: Starvation% (←=0% → →=65%)
+  M=MLFQ reference, digit = omega_starvation × 10
+
+  32.0s |                                                            |
+  31.1s |                                                            |
+  30.2s |                                                            |
+  29.3s |                                                            |
+  28.4s |                                                            |
+  27.5s |                                                            |
+  26.6s |                                                            |
+  25.7s |                                                            |
+  24.8s |                                                            |
+  23.9s |                                                            |
+  23.1s |                                                            |
+  22.2s |                                M                           |
+  21.3s |                             7 8  94  12                    |
+  20.4s |                                  0                         |
+  19.5s |                                                            |
+  18.6s |                                                            |
+  17.7s |                                                            |
+  16.8s |                                                            |
+  15.9s |                                                            |
+  15.0s |                                                            |
+         ------------------------------------------------------------
+         0%                  ~30%                                ~65%
+
+
+========================================================================
+GRADIENT NORM RATIO HISTORY  (starvation_grad / value_delta_grad)
+========================================================================
+
+  Seed 42:
+    ep    500: ratio=1.001
+    ep   1000: ratio=0.999
+    ep   1500: ratio=0.999
+    ep   2000: ratio=1.000
+    ep   2500: ratio=0.999
+    ep   3000: ratio=0.999
+    ep   3500: ratio=1.002
+    ep   4000: ratio=1.001
+    ep   4500: ratio=1.000
+    ep   5000: ratio=1.000
+    ep   5500: ratio=0.999
+    ep   6000: ratio=0.999
+    ep   6500: ratio=1.000
+    ep   7000: ratio=0.999
+    ep   7500: ratio=0.999
+    ep   8000: ratio=1.000
+    ep   8500: ratio=0.999
+    ep   9000: ratio=1.001
+    ep   9500: ratio=0.999
+    ep  10000: ratio=1.000
+    ep  10500: ratio=0.999
+    ep  11000: ratio=1.000
+    ep  11500: ratio=0.999
+    ep  12000: ratio=1.000
+    ep  12500: ratio=0.999
+    ep  13000: ratio=1.001
+    ep  13500: ratio=1.000
+    ep  14000: ratio=1.000
+    ep  14500: ratio=1.000
+    ep  15000: ratio=0.998
+    ep  15500: ratio=0.999
+    ep  16000: ratio=1.000
+    ep  16500: ratio=0.999
+    ep  17000: ratio=1.000
+    ep  17500: ratio=1.000
+    ep  18000: ratio=1.000
+    ep  18500: ratio=1.000
+    ep  19000: ratio=0.998
+    ep  19500: ratio=0.997
+    ep  20000: ratio=0.999
+    ep  20500: ratio=1.001
+    ep  21000: ratio=0.999
+    ep  21500: ratio=1.000
+    ep  22000: ratio=1.001
+    ep  22500: ratio=1.000
+    ep  23000: ratio=1.000
+    ep  23500: ratio=1.001
+    ep  24000: ratio=0.999
+    ep  24500: ratio=1.001
+    ep  25000: ratio=1.000
+    ep  25500: ratio=1.000
+    ep  26000: ratio=0.999
+    ep  26500: ratio=1.001
+    ep  27000: ratio=0.998
+    ep  27500: ratio=1.000
+    ep  28000: ratio=0.995
+    ep  28500: ratio=1.000
+    ep  29000: ratio=0.999
+    ep  29500: ratio=0.999
+    ep  30000: ratio=0.999
+
+  Seed 123:
+    ep    500: ratio=1.001
+    ep   1000: ratio=1.000
+    ep   1500: ratio=1.000
+    ep   2000: ratio=1.001
+    ep   2500: ratio=0.999
+    ep   3000: ratio=1.000
+    ep   3500: ratio=1.000
+    ep   4000: ratio=1.000
+    ep   4500: ratio=1.000
+    ep   5000: ratio=1.000
+    ep   5500: ratio=1.000
+    ep   6000: ratio=0.999
+    ep   6500: ratio=1.000
+    ep   7000: ratio=1.000
+    ep   7500: ratio=1.000
+    ep   8000: ratio=1.000
+    ep   8500: ratio=1.000
+    ep   9000: ratio=1.000
+    ep   9500: ratio=1.000
+    ep  10000: ratio=1.000
+    ep  10500: ratio=1.001
+    ep  11000: ratio=1.001
+    ep  11500: ratio=1.001
+    ep  12000: ratio=1.000
+    ep  12500: ratio=0.998
+    ep  13000: ratio=1.000
+    ep  13500: ratio=1.000
+    ep  14000: ratio=0.999
+    ep  14500: ratio=0.999
+    ep  15000: ratio=1.000
+    ep  15500: ratio=1.000
+    ep  16000: ratio=0.999
+    ep  16500: ratio=1.001
+    ep  17000: ratio=1.000
+    ep  17500: ratio=1.000
+    ep  18000: ratio=0.999
+    ep  18500: ratio=1.000
+    ep  19000: ratio=1.001
+    ep  19500: ratio=1.001
+    ep  20000: ratio=1.000
+    ep  20500: ratio=0.999
+    ep  21000: ratio=1.000
+    ep  21500: ratio=0.999
+    ep  22000: ratio=0.999
+    ep  22500: ratio=0.999
+    ep  23000: ratio=0.999
+    ep  23500: ratio=1.000
+    ep  24000: ratio=1.000
+    ep  24500: ratio=1.001
+    ep  25000: ratio=1.000
+    ep  25500: ratio=1.000
+    ep  26000: ratio=1.000
+    ep  26500: ratio=1.000
+    ep  27000: ratio=0.999
+    ep  27500: ratio=1.001
+    ep  28000: ratio=1.000
+    ep  28500: ratio=1.000
+    ep  29000: ratio=0.999
+    ep  29500: ratio=0.998
+    ep  30000: ratio=1.000
+
+  Seed 456:
+    ep    500: ratio=0.999
+    ep   1000: ratio=1.004
+    ep   1500: ratio=1.022
+    ep   2000: ratio=1.019
+    ep   2500: ratio=0.968
+    ep   3000: ratio=1.038
+    ep   3500: ratio=0.976
+    ep   4000: ratio=0.944
+    ep   4500: ratio=1.006
+    ep   5000: ratio=1.262
+    ep   5500: ratio=0.983
+    ep   6000: ratio=1.034
+    ep   6500: ratio=1.046
+    ep   7000: ratio=0.991
+    ep   7500: ratio=0.991
+    ep   8000: ratio=0.983
+    ep   8500: ratio=1.012
+    ep   9000: ratio=0.985
+    ep   9500: ratio=1.047
+    ep  10000: ratio=0.997
+    ep  10500: ratio=0.978
+    ep  11000: ratio=1.010
+    ep  11500: ratio=0.985
+    ep  12000: ratio=1.021
+    ep  12500: ratio=0.896
+    ep  13000: ratio=1.064
+    ep  13500: ratio=0.974
+    ep  14000: ratio=1.044
+    ep  14500: ratio=1.010
+    ep  15000: ratio=1.051
+    ep  15500: ratio=0.982
+    ep  16000: ratio=0.987
+    ep  16500: ratio=1.102
+    ep  17000: ratio=0.981
+    ep  17500: ratio=0.970
+    ep  18000: ratio=0.988
+    ep  18500: ratio=1.010
+    ep  19000: ratio=0.930
+    ep  19500: ratio=0.985
+    ep  20000: ratio=0.763
+    ep  20500: ratio=1.041
+    ep  21000: ratio=0.966
+    ep  21500: ratio=1.033
+    ep  22000: ratio=0.880
+    ep  22500: ratio=1.096
+    ep  23000: ratio=1.089
+    ep  23500: ratio=1.101
+    ep  24000: ratio=1.014
+    ep  24500: ratio=0.952
+    ep  25000: ratio=0.938
+    ep  25500: ratio=0.990
+    ep  26000: ratio=0.946
+    ep  26500: ratio=0.977
+    ep  27000: ratio=0.924
+    ep  27500: ratio=1.018
+    ep  28000: ratio=1.116
+    ep  28500: ratio=1.100
+    ep  29000: ratio=0.956
+    ep  29500: ratio=1.060
+    ep  30000: ratio=0.941
+
+
+========================================================================
+VERDICT
+========================================================================
+
+No omega value dominates MLFQ on both metrics simultaneously.
+Best trade-off: omega_s=0.8  MCT=20.43s  Starve=34.5%
+
+Final agent saved → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w14_omega/w14_omega_final.npz
+Pareto data saved → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w14_omega/pareto_frontier.json

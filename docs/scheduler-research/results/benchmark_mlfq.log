@@ -1,0 +1,84 @@
+======================================================================
+W12 vs MLFQ Benchmark
+N_eval=500  checkpoint=/Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/results/w12_seed456.npz
+======================================================================
+
+Loading test trace: /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/data/alibaba2018/trace_test_filtered.csv
+  TraceEpisodeSampler5: 1,981,175 tasks loaded.
+  Loaded 1,981,175 test tasks.
+
+Loading W12 checkpoint (seed 456) ...
+  Done.
+
+======================================================================
+CONDITION 1 — Pure scheduling comparison (N=500 test episodes)
+======================================================================
+
+  Running W12 ...
+  W12: MCT=21.18±12.93s  Starve=53.2%  SDV=0.886  SRPT=57.0%  (1.8s wall)
+
+  Running MLFQ ...
+  MLFQ: MCT=21.59±13.10s  Starve=36.0%  SDV=0.852  SRPT=58.1%  (0.1s wall)
+
+  Running Round Robin ...
+  Round Robin: MCT=20.23±12.43s  Starve=0.0%  SDV=0.961  SRPT=60.6%  (0.2s wall)
+
+  Running CFS-lite ...
+  CFS-lite: MCT=19.97±12.33s  Starve=0.6%  SDV=1.004  SRPT=62.3%  (0.2s wall)
+
+
+--- CONDITION 1 TABLE ---
+Policy             MCT mean±std   Starve%     SDV   SRPT%
+------------------------------------------------------------
+W12              21.18±12.93 s     53.2%   0.886   57.0%
+MLFQ             21.59±13.10 s     36.0%   0.852   58.1%
+Round Robin      20.23±12.43 s      0.0%   0.961   60.6%
+CFS-lite         19.97±12.33 s      0.6%   1.004   62.3%
+
+======================================================================
+CONDITION 2 — Value-aware comparison (N=500 test episodes)
+======================================================================
+
+  Running W12 ...
+  W12: MCT=21.22±12.96s  Starve=54.2%  SRPT=57.1%  Value=4.9337  VRFI=0.267  (1.7s wall)
+
+  Running MLFQ-V ...
+  MLFQ-V: MCT=21.54±13.62s  Starve=26.0%  SRPT=58.8%  Value=4.9345  VRFI=0.422  (0.1s wall)
+
+  Running value_aware ...
+  value_aware: MCT=20.93±12.71s  Starve=48.8%  SRPT=58.4%  Value=4.9348  VRFI=0.606  (0.2s wall)
+
+  Running MLFQ ...
+  MLFQ: MCT=21.59±13.10s  Starve=36.0%  SRPT=58.1%  Value=4.9330  VRFI=0.420  (0.1s wall)
+
+
+--- CONDITION 2 TABLE ---
+Policy             MCT mean±std  Total Value    VRFI   Starve%
+--------------------------------------------------------------
+W12              21.22±12.96 s       4.9337   0.267     54.2%
+MLFQ-V           21.54±13.62 s       4.9345   0.422     26.0%
+value_aware      20.93±12.71 s       4.9348   0.606     48.8%
+MLFQ             21.59±13.10 s       4.9330   0.420     36.0%
+
+
+======================================================================
+VERDICT
+======================================================================
+
+1. Does W12 beat MLFQ on MCT? (Condition 1): YES
+   W12=21.18s  MLFQ=21.59s  Δ=+0.41s
+
+2. Does W12 beat MLFQ-V on total value? (Condition 2): NO
+   W12=4.9337  MLFQ-V=4.9345  Δ=-0.0008
+
+3. Per-metric W12 wins/losses (vs MLFQ, Condition 1):
+   MCT           : W12=21.185  MLFQ=21.592  → W12 WIN
+   Starvation%   : W12=53.200  MLFQ=36.000  → W12 LOSS
+   SDV           : W12=0.886  MLFQ=0.852  → W12 LOSS
+   SRPT%         : W12=56.984  MLFQ=58.083  → W12 LOSS
+
+4. Per-metric W12 wins/losses (vs MLFQ-V, Condition 2):
+   MCT           : W12=21.2192  MLFQ-V=21.5436  → W12 WIN
+   Total Value   : W12=4.9337  MLFQ-V=4.9345  → W12 LOSS
+   VRFI          : W12=0.2674  MLFQ-V=0.4217  → W12 LOSS
+   Starvation%   : W12=54.2000  MLFQ-V=26.0000  → W12 LOSS

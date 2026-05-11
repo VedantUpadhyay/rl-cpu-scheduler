@@ -1,0 +1,34 @@
+Device: cpu
+Traceback (most recent call last):
+  File "/Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/scripts/w15_variable_n_train.py", line 55, in <module>
+    LOG_FILE = os.path.join(OUT_DIR, f"w15_seed{_args.seed}_train.log")
+                                                ^^^^^
+NameError: name '_args' is not defined. Did you mean: 'vars'?
+Device: cpu
+  TraceEpisodeSampler5: 1,981,175 tasks loaded.
+Traceback (most recent call last):
+  File "/Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/scripts/w15_variable_n_train.py", line 933, in <module>
+    main()
+    ~~~~^^
+  File "/Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/scripts/w15_variable_n_train.py", line 844, in main
+    w15_fixed = eval_fixed_n5_w15(best_agent, test_sampler, OMEGA_EVAL, N_EVAL_FIXED, SEEDS[0])
+  File "/Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/scripts/w15_variable_n_train.py", line 464, in eval_fixed_n5_w15
+    sv   = encode_state_w15_fixed(env, tasks)
+  File "/Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/scripts/w15_variable_n_train.py", line 183, in encode_state_w15_fixed
+    vec[off + 3] = _urgency_norm(p, tasks)
+                   ~~~~~~~~~~~~~^^^^^^^^^^
+TypeError: _urgency_norm() takes 1 positional argument but 2 were given
+Device: cpu
+  TraceEpisodeSampler5: 1,981,175 tasks loaded.
+Traceback (most recent call last):
+  File "/Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/scripts/w15_variable_n_train.py", line 933, in <module>
+    main()
+    ~~~~^^
+  File "/Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/scripts/w15_variable_n_train.py", line 844, in main
+    w15_fixed = eval_fixed_n5_w15(best_agent, test_sampler, OMEGA_EVAL, N_EVAL_FIXED, SEEDS[0])
+  File "/Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/scripts/w15_variable_n_train.py", line 464, in eval_fixed_n5_w15
+    sv   = encode_state_w15_fixed(env, tasks)
+  File "/Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/scripts/w15_variable_n_train.py", line 184, in encode_state_w15_fixed
+    vec[off + 4] = _norm_cpu(p.plan_cpu)
+                             ^^^^^^^^^^
+AttributeError: 'Process' object has no attribute 'plan_cpu'

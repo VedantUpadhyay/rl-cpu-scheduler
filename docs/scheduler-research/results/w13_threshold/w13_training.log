@@ -1,0 +1,292 @@
+====================================================================
+W13 — Hard Threshold Starvation Penalty Experiment
+Variants: ['W13-A', 'W13-B', 'W13-C']  Seeds: [42, 123, 456]
+N_episodes=10000  N_eval=500
+Success: MCT < 21.59s AND Starve < 36.0%
+====================================================================
+
+Loading TRAIN trace: /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/data/alibaba2018/trace_train_filtered.csv
+  TraceEpisodeSampler5: 7,925,241 tasks loaded.
+Loading TEST trace: /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/data/alibaba2018/trace_test_filtered.csv
+  TraceEpisodeSampler5: 1,981,175 tasks loaded.
+
+
+====================================================================
+VARIANT: W13-A  THRESHOLD=50.0s  PENALTY=0.5
+====================================================================
+
+--- W13-A seed=42 ---
+  ep    500 | loss=-0.0461 | H=0.3309 | MCT=20.55s | SRPT=66.4%
+  ep   1000 | loss=-0.0492 | H=0.3083 | MCT=21.00s | SRPT=59.8%
+  ep   1500 | loss=-0.0610 | H=0.3455 | MCT=21.49s | SRPT=63.6%
+  ep   2000 | loss=-0.0513 | H=0.3281 | MCT=22.34s | SRPT=60.4%
+  ep   2500 | loss=-0.0457 | H=0.2992 | MCT=22.22s | SRPT=64.5%
+  ep   3000 | loss=-0.0486 | H=0.3160 | MCT=20.21s | SRPT=59.1%
+  ep   3500 | loss=-0.0531 | H=0.3595 | MCT=20.52s | SRPT=60.2%
+  ep   4000 | loss=-0.0581 | H=0.4210 | MCT=21.08s | SRPT=53.8%
+  ep   4500 | loss=-0.0605 | H=0.4718 | MCT=20.55s | SRPT=53.7%
+  ep   5000 | loss=-0.0549 | H=0.4589 | MCT=24.35s | SRPT=50.4%
+  ep   5500 | loss=-0.0478 | H=0.4311 | MCT=22.22s | SRPT=49.8%
+  ep   6000 | loss=-0.0424 | H=0.4228 | MCT=22.75s | SRPT=54.6%
+  ep   6500 | loss=-0.0385 | H=0.4424 | MCT=20.50s | SRPT=53.6%
+  ep   7000 | loss=-0.0307 | H=0.4181 | MCT=21.30s | SRPT=55.2%
+  ep   7500 | loss=-0.0252 | H=0.4003 | MCT=25.21s | SRPT=53.4%
+  ep   8000 | loss=-0.0203 | H=0.4265 | MCT=23.18s | SRPT=47.9%
+  ep   8500 | loss=-0.0158 | H=0.4819 | MCT=22.25s | SRPT=51.0%
+  ep   9000 | loss=-0.0095 | H=0.4561 | MCT=21.54s | SRPT=56.8%
+  ep   9500 | loss=-0.0035 | H=0.4241 | MCT=22.34s | SRPT=58.8%
+  ep  10000 | loss=0.0046 | H=0.3933 | MCT=21.86s | SRPT=57.8%
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w13_threshold/W13_A_seed42.npz
+  Seed 42: MCT=21.51±13.75s  SRPT=56.1%  Starve=41.8%  VRFI=0.436  Wall=5.8min
+
+--- W13-A seed=123 ---
+  ep    500 | loss=-0.0002 | H=0.2945 | MCT=19.65s | SRPT=64.3%
+  ep   1000 | loss=0.0060 | H=0.2995 | MCT=21.28s | SRPT=62.5%
+  ep   1500 | loss=0.0010 | H=0.2907 | MCT=22.31s | SRPT=60.4%
+  ep   2000 | loss=0.0028 | H=0.3093 | MCT=23.27s | SRPT=59.7%
+  ep   2500 | loss=-0.0018 | H=0.3029 | MCT=22.23s | SRPT=61.3%
+  ep   3000 | loss=-0.0086 | H=0.3088 | MCT=22.28s | SRPT=61.1%
+  ep   3500 | loss=-0.0102 | H=0.3449 | MCT=21.66s | SRPT=58.6%
+  ep   4000 | loss=-0.0272 | H=0.4129 | MCT=20.28s | SRPT=57.8%
+  ep   4500 | loss=-0.0264 | H=0.4048 | MCT=23.30s | SRPT=55.3%
+  ep   5000 | loss=-0.0169 | H=0.3678 | MCT=22.57s | SRPT=53.8%
+  ep   5500 | loss=-0.0196 | H=0.3912 | MCT=21.41s | SRPT=56.0%
+  ep   6000 | loss=-0.0219 | H=0.4037 | MCT=21.48s | SRPT=59.7%
+  ep   6500 | loss=-0.0173 | H=0.3899 | MCT=22.49s | SRPT=55.1%
+  ep   7000 | loss=-0.0119 | H=0.4090 | MCT=21.91s | SRPT=53.3%
+  ep   7500 | loss=-0.0124 | H=0.4441 | MCT=21.11s | SRPT=56.8%
+  ep   8000 | loss=0.0014 | H=0.3847 | MCT=21.61s | SRPT=53.3%
+  ep   8500 | loss=0.0016 | H=0.3996 | MCT=21.96s | SRPT=54.3%
+  ep   9000 | loss=0.0078 | H=0.3827 | MCT=20.84s | SRPT=60.7%
+  ep   9500 | loss=0.0145 | H=0.3613 | MCT=23.02s | SRPT=52.2%
+  ep  10000 | loss=0.0170 | H=0.3573 | MCT=21.32s | SRPT=56.0%
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w13_threshold/W13_A_seed123.npz
+  Seed 123: MCT=21.19±12.88s  SRPT=54.8%  Starve=48.0%  VRFI=0.439  Wall=6.8min
+
+--- W13-A seed=456 ---
+  ep    500 | loss=-0.0836 | H=0.3167 | MCT=20.72s | SRPT=63.5%
+  ep   1000 | loss=-0.0775 | H=0.2925 | MCT=20.92s | SRPT=67.4%
+  ep   1500 | loss=-0.0709 | H=0.2782 | MCT=20.57s | SRPT=68.5%
+  ep   2000 | loss=-0.0682 | H=0.2830 | MCT=22.56s | SRPT=65.0%
+  ep   2500 | loss=-0.0602 | H=0.2647 | MCT=23.30s | SRPT=63.1%
+  ep   3000 | loss=-0.0557 | H=0.2619 | MCT=20.96s | SRPT=65.6%
+  ep   3500 | loss=-0.0593 | H=0.3000 | MCT=20.89s | SRPT=64.7%
+  ep   4000 | loss=-0.0488 | H=0.2668 | MCT=22.31s | SRPT=63.5%
+  ep   4500 | loss=-0.0564 | H=0.3342 | MCT=21.62s | SRPT=65.4%
+  ep   5000 | loss=-0.0493 | H=0.3216 | MCT=19.89s | SRPT=65.0%
+  ep   5500 | loss=-0.0523 | H=0.3792 | MCT=22.14s | SRPT=55.0%
+  ep   6000 | loss=-0.0503 | H=0.4093 | MCT=21.80s | SRPT=52.5%
+  ep   6500 | loss=-0.0441 | H=0.4030 | MCT=24.11s | SRPT=56.8%
+  ep   7000 | loss=-0.0355 | H=0.3751 | MCT=21.42s | SRPT=62.8%
+  ep   7500 | loss=-0.0357 | H=0.4470 | MCT=21.30s | SRPT=51.0%
+  ep   8000 | loss=-0.0344 | H=0.5296 | MCT=21.59s | SRPT=49.1%
+  ep   8500 | loss=-0.0232 | H=0.4599 | MCT=23.54s | SRPT=53.6%
+  ep   9000 | loss=-0.0170 | H=0.4812 | MCT=22.24s | SRPT=47.9%
+  ep   9500 | loss=-0.0082 | H=0.3999 | MCT=20.88s | SRPT=60.1%
+  ep  10000 | loss=-0.0028 | H=0.4398 | MCT=21.81s | SRPT=56.0%
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w13_threshold/W13_A_seed456.npz
+  Seed 456: MCT=21.26±13.63s  SRPT=58.0%  Starve=50.2%  VRFI=0.235  Wall=5.0min
+
+====================================================================
+VARIANT: W13-B  THRESHOLD=50.0s  PENALTY=2.0
+====================================================================
+
+--- W13-B seed=42 ---
+  ep    500 | loss=-0.0427 | H=0.3254 | MCT=20.46s | SRPT=65.1%
+  ep   1000 | loss=-0.0404 | H=0.3005 | MCT=20.93s | SRPT=62.8%
+  ep   1500 | loss=-0.0434 | H=0.3105 | MCT=21.75s | SRPT=64.6%
+  ep   2000 | loss=-0.0420 | H=0.2809 | MCT=22.33s | SRPT=63.9%
+  ep   2500 | loss=-0.0448 | H=0.3139 | MCT=22.10s | SRPT=62.2%
+  ep   3000 | loss=-0.0369 | H=0.2944 | MCT=19.25s | SRPT=59.8%
+  ep   3500 | loss=-0.0414 | H=0.3271 | MCT=21.29s | SRPT=58.2%
+  ep   4000 | loss=-0.0352 | H=0.3114 | MCT=19.70s | SRPT=67.8%
+  ep   4500 | loss=-0.0332 | H=0.3300 | MCT=20.29s | SRPT=57.8%
+  ep   5000 | loss=-0.0367 | H=0.3458 | MCT=23.40s | SRPT=60.4%
+  ep   5500 | loss=-0.0363 | H=0.3690 | MCT=21.77s | SRPT=57.4%
+  ep   6000 | loss=-0.0351 | H=0.3795 | MCT=21.97s | SRPT=59.2%
+  ep   6500 | loss=-0.0265 | H=0.3558 | MCT=19.47s | SRPT=59.1%
+  ep   7000 | loss=-0.0168 | H=0.3511 | MCT=20.94s | SRPT=61.1%
+  ep   7500 | loss=-0.0194 | H=0.3851 | MCT=24.37s | SRPT=54.3%
+  ep   8000 | loss=-0.0140 | H=0.4103 | MCT=22.38s | SRPT=57.6%
+  ep   8500 | loss=-0.0043 | H=0.3699 | MCT=21.74s | SRPT=58.6%
+  ep   9000 | loss=0.0022 | H=0.3475 | MCT=21.74s | SRPT=59.9%
+  ep   9500 | loss=0.0030 | H=0.3630 | MCT=22.57s | SRPT=60.1%
+  ep  10000 | loss=0.0091 | H=0.3578 | MCT=22.04s | SRPT=56.3%
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w13_threshold/W13_B_seed42.npz
+  Seed 42: MCT=21.55±14.09s  SRPT=58.7%  Starve=52.2%  VRFI=0.326  Wall=7.0min
+
+--- W13-B seed=123 ---
+  ep    500 | loss=0.0039 | H=0.3042 | MCT=19.86s | SRPT=67.3%
+  ep   1000 | loss=-0.0166 | H=0.2976 | MCT=20.36s | SRPT=64.5%
+  ep   1500 | loss=-0.0280 | H=0.3117 | MCT=21.56s | SRPT=65.0%
+  ep   2000 | loss=-0.0442 | H=0.3430 | MCT=23.65s | SRPT=58.0%
+  ep   2500 | loss=-0.0382 | H=0.3184 | MCT=22.22s | SRPT=57.5%
+  ep   3000 | loss=-0.0458 | H=0.3382 | MCT=21.56s | SRPT=64.6%
+  ep   3500 | loss=-0.0389 | H=0.3404 | MCT=21.66s | SRPT=59.8%
+  ep   4000 | loss=-0.0489 | H=0.3933 | MCT=20.31s | SRPT=62.5%
+  ep   4500 | loss=-0.0488 | H=0.4092 | MCT=23.63s | SRPT=58.3%
+  ep   5000 | loss=-0.0446 | H=0.3898 | MCT=23.37s | SRPT=56.8%
+  ep   5500 | loss=-0.0313 | H=0.3756 | MCT=20.76s | SRPT=61.6%
+  ep   6000 | loss=-0.0368 | H=0.4254 | MCT=21.21s | SRPT=60.6%
+  ep   6500 | loss=-0.0354 | H=0.4261 | MCT=22.44s | SRPT=54.3%
+  ep   7000 | loss=-0.0272 | H=0.4026 | MCT=21.36s | SRPT=59.4%
+  ep   7500 | loss=-0.0209 | H=0.3911 | MCT=21.26s | SRPT=54.7%
+  ep   8000 | loss=-0.0147 | H=0.3925 | MCT=21.83s | SRPT=54.2%
+  ep   8500 | loss=-0.0078 | H=0.4072 | MCT=21.62s | SRPT=59.5%
+  ep   9000 | loss=-0.0055 | H=0.4083 | MCT=21.95s | SRPT=55.4%
+  ep   9500 | loss=0.0005 | H=0.3669 | MCT=23.04s | SRPT=53.7%
+  ep  10000 | loss=0.0053 | H=0.3797 | MCT=22.52s | SRPT=58.8%
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w13_threshold/W13_B_seed123.npz
+  Seed 123: MCT=22.36±14.39s  SRPT=52.8%  Starve=48.2%  VRFI=0.400  Wall=6.6min
+
+--- W13-B seed=456 ---
+  ep    500 | loss=-0.0795 | H=0.3097 | MCT=20.49s | SRPT=65.7%
+  ep   1000 | loss=-0.0717 | H=0.2824 | MCT=21.00s | SRPT=68.7%
+  ep   1500 | loss=-0.0686 | H=0.2859 | MCT=20.76s | SRPT=68.9%
+  ep   2000 | loss=-0.0689 | H=0.2960 | MCT=21.88s | SRPT=67.7%
+  ep   2500 | loss=-0.0652 | H=0.2865 | MCT=22.39s | SRPT=67.2%
+  ep   3000 | loss=-0.0512 | H=0.2437 | MCT=20.64s | SRPT=66.5%
+  ep   3500 | loss=-0.0489 | H=0.2527 | MCT=21.90s | SRPT=67.3%
+  ep   4000 | loss=-0.0528 | H=0.3124 | MCT=23.94s | SRPT=63.3%
+  ep   4500 | loss=-0.0609 | H=0.3842 | MCT=21.32s | SRPT=65.6%
+  ep   5000 | loss=-0.0579 | H=0.3770 | MCT=19.66s | SRPT=62.4%
+  ep   5500 | loss=-0.0521 | H=0.3747 | MCT=21.38s | SRPT=54.6%
+  ep   6000 | loss=-0.0526 | H=0.4301 | MCT=22.02s | SRPT=56.3%
+  ep   6500 | loss=-0.0478 | H=0.4363 | MCT=23.34s | SRPT=55.1%
+  ep   7000 | loss=-0.0336 | H=0.3706 | MCT=21.86s | SRPT=55.6%
+  ep   7500 | loss=-0.0344 | H=0.4301 | MCT=21.47s | SRPT=56.7%
+  ep   8000 | loss=-0.0275 | H=0.4218 | MCT=21.07s | SRPT=58.3%
+  ep   8500 | loss=-0.0122 | H=0.3388 | MCT=23.51s | SRPT=64.1%
+  ep   9000 | loss=-0.0030 | H=0.2439 | MCT=22.55s | SRPT=64.8%
+  ep   9500 | loss=0.0000 | H=0.1926 | MCT=20.42s | SRPT=76.4%
+  ep  10000 | loss=0.0010 | H=0.2170 | MCT=22.04s | SRPT=68.3%
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w13_threshold/W13_B_seed456.npz
+  Seed 456: MCT=21.07±13.26s  SRPT=65.4%  Starve=52.6%  VRFI=0.244  Wall=4.8min
+
+====================================================================
+VARIANT: W13-C  THRESHOLD=100.0s  PENALTY=2.0
+====================================================================
+
+--- W13-C seed=42 ---
+  ep    500 | loss=-0.0429 | H=0.3244 | MCT=20.54s | SRPT=65.4%
+  ep   1000 | loss=-0.0361 | H=0.2909 | MCT=20.87s | SRPT=61.6%
+  ep   1500 | loss=-0.0403 | H=0.3179 | MCT=21.84s | SRPT=62.8%
+  ep   2000 | loss=-0.0260 | H=0.2812 | MCT=21.36s | SRPT=63.5%
+  ep   2500 | loss=-0.0292 | H=0.2673 | MCT=22.27s | SRPT=61.3%
+  ep   3000 | loss=-0.0383 | H=0.2983 | MCT=19.80s | SRPT=59.9%
+  ep   3500 | loss=-0.0450 | H=0.3230 | MCT=20.95s | SRPT=59.5%
+  ep   4000 | loss=-0.0428 | H=0.3302 | MCT=19.73s | SRPT=63.5%
+  ep   4500 | loss=-0.0334 | H=0.2985 | MCT=20.49s | SRPT=64.8%
+  ep   5000 | loss=-0.0358 | H=0.3338 | MCT=24.17s | SRPT=57.7%
+  ep   5500 | loss=-0.0283 | H=0.3214 | MCT=21.71s | SRPT=59.9%
+  ep   6000 | loss=-0.0234 | H=0.3304 | MCT=22.62s | SRPT=60.7%
+  ep   6500 | loss=-0.0267 | H=0.3965 | MCT=20.21s | SRPT=58.9%
+  ep   7000 | loss=-0.0227 | H=0.4314 | MCT=21.32s | SRPT=60.8%
+  ep   7500 | loss=-0.0216 | H=0.4437 | MCT=24.73s | SRPT=49.5%
+  ep   8000 | loss=-0.0130 | H=0.4552 | MCT=22.44s | SRPT=50.7%
+  ep   8500 | loss=-0.0085 | H=0.4753 | MCT=21.70s | SRPT=53.0%
+  ep   9000 | loss=-0.0026 | H=0.4960 | MCT=22.25s | SRPT=48.8%
+  ep   9500 | loss=0.0039 | H=0.4832 | MCT=23.35s | SRPT=53.6%
+  ep  10000 | loss=0.0129 | H=0.4175 | MCT=22.14s | SRPT=51.2%
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w13_threshold/W13_C_seed42.npz
+  Seed 42: MCT=21.45±14.07s  SRPT=55.4%  Starve=47.2%  VRFI=0.438  Wall=44.9min
+
+--- W13-C seed=123 ---
+  ep    500 | loss=-0.0064 | H=0.3100 | MCT=19.69s | SRPT=66.2%
+  ep   1000 | loss=0.0040 | H=0.3089 | MCT=21.04s | SRPT=61.9%
+  ep   1500 | loss=-0.0059 | H=0.2996 | MCT=22.08s | SRPT=62.1%
+  ep   2000 | loss=-0.0210 | H=0.3199 | MCT=23.16s | SRPT=57.4%
+  ep   2500 | loss=-0.0194 | H=0.3307 | MCT=22.52s | SRPT=57.0%
+  ep   3000 | loss=-0.0227 | H=0.3434 | MCT=21.64s | SRPT=60.9%
+  ep   3500 | loss=-0.0295 | H=0.3578 | MCT=21.95s | SRPT=55.4%
+  ep   4000 | loss=-0.0326 | H=0.3895 | MCT=19.88s | SRPT=61.8%
+  ep   4500 | loss=-0.0306 | H=0.4058 | MCT=22.98s | SRPT=53.0%
+  ep   5000 | loss=-0.0279 | H=0.4000 | MCT=22.99s | SRPT=54.3%
+  ep   5500 | loss=-0.0177 | H=0.3857 | MCT=20.76s | SRPT=58.6%
+  ep   6000 | loss=-0.0154 | H=0.4185 | MCT=20.96s | SRPT=56.2%
+  ep   6500 | loss=-0.0163 | H=0.4054 | MCT=22.29s | SRPT=53.6%
+  ep   7000 | loss=-0.0104 | H=0.4298 | MCT=21.36s | SRPT=57.4%
+  ep   7500 | loss=-0.0026 | H=0.3826 | MCT=21.12s | SRPT=53.7%
+  ep   8000 | loss=0.0066 | H=0.4037 | MCT=21.30s | SRPT=57.7%
+  ep   8500 | loss=0.0139 | H=0.3793 | MCT=21.65s | SRPT=57.4%
+  ep   9000 | loss=0.0175 | H=0.4067 | MCT=21.58s | SRPT=54.5%
+  ep   9500 | loss=0.0228 | H=0.3875 | MCT=23.61s | SRPT=55.4%
+  ep  10000 | loss=0.0273 | H=0.3471 | MCT=21.42s | SRPT=58.4%
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w13_threshold/W13_C_seed123.npz
+  Seed 123: MCT=21.08±12.53s  SRPT=55.8%  Starve=46.6%  VRFI=0.363  Wall=6.2min
+
+--- W13-C seed=456 ---
+  ep    500 | loss=-0.0836 | H=0.3171 | MCT=19.86s | SRPT=66.8%
+  ep   1000 | loss=-0.0719 | H=0.2721 | MCT=21.54s | SRPT=67.9%
+  ep   1500 | loss=-0.0681 | H=0.2658 | MCT=20.87s | SRPT=66.4%
+  ep   2000 | loss=-0.0603 | H=0.2491 | MCT=22.62s | SRPT=68.9%
+  ep   2500 | loss=-0.0527 | H=0.2316 | MCT=22.70s | SRPT=68.2%
+  ep   3000 | loss=-0.0623 | H=0.2924 | MCT=20.66s | SRPT=68.3%
+  ep   3500 | loss=-0.0644 | H=0.3250 | MCT=21.61s | SRPT=68.7%
+  ep   4000 | loss=-0.0569 | H=0.3102 | MCT=23.28s | SRPT=62.3%
+  ep   4500 | loss=-0.0638 | H=0.3780 | MCT=21.70s | SRPT=62.2%
+  ep   5000 | loss=-0.0558 | H=0.3627 | MCT=20.22s | SRPT=62.9%
+  ep   5500 | loss=-0.0513 | H=0.3688 | MCT=21.07s | SRPT=60.3%
+  ep   6000 | loss=-0.0413 | H=0.3316 | MCT=22.08s | SRPT=61.6%
+  ep   6500 | loss=-0.0373 | H=0.3403 | MCT=23.80s | SRPT=63.9%
+  ep   7000 | loss=-0.0273 | H=0.2874 | MCT=21.38s | SRPT=63.2%
+  ep   7500 | loss=-0.0316 | H=0.3938 | MCT=22.30s | SRPT=56.6%
+  ep   8000 | loss=-0.0259 | H=0.3966 | MCT=21.23s | SRPT=59.1%
+  ep   8500 | loss=-0.0199 | H=0.3931 | MCT=23.01s | SRPT=57.9%
+  ep   9000 | loss=-0.0140 | H=0.3892 | MCT=21.86s | SRPT=57.2%
+  ep   9500 | loss=-0.0087 | H=0.4076 | MCT=19.76s | SRPT=61.0%
+  ep  10000 | loss=-0.0030 | H=0.4653 | MCT=22.39s | SRPT=50.0%
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w13_threshold/W13_C_seed456.npz
+  Seed 456: MCT=21.36±13.56s  SRPT=52.6%  Starve=53.8%  VRFI=0.329  Wall=5.6min
+
+
+====================================================================
+CROSS-SEED SUMMARY (mean±std over 3 seeds)
+====================================================================
+
+Variant           T     P     MCT mean±std   Starve%   SRPT%    VRFI
+-----------------------------------------------------------------
+W13-A           50s  0.5   21.32±0.14  s     46.7%   56.3%   0.370
+W13-B           50s  2.0   21.66±0.53  s     51.0%   59.0%   0.323
+W13-C          100s  2.0   21.30±0.16  s     49.2%   54.6%   0.377
+
+Running MLFQ benchmark (N=500, seed=999) ...
+  MLFQ: MCT=21.59s  Starve=36.0%  VRFI=0.419  SRPT=58.1%
+
+
+====================================================================
+FULL COMPARISON vs MLFQ (best-seed per variant, N=500 eval)
+====================================================================
+
+Policy                      MCT   Starve%    VRFI   SRPT%
+--------------------------------------------------------
+MLFQ                     21.59s     36.0%   0.419   58.1%  ← baseline
+W12 (λ=0.01)             21.18s     53.2%   0.267   57.0%  MCT:✓ Starve:✗
+W13-A                    21.11s     45.2%   0.410   52.5%  MCT:✓ Starve:✗
+W13-B                    21.54s     56.0%   0.216   65.3%  MCT:✓ Starve:✗
+W13-C                    20.82s     47.8%   0.349   55.0%  MCT:✓ Starve:✗
+
+--- MCT vs variant (lower is better) ---
+  W12 (λ=0.01)       ███████████████████                      21.18s
+  W13-A              █████████████████                        21.11s
+  W13-B              ███████████████████████████              21.54s
+  W13-C              ███████████                              20.82s
+  MLFQ               ░░░░░░░░░░░░░░░░░░░░░░░░░░░░             21.59s  ← threshold
+
+--- Starvation% vs variant (lower is better) ---
+  W12 (λ=0.01)       ███████████████████████████████████      53.2% ← above MLFQ
+  W13-A              ██████████████████████████████           45.2% ← above MLFQ
+  W13-B              █████████████████████████████████████    56.0% ← above MLFQ
+  W13-C              ███████████████████████████████          47.8% ← above MLFQ
+  MLFQ               ░░░░░░░░░░░░░░░░░░░░░░░░                 36.0%  ← threshold
+
+
+====================================================================
+VERDICT
+====================================================================
+
+No variant beats MLFQ on both metrics simultaneously.
+Best trade-off: W13-A (T=50.0s, P=0.5): MCT=21.11s, Starve=45.2%
+  Recommendation: use W13-A and document starvation gap in paper.
+
+Results saved → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w13_threshold/w13_threshold_results.json

@@ -1,0 +1,64 @@
+Device: cpu
+  TraceEpisodeSampler5: 1,981,175 tasks loaded.
+Traceback (most recent call last):
+  File "/Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/scripts/w15_variable_n_train.py", line 935, in <module>
+    main()
+    ~~~~^^
+  File "/Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/scripts/w15_variable_n_train.py", line 846, in main
+    w15_fixed = eval_fixed_n5_w15(best_agent, test_sampler, OMEGA_EVAL, N_EVAL_FIXED, SEEDS[0])
+  File "/Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/scripts/w15_variable_n_train.py", line 466, in eval_fixed_n5_w15
+    sv   = encode_state_w15_fixed(env, tasks)
+  File "/Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/scripts/w15_variable_n_train.py", line 186, in encode_state_w15_fixed
+    vec[off + 4] = _norm_cpu(p.plan_cpu)
+                             ^^^^^^^^^^
+AttributeError: 'Process' object has no attribute 'plan_cpu'
+================================================
+  ep   1000 | λ=0.046 | ω=0.06 | loss=4.2223 | H=1.5161 | MCT=21.77s | Starv=100.0% | MeanQ=2.09 | grad_ratio=1.00 | 13.9min
+  [ckpt] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w15_variable_n/w15_seed123_ep1000.pt
+  ep   2000 | λ=0.046 | ω=0.64 | loss=4.2169 | H=1.5327 | MCT=22.53s | Starv=100.0% | MeanQ=2.12 | grad_ratio=1.00 | 30.5min
+  [ckpt] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w15_variable_n/w15_seed123_ep2000.pt
+  ep   3000 | λ=0.044 | ω=0.50 | loss=4.0347 | H=1.4896 | MCT=20.24s | Starv=100.0% | MeanQ=1.93 | grad_ratio=1.00 | 47.9min
+  [ckpt] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w15_variable_n/w15_seed123_ep3000.pt
+  ep   4000 | λ=0.047 | ω=0.26 | loss=4.5778 | H=1.5260 | MCT=21.31s | Starv=100.0% | MeanQ=2.03 | grad_ratio=1.00 | 66.8min
+  [ckpt] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w15_variable_n/w15_seed123_ep4000.pt
+  ep   5000 | λ=0.042 | ω=0.26 | loss=4.5203 | H=1.4936 | MCT=21.00s | Starv=100.0% | MeanQ=2.00 | grad_ratio=1.00 | 83.2min
+  [ckpt] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w15_variable_n/w15_seed123_ep5000.pt
+  ep   6000 | λ=0.043 | ω=0.07 | loss=4.3684 | H=1.4841 | MCT=20.63s | Starv=100.0% | MeanQ=1.95 | grad_ratio=1.00 | 100.8min
+  [ckpt] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w15_variable_n/w15_seed123_ep6000.pt
+  ep   7000 | λ=0.044 | ω=0.88 | loss=4.0873 | H=1.5108 | MCT=20.19s | Starv=100.0% | MeanQ=1.93 | grad_ratio=1.00 | 120.9min
+  [ckpt] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w15_variable_n/w15_seed123_ep7000.pt
+  ep   8000 | λ=0.047 | ω=0.95 | loss=3.7403 | H=1.5404 | MCT=21.30s | Starv=100.0% | MeanQ=2.03 | grad_ratio=1.00 | 140.7min
+  [ckpt] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w15_variable_n/w15_seed123_ep8000.pt
+  ep   9000 | λ=0.045 | ω=0.90 | loss=3.7404 | H=1.5100 | MCT=20.40s | Starv=100.0% | MeanQ=1.94 | grad_ratio=1.00 | 227.3min
+  [ckpt] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w15_variable_n/w15_seed123_ep9000.pt
+  ep  10000 | λ=0.045 | ω=0.82 | loss=3.6125 | H=1.5055 | MCT=20.35s | Starv=100.0% | MeanQ=1.95 | grad_ratio=1.00 | 248.5min
+  [ckpt] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w15_variable_n/w15_seed123_ep10000.pt
+  ep  11000 | λ=0.046 | ω=0.79 | loss=3.3515 | H=1.5277 | MCT=20.72s | Starv=100.0% | MeanQ=1.98 | grad_ratio=1.00 | 272.3min
+  [ckpt] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w15_variable_n/w15_seed123_ep11000.pt
+  ep  12000 | λ=0.046 | ω=0.95 | loss=3.2675 | H=1.5118 | MCT=20.79s | Starv=100.0% | MeanQ=2.01 | grad_ratio=1.00 | 298.8min
+  [ckpt] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w15_variable_n/w15_seed123_ep12000.pt
+  ep  13000 | λ=0.042 | ω=0.99 | loss=3.1741 | H=1.4909 | MCT=19.64s | Starv=100.0% | MeanQ=1.88 | grad_ratio=1.00 | 327.2min
+  [ckpt] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w15_variable_n/w15_seed123_ep13000.pt
+  ep  14000 | λ=0.041 | ω=0.06 | loss=3.0117 | H=1.4952 | MCT=20.25s | Starv=100.0% | MeanQ=1.96 | grad_ratio=1.00 | 493.5min
+  [ckpt] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w15_variable_n/w15_seed123_ep14000.pt
+  ep  15000 | λ=0.047 | ω=0.07 | loss=2.5382 | H=1.5470 | MCT=22.17s | Starv=100.0% | MeanQ=2.12 | grad_ratio=1.00 | 969.1min
+  [ckpt] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w15_variable_n/w15_seed123_ep15000.pt
+  ep  16000 | λ=0.040 | ω=0.95 | loss=2.5808 | H=1.4854 | MCT=20.81s | Starv=100.0% | MeanQ=2.00 | grad_ratio=1.00 | 1079.2min
+  [ckpt] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w15_variable_n/w15_seed123_ep16000.pt
+  ep  17000 | λ=0.044 | ω=0.38 | loss=2.2422 | H=1.5278 | MCT=21.05s | Starv=100.0% | MeanQ=2.05 | grad_ratio=1.00 | 1166.4min
+  [ckpt] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w15_variable_n/w15_seed123_ep17000.pt
+  ep  18000 | λ=0.047 | ω=0.44 | loss=1.9158 | H=1.5707 | MCT=22.19s | Starv=100.0% | MeanQ=2.17 | grad_ratio=1.00 | 1301.8min
+  [ckpt] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w15_variable_n/w15_seed123_ep18000.pt
+  ep  19000 | λ=0.043 | ω=0.39 | loss=1.8539 | H=1.5245 | MCT=20.89s | Starv=100.0% | MeanQ=2.08 | grad_ratio=1.00 | 1357.8min
+  [ckpt] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w15_variable_n/w15_seed123_ep19000.pt
+  ep  20000 | λ=0.048 | ω=0.29 | loss=1.4841 | H=1.5775 | MCT=21.76s | Starv=100.0% | MeanQ=2.16 | grad_ratio=1.00 | 1436.0min
+  [ckpt] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w15_variable_n/w15_seed123_ep20000.pt
+  [final] → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w15_variable_n/w15_seed123_final.pt
+  Seed 123 done. (1436.0 min)
+
+========================================================================
+ALL SEEDS COMPLETE. Starting evaluation...
+========================================================================
+
+--- EVAL 1: Fixed N=5 (N_EVAL=200, omega=0.7) ---
+  W15 (omega=0.7)...

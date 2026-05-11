@@ -1,0 +1,489 @@
+================================================================
+Ablation Multi-Seed Experiment  (W11 / W11b / W11c / W11d / W12)
+Seeds: [42, 123, 456]    N_episodes: 10000    N_eval: 500
+================================================================
+
+Loading TRAIN trace: /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/data/alibaba2018/trace_train_filtered.csv
+  TraceEpisodeSampler5: 7,925,241 tasks loaded.
+Loading TEST trace:  /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/data/alibaba2018/trace_test_filtered.csv
+  TraceEpisodeSampler5: 1,981,175 tasks loaded.
+
+
+================================================================
+AGENT: W11
+================================================================
+  D_CAND=7  arrived_flag_idx=6  reward=composite  W_CT=0.2
+
+--- W11 seed=42 ---
+  ep    500 | avg_loss=-0.0366 | avg_H=0.3187 | avg_MCT=19.73s | SRPT=66.1% | lam=0.28525
+  ep   1000 | avg_loss=-0.0424 | avg_H=0.3092 | avg_MCT=20.64s | SRPT=60.5% | lam=0.27050
+  ep   1500 | avg_loss=-0.0525 | avg_H=0.3755 | avg_MCT=22.10s | SRPT=58.8% | lam=0.25575
+  ep   2000 | avg_loss=-0.0563 | avg_H=0.3783 | avg_MCT=22.12s | SRPT=58.0% | lam=0.24100
+  ep   2500 | avg_loss=-0.0605 | avg_H=0.3889 | avg_MCT=21.60s | SRPT=59.6% | lam=0.22625
+  ep   3000 | avg_loss=-0.0639 | avg_H=0.4117 | avg_MCT=20.09s | SRPT=52.4% | lam=0.21150
+  ep   3500 | avg_loss=-0.0721 | avg_H=0.4695 | avg_MCT=20.09s | SRPT=51.6% | lam=0.19675
+  ep   4000 | avg_loss=-0.0591 | avg_H=0.4118 | avg_MCT=20.35s | SRPT=55.9% | lam=0.18200
+  ep   4500 | avg_loss=-0.0582 | avg_H=0.4362 | avg_MCT=20.84s | SRPT=54.8% | lam=0.16725
+  ep   5000 | avg_loss=-0.0549 | avg_H=0.4564 | avg_MCT=23.98s | SRPT=50.0% | lam=0.15250
+  ep   5500 | avg_loss=-0.0496 | avg_H=0.4409 | avg_MCT=21.75s | SRPT=52.8% | lam=0.13775
+  ep   6000 | avg_loss=-0.0423 | avg_H=0.4056 | avg_MCT=22.14s | SRPT=55.5% | lam=0.12300
+  ep   6500 | avg_loss=-0.0383 | avg_H=0.4333 | avg_MCT=20.59s | SRPT=50.6% | lam=0.10825
+  ep   7000 | avg_loss=-0.0364 | avg_H=0.4659 | avg_MCT=20.87s | SRPT=53.0% | lam=0.09350
+  ep   7500 | avg_loss=-0.0311 | avg_H=0.4586 | avg_MCT=24.27s | SRPT=51.8% | lam=0.07875
+  ep   8000 | avg_loss=-0.0202 | avg_H=0.3948 | avg_MCT=21.83s | SRPT=51.8% | lam=0.06400
+  ep   8500 | avg_loss=-0.0160 | avg_H=0.4099 | avg_MCT=21.45s | SRPT=55.0% | lam=0.04925
+  ep   9000 | avg_loss=-0.0099 | avg_H=0.4228 | avg_MCT=22.00s | SRPT=53.7% | lam=0.03450
+  ep   9500 | avg_loss=-0.0064 | avg_H=0.4978 | avg_MCT=22.29s | SRPT=53.9% | lam=0.01975
+  ep  10000 | avg_loss=0.0015 | avg_H=0.4401 | avg_MCT=21.88s | SRPT=50.2% | lam=0.00500
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/results/w11_seed42.npz
+  Evaluating W11 seed=42 (N=500 test episodes, epsilon=0)...
+  Seed 42: MCT=21.09±13.80s  SRPT=50.3%  Starve=31.0%  Wall=6.0min
+
+--- W11 seed=123 ---
+  ep    500 | avg_loss=0.0053 | avg_H=0.3031 | avg_MCT=19.47s | SRPT=66.5% | lam=0.28525
+  ep   1000 | avg_loss=-0.0242 | avg_H=0.3231 | avg_MCT=21.45s | SRPT=61.7% | lam=0.27050
+  ep   1500 | avg_loss=-0.0181 | avg_H=0.3219 | avg_MCT=22.80s | SRPT=59.6% | lam=0.25575
+  ep   2000 | avg_loss=-0.0207 | avg_H=0.3344 | avg_MCT=23.14s | SRPT=60.8% | lam=0.24100
+  ep   2500 | avg_loss=-0.0103 | avg_H=0.3004 | avg_MCT=21.81s | SRPT=63.1% | lam=0.22625
+  ep   3000 | avg_loss=-0.0125 | avg_H=0.3059 | avg_MCT=22.26s | SRPT=61.9% | lam=0.21150
+  ep   3500 | avg_loss=-0.0301 | avg_H=0.3416 | avg_MCT=21.62s | SRPT=60.3% | lam=0.19675
+  ep   4000 | avg_loss=-0.0403 | avg_H=0.4127 | avg_MCT=20.21s | SRPT=60.1% | lam=0.18200
+  ep   4500 | avg_loss=-0.0424 | avg_H=0.4411 | avg_MCT=23.13s | SRPT=56.5% | lam=0.16725
+  ep   5000 | avg_loss=-0.0425 | avg_H=0.4393 | avg_MCT=22.84s | SRPT=53.7% | lam=0.15250
+  ep   5500 | avg_loss=-0.0310 | avg_H=0.3996 | avg_MCT=20.57s | SRPT=56.5% | lam=0.13775
+  ep   6000 | avg_loss=-0.0409 | avg_H=0.4707 | avg_MCT=21.89s | SRPT=51.1% | lam=0.12300
+  ep   6500 | avg_loss=-0.0339 | avg_H=0.4454 | avg_MCT=22.36s | SRPT=48.0% | lam=0.10825
+  ep   7000 | avg_loss=-0.0256 | avg_H=0.4434 | avg_MCT=21.48s | SRPT=52.9% | lam=0.09350
+  ep   7500 | avg_loss=-0.0243 | avg_H=0.4588 | avg_MCT=21.89s | SRPT=48.6% | lam=0.07875
+  ep   8000 | avg_loss=-0.0134 | avg_H=0.4249 | avg_MCT=21.27s | SRPT=54.0% | lam=0.06400
+  ep   8500 | avg_loss=-0.0123 | avg_H=0.4759 | avg_MCT=22.26s | SRPT=48.6% | lam=0.04925
+  ep   9000 | avg_loss=-0.0041 | avg_H=0.4983 | avg_MCT=20.77s | SRPT=52.0% | lam=0.03450
+  ep   9500 | avg_loss=0.0002 | avg_H=0.4432 | avg_MCT=23.31s | SRPT=45.2% | lam=0.01975
+  ep  10000 | avg_loss=0.0064 | avg_H=0.4487 | avg_MCT=21.77s | SRPT=52.9% | lam=0.00500
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/results/w11_seed123.npz
+  Evaluating W11 seed=123 (N=500 test episodes, epsilon=0)...
+  Seed 123: MCT=21.92±14.31s  SRPT=51.2%  Starve=42.8%  Wall=6.0min
+
+--- W11 seed=456 ---
+  ep    500 | avg_loss=-0.0846 | avg_H=0.3143 | avg_MCT=20.00s | SRPT=65.6% | lam=0.28525
+  ep   1000 | avg_loss=-0.0851 | avg_H=0.3205 | avg_MCT=21.14s | SRPT=63.9% | lam=0.27050
+  ep   1500 | avg_loss=-0.0952 | avg_H=0.3756 | avg_MCT=20.19s | SRPT=63.1% | lam=0.25575
+  ep   2000 | avg_loss=-0.0914 | avg_H=0.3817 | avg_MCT=21.82s | SRPT=61.6% | lam=0.24100
+  ep   2500 | avg_loss=-0.0927 | avg_H=0.4108 | avg_MCT=21.99s | SRPT=57.7% | lam=0.22625
+  ep   3000 | avg_loss=-0.0998 | avg_H=0.4729 | avg_MCT=20.38s | SRPT=56.9% | lam=0.21150
+  ep   3500 | avg_loss=-0.1009 | avg_H=0.5138 | avg_MCT=20.90s | SRPT=56.1% | lam=0.19675
+  ep   4000 | avg_loss=-0.0873 | avg_H=0.4808 | avg_MCT=21.72s | SRPT=62.1% | lam=0.18200
+  ep   4500 | avg_loss=-0.0875 | avg_H=0.5236 | avg_MCT=21.21s | SRPT=55.6% | lam=0.16725
+  ep   5000 | avg_loss=-0.0735 | avg_H=0.4831 | avg_MCT=19.23s | SRPT=57.8% | lam=0.15250
+  ep   5500 | avg_loss=-0.0664 | avg_H=0.4831 | avg_MCT=19.66s | SRPT=56.9% | lam=0.13775
+  ep   6000 | avg_loss=-0.0560 | avg_H=0.4584 | avg_MCT=20.81s | SRPT=59.6% | lam=0.12300
+  ep   6500 | avg_loss=-0.0576 | avg_H=0.5352 | avg_MCT=23.14s | SRPT=56.1% | lam=0.10825
+  ep   7000 | avg_loss=-0.0426 | avg_H=0.4616 | avg_MCT=21.59s | SRPT=58.5% | lam=0.09350
+  ep   7500 | avg_loss=-0.0367 | avg_H=0.4727 | avg_MCT=20.85s | SRPT=61.5% | lam=0.07875
+  ep   8000 | avg_loss=-0.0246 | avg_H=0.3965 | avg_MCT=20.54s | SRPT=59.9% | lam=0.06400
+  ep   8500 | avg_loss=-0.0205 | avg_H=0.4285 | avg_MCT=22.62s | SRPT=64.3% | lam=0.04925
+  ep   9000 | avg_loss=-0.0118 | avg_H=0.3751 | avg_MCT=20.99s | SRPT=63.1% | lam=0.03450
+  ep   9500 | avg_loss=-0.0063 | avg_H=0.3722 | avg_MCT=20.72s | SRPT=62.3% | lam=0.01975
+  ep  10000 | avg_loss=-0.0013 | avg_H=0.4140 | avg_MCT=21.53s | SRPT=61.1% | lam=0.00500
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/results/w11_seed456.npz
+  Evaluating W11 seed=456 (N=500 test episodes, epsilon=0)...
+  Seed 456: MCT=20.15±12.43s  SRPT=62.5%  Starve=34.6%  Wall=3.9min
+
+================================================================
+AGENT: W11b
+================================================================
+  D_CAND=7  arrived_flag_idx=6  reward=composite  W_CT=0.6
+
+--- W11b seed=42 ---
+  ep    500 | avg_loss=-0.0200 | avg_H=0.3288 | avg_MCT=20.57s | SRPT=62.5% | lam=0.28525
+  ep   1000 | avg_loss=-0.0317 | avg_H=0.3253 | avg_MCT=20.40s | SRPT=58.7% | lam=0.27050
+  ep   1500 | avg_loss=-0.0458 | avg_H=0.3753 | avg_MCT=22.74s | SRPT=59.3% | lam=0.25575
+  ep   2000 | avg_loss=-0.0452 | avg_H=0.3587 | avg_MCT=22.00s | SRPT=55.7% | lam=0.24100
+  ep   2500 | avg_loss=-0.0557 | avg_H=0.3870 | avg_MCT=21.78s | SRPT=62.4% | lam=0.22625
+  ep   3000 | avg_loss=-0.0526 | avg_H=0.3814 | avg_MCT=19.16s | SRPT=55.4% | lam=0.21150
+  ep   3500 | avg_loss=-0.0550 | avg_H=0.4063 | avg_MCT=20.64s | SRPT=53.1% | lam=0.19675
+  ep   4000 | avg_loss=-0.0577 | avg_H=0.4341 | avg_MCT=20.27s | SRPT=52.6% | lam=0.18200
+  ep   4500 | avg_loss=-0.0525 | avg_H=0.4250 | avg_MCT=20.57s | SRPT=55.3% | lam=0.16725
+  ep   5000 | avg_loss=-0.0536 | avg_H=0.4471 | avg_MCT=24.33s | SRPT=50.1% | lam=0.15250
+  ep   5500 | avg_loss=-0.0486 | avg_H=0.4309 | avg_MCT=21.58s | SRPT=53.6% | lam=0.13775
+  ep   6000 | avg_loss=-0.0495 | avg_H=0.4757 | avg_MCT=23.28s | SRPT=51.0% | lam=0.12300
+  ep   6500 | avg_loss=-0.0446 | avg_H=0.4789 | avg_MCT=21.32s | SRPT=48.3% | lam=0.10825
+  ep   7000 | avg_loss=-0.0396 | avg_H=0.4940 | avg_MCT=20.97s | SRPT=52.9% | lam=0.09350
+  ep   7500 | avg_loss=-0.0311 | avg_H=0.4684 | avg_MCT=25.09s | SRPT=50.5% | lam=0.07875
+  ep   8000 | avg_loss=-0.0249 | avg_H=0.4692 | avg_MCT=22.62s | SRPT=53.1% | lam=0.06400
+  ep   8500 | avg_loss=-0.0192 | avg_H=0.4876 | avg_MCT=22.27s | SRPT=53.1% | lam=0.04925
+  ep   9000 | avg_loss=-0.0116 | avg_H=0.4752 | avg_MCT=21.54s | SRPT=54.7% | lam=0.03450
+  ep   9500 | avg_loss=-0.0053 | avg_H=0.4787 | avg_MCT=21.95s | SRPT=55.8% | lam=0.01975
+  ep  10000 | avg_loss=0.0023 | avg_H=0.4223 | avg_MCT=21.69s | SRPT=54.2% | lam=0.00500
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/results/w11b_seed42.npz
+  Evaluating W11b seed=42 (N=500 test episodes, epsilon=0)...
+  Seed 42: MCT=21.37±14.09s  SRPT=52.8%  Starve=34.8%  Wall=6.5min
+
+--- W11b seed=123 ---
+  ep    500 | avg_loss=0.0575 | avg_H=0.2946 | avg_MCT=19.82s | SRPT=65.9% | lam=0.28525
+  ep   1000 | avg_loss=0.0345 | avg_H=0.3195 | avg_MCT=21.00s | SRPT=61.1% | lam=0.27050
+  ep   1500 | avg_loss=0.0227 | avg_H=0.3434 | avg_MCT=21.92s | SRPT=59.4% | lam=0.25575
+  ep   2000 | avg_loss=0.0008 | avg_H=0.3785 | avg_MCT=24.24s | SRPT=53.5% | lam=0.24100
+  ep   2500 | avg_loss=-0.0000 | avg_H=0.3704 | avg_MCT=22.22s | SRPT=56.9% | lam=0.22625
+  ep   3000 | avg_loss=-0.0069 | avg_H=0.3734 | avg_MCT=21.49s | SRPT=62.2% | lam=0.21150
+  ep   3500 | avg_loss=-0.0119 | avg_H=0.3482 | avg_MCT=21.17s | SRPT=58.4% | lam=0.19675
+  ep   4000 | avg_loss=-0.0285 | avg_H=0.3819 | avg_MCT=20.17s | SRPT=57.1% | lam=0.18200
+  ep   4500 | avg_loss=-0.0270 | avg_H=0.4444 | avg_MCT=23.51s | SRPT=55.0% | lam=0.16725
+  ep   5000 | avg_loss=-0.0218 | avg_H=0.4015 | avg_MCT=22.83s | SRPT=55.8% | lam=0.15250
+  ep   5500 | avg_loss=-0.0200 | avg_H=0.3886 | avg_MCT=21.10s | SRPT=56.2% | lam=0.13775
+  ep   6000 | avg_loss=-0.0290 | avg_H=0.4521 | avg_MCT=21.54s | SRPT=57.4% | lam=0.12300
+  ep   6500 | avg_loss=-0.0216 | avg_H=0.4258 | avg_MCT=23.06s | SRPT=53.9% | lam=0.10825
+  ep   7000 | avg_loss=-0.0173 | avg_H=0.4139 | avg_MCT=21.91s | SRPT=54.7% | lam=0.09350
+  ep   7500 | avg_loss=-0.0116 | avg_H=0.4396 | avg_MCT=21.85s | SRPT=49.5% | lam=0.07875
+  ep   8000 | avg_loss=-0.0017 | avg_H=0.4248 | avg_MCT=21.58s | SRPT=54.2% | lam=0.06400
+  ep   8500 | avg_loss=-0.0032 | avg_H=0.4356 | avg_MCT=21.81s | SRPT=52.6% | lam=0.04925
+  ep   9000 | avg_loss=0.0060 | avg_H=0.4780 | avg_MCT=21.30s | SRPT=53.9% | lam=0.03450
+  ep   9500 | avg_loss=0.0090 | avg_H=0.4206 | avg_MCT=23.57s | SRPT=51.2% | lam=0.01975
+  ep  10000 | avg_loss=0.0111 | avg_H=0.4439 | avg_MCT=21.65s | SRPT=51.6% | lam=0.00500
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/results/w11b_seed123.npz
+  Evaluating W11b seed=123 (N=500 test episodes, epsilon=0)...
+  Seed 123: MCT=21.82±14.12s  SRPT=50.8%  Starve=42.2%  Wall=6.7min
+
+--- W11b seed=456 ---
+  ep    500 | avg_loss=-0.0767 | avg_H=0.3076 | avg_MCT=20.48s | SRPT=64.0% | lam=0.28525
+  ep   1000 | avg_loss=-0.0838 | avg_H=0.3315 | avg_MCT=21.47s | SRPT=60.5% | lam=0.27050
+  ep   1500 | avg_loss=-0.0806 | avg_H=0.3334 | avg_MCT=20.21s | SRPT=64.6% | lam=0.25575
+  ep   2000 | avg_loss=-0.0801 | avg_H=0.3500 | avg_MCT=21.43s | SRPT=62.1% | lam=0.24100
+  ep   2500 | avg_loss=-0.0804 | avg_H=0.3707 | avg_MCT=22.51s | SRPT=62.0% | lam=0.22625
+  ep   3000 | avg_loss=-0.0745 | avg_H=0.3645 | avg_MCT=20.22s | SRPT=64.1% | lam=0.21150
+  ep   3500 | avg_loss=-0.0766 | avg_H=0.4028 | avg_MCT=20.32s | SRPT=59.8% | lam=0.19675
+  ep   4000 | avg_loss=-0.0749 | avg_H=0.4277 | avg_MCT=22.40s | SRPT=55.6% | lam=0.18200
+  ep   4500 | avg_loss=-0.0741 | avg_H=0.4592 | avg_MCT=21.56s | SRPT=53.7% | lam=0.16725
+  ep   5000 | avg_loss=-0.0649 | avg_H=0.4407 | avg_MCT=19.49s | SRPT=57.3% | lam=0.15250
+  ep   5500 | avg_loss=-0.0567 | avg_H=0.4278 | avg_MCT=20.33s | SRPT=57.6% | lam=0.13775
+  ep   6000 | avg_loss=-0.0485 | avg_H=0.4176 | avg_MCT=21.51s | SRPT=60.5% | lam=0.12300
+  ep   6500 | avg_loss=-0.0527 | avg_H=0.5110 | avg_MCT=22.91s | SRPT=57.6% | lam=0.10825
+  ep   7000 | avg_loss=-0.0347 | avg_H=0.3919 | avg_MCT=21.11s | SRPT=57.5% | lam=0.09350
+  ep   7500 | avg_loss=-0.0316 | avg_H=0.4366 | avg_MCT=19.98s | SRPT=58.8% | lam=0.07875
+  ep   8000 | avg_loss=-0.0286 | avg_H=0.4929 | avg_MCT=20.72s | SRPT=53.5% | lam=0.06400
+  ep   8500 | avg_loss=-0.0197 | avg_H=0.4553 | avg_MCT=22.11s | SRPT=60.2% | lam=0.04925
+  ep   9000 | avg_loss=-0.0117 | avg_H=0.4305 | avg_MCT=21.69s | SRPT=56.1% | lam=0.03450
+  ep   9500 | avg_loss=-0.0054 | avg_H=0.4564 | avg_MCT=20.41s | SRPT=51.4% | lam=0.01975
+  ep  10000 | avg_loss=0.0011 | avg_H=0.4848 | avg_MCT=21.94s | SRPT=51.8% | lam=0.00500
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/results/w11b_seed456.npz
+  Evaluating W11b seed=456 (N=500 test episodes, epsilon=0)...
+  Seed 456: MCT=19.92±12.29s  SRPT=56.0%  Starve=32.8%  Wall=5.7min
+
+================================================================
+AGENT: W11c
+================================================================
+  D_CAND=8  arrived_flag_idx=6  reward=composite_noisy  W_CT=0.6
+
+--- W11c seed=42 ---
+  ep    500 | avg_loss=-0.0772 | avg_H=0.3554 | avg_MCT=22.77s | SRPT=57.2% | lam=0.28525
+  ep   1000 | avg_loss=-0.0768 | avg_H=0.3580 | avg_MCT=24.19s | SRPT=53.9% | lam=0.27050
+  ep   1500 | avg_loss=-0.0881 | avg_H=0.4146 | avg_MCT=23.26s | SRPT=53.6% | lam=0.25575
+  ep   2000 | avg_loss=-0.0912 | avg_H=0.4319 | avg_MCT=20.16s | SRPT=48.8% | lam=0.24100
+  ep   2500 | avg_loss=-0.0974 | avg_H=0.4696 | avg_MCT=25.05s | SRPT=45.8% | lam=0.22625
+  ep   3000 | avg_loss=-0.0982 | avg_H=0.5045 | avg_MCT=26.17s | SRPT=40.2% | lam=0.21150
+  ep   3500 | avg_loss=-0.0976 | avg_H=0.5410 | avg_MCT=24.04s | SRPT=38.3% | lam=0.19675
+  ep   4000 | avg_loss=-0.1012 | avg_H=0.6080 | avg_MCT=29.03s | SRPT=31.0% | lam=0.18200
+  ep   4500 | avg_loss=-0.0910 | avg_H=0.6015 | avg_MCT=26.79s | SRPT=31.1% | lam=0.16725
+  ep   5000 | avg_loss=-0.1031 | avg_H=0.7307 | avg_MCT=27.74s | SRPT=30.7% | lam=0.15250
+  ep   5500 | avg_loss=-0.0919 | avg_H=0.7199 | avg_MCT=27.14s | SRPT=34.3% | lam=0.13775
+  ep   6000 | avg_loss=-0.0833 | avg_H=0.7343 | avg_MCT=28.60s | SRPT=31.3% | lam=0.12300
+  ep   6500 | avg_loss=-0.0709 | avg_H=0.7273 | avg_MCT=26.52s | SRPT=33.3% | lam=0.10825
+  ep   7000 | avg_loss=-0.0648 | avg_H=0.7717 | avg_MCT=30.20s | SRPT=28.9% | lam=0.09350
+  ep   7500 | avg_loss=-0.0491 | avg_H=0.7027 | avg_MCT=29.69s | SRPT=28.4% | lam=0.07875
+  ep   8000 | avg_loss=-0.0433 | avg_H=0.7601 | avg_MCT=30.40s | SRPT=31.5% | lam=0.06400
+  ep   8500 | avg_loss=-0.0326 | avg_H=0.7348 | avg_MCT=31.79s | SRPT=29.8% | lam=0.04925
+  ep   9000 | avg_loss=-0.0230 | avg_H=0.7810 | avg_MCT=29.11s | SRPT=31.2% | lam=0.03450
+  ep   9500 | avg_loss=-0.0103 | avg_H=0.6725 | avg_MCT=27.51s | SRPT=34.0% | lam=0.01975
+  ep  10000 | avg_loss=-0.0007 | avg_H=0.6647 | avg_MCT=27.42s | SRPT=36.7% | lam=0.00500
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/results/w11c_seed42.npz
+  Evaluating W11c seed=42 (N=500 test episodes, epsilon=0)...
+  Seed 42: MCT=31.62±21.11s  SRPT=29.0%  Starve=59.8%  Wall=7.1min
+
+--- W11c seed=123 ---
+  ep    500 | avg_loss=-0.0906 | avg_H=0.3449 | avg_MCT=21.28s | SRPT=65.7% | lam=0.28525
+  ep   1000 | avg_loss=-0.0918 | avg_H=0.3593 | avg_MCT=24.77s | SRPT=58.1% | lam=0.27050
+  ep   1500 | avg_loss=-0.0924 | avg_H=0.3720 | avg_MCT=21.87s | SRPT=60.3% | lam=0.25575
+  ep   2000 | avg_loss=-0.0941 | avg_H=0.3994 | avg_MCT=22.37s | SRPT=55.1% | lam=0.24100
+  ep   2500 | avg_loss=-0.0962 | avg_H=0.4321 | avg_MCT=24.75s | SRPT=51.8% | lam=0.22625
+  ep   3000 | avg_loss=-0.1019 | avg_H=0.4867 | avg_MCT=22.40s | SRPT=49.3% | lam=0.21150
+  ep   3500 | avg_loss=-0.1025 | avg_H=0.5270 | avg_MCT=23.17s | SRPT=49.6% | lam=0.19675
+  ep   4000 | avg_loss=-0.1080 | avg_H=0.6011 | avg_MCT=28.54s | SRPT=41.9% | lam=0.18200
+  ep   4500 | avg_loss=-0.1015 | avg_H=0.6147 | avg_MCT=24.24s | SRPT=41.3% | lam=0.16725
+  ep   5000 | avg_loss=-0.1039 | avg_H=0.6907 | avg_MCT=24.48s | SRPT=42.9% | lam=0.15250
+  ep   5500 | avg_loss=-0.0957 | avg_H=0.7059 | avg_MCT=28.06s | SRPT=38.9% | lam=0.13775
+  ep   6000 | avg_loss=-0.0824 | avg_H=0.6789 | avg_MCT=26.56s | SRPT=37.7% | lam=0.12300
+  ep   6500 | avg_loss=-0.0754 | avg_H=0.7110 | avg_MCT=27.36s | SRPT=36.6% | lam=0.10825
+  ep   7000 | avg_loss=-0.0592 | avg_H=0.6461 | avg_MCT=24.33s | SRPT=42.5% | lam=0.09350
+  ep   7500 | avg_loss=-0.0526 | avg_H=0.6830 | avg_MCT=25.04s | SRPT=47.1% | lam=0.07875
+  ep   8000 | avg_loss=-0.0440 | avg_H=0.7052 | avg_MCT=24.31s | SRPT=39.3% | lam=0.06400
+  ep   8500 | avg_loss=-0.0333 | avg_H=0.7073 | avg_MCT=30.06s | SRPT=34.7% | lam=0.04925
+  ep   9000 | avg_loss=-0.0205 | avg_H=0.6377 | avg_MCT=24.04s | SRPT=48.5% | lam=0.03450
+  ep   9500 | avg_loss=-0.0115 | avg_H=0.6527 | avg_MCT=25.89s | SRPT=44.6% | lam=0.01975
+  ep  10000 | avg_loss=-0.0017 | avg_H=0.6405 | avg_MCT=23.44s | SRPT=45.3% | lam=0.00500
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/results/w11c_seed123.npz
+  Evaluating W11c seed=123 (N=500 test episodes, epsilon=0)...
+  Seed 123: MCT=28.26±20.81s  SRPT=39.8%  Starve=43.2%  Wall=19.9min
+
+--- W11c seed=456 ---
+  ep    500 | avg_loss=-0.0180 | avg_H=0.3651 | avg_MCT=22.83s | SRPT=58.0% | lam=0.28525
+  ep   1000 | avg_loss=-0.0375 | avg_H=0.3836 | avg_MCT=24.45s | SRPT=56.8% | lam=0.27050
+  ep   1500 | avg_loss=-0.0427 | avg_H=0.4147 | avg_MCT=23.56s | SRPT=51.6% | lam=0.25575
+  ep   2000 | avg_loss=-0.0428 | avg_H=0.3763 | avg_MCT=23.91s | SRPT=53.7% | lam=0.24100
+  ep   2500 | avg_loss=-0.0387 | avg_H=0.3780 | avg_MCT=22.21s | SRPT=49.1% | lam=0.22625
+  ep   3000 | avg_loss=-0.0632 | avg_H=0.4680 | avg_MCT=26.86s | SRPT=47.5% | lam=0.21150
+  ep   3500 | avg_loss=-0.0664 | avg_H=0.4869 | avg_MCT=23.68s | SRPT=43.2% | lam=0.19675
+  ep   4000 | avg_loss=-0.0677 | avg_H=0.5653 | avg_MCT=27.10s | SRPT=38.3% | lam=0.18200
+  ep   4500 | avg_loss=-0.0638 | avg_H=0.5637 | avg_MCT=24.94s | SRPT=32.9% | lam=0.16725
+  ep   5000 | avg_loss=-0.0722 | avg_H=0.6450 | avg_MCT=27.34s | SRPT=33.0% | lam=0.15250
+  ep   5500 | avg_loss=-0.0698 | avg_H=0.6822 | avg_MCT=31.08s | SRPT=28.9% | lam=0.13775
+  ep   6000 | avg_loss=-0.0589 | avg_H=0.6669 | avg_MCT=30.82s | SRPT=32.0% | lam=0.12300
+  ep   6500 | avg_loss=-0.0542 | avg_H=0.6988 | avg_MCT=27.09s | SRPT=32.6% | lam=0.10825
+  ep   7000 | avg_loss=-0.0410 | avg_H=0.6649 | avg_MCT=28.71s | SRPT=31.5% | lam=0.09350
+  ep   7500 | avg_loss=-0.0350 | avg_H=0.7086 | avg_MCT=25.88s | SRPT=32.2% | lam=0.07875
+  ep   8000 | avg_loss=-0.0226 | avg_H=0.6677 | avg_MCT=24.76s | SRPT=35.7% | lam=0.06400
+  ep   8500 | avg_loss=-0.0141 | avg_H=0.6795 | avg_MCT=26.66s | SRPT=32.0% | lam=0.04925
+  ep   9000 | avg_loss=-0.0053 | avg_H=0.6657 | avg_MCT=29.11s | SRPT=34.9% | lam=0.03450
+  ep   9500 | avg_loss=-0.0015 | avg_H=0.6551 | avg_MCT=28.07s | SRPT=35.6% | lam=0.01975
+  ep  10000 | avg_loss=0.0089 | avg_H=0.6572 | avg_MCT=25.73s | SRPT=38.2% | lam=0.00500
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/results/w11c_seed456.npz
+  Evaluating W11c seed=456 (N=500 test episodes, epsilon=0)...
+  Seed 456: MCT=30.80±22.26s  SRPT=30.4%  Starve=53.0%  Wall=6.9min
+
+================================================================
+AGENT: W11d
+================================================================
+  D_CAND=6  arrived_flag_idx=5  reward=composite  W_CT=0.6
+
+--- W11d seed=42 ---
+  ep    500 | avg_loss=-0.0480 | avg_H=0.3022 | avg_MCT=20.58s | SRPT=68.1% | lam=0.28525
+  ep   1000 | avg_loss=-0.0688 | avg_H=0.3136 | avg_MCT=21.76s | SRPT=64.2% | lam=0.27050
+  ep   1500 | avg_loss=-0.0897 | avg_H=0.3683 | avg_MCT=23.80s | SRPT=57.8% | lam=0.25575
+  ep   2000 | avg_loss=-0.0948 | avg_H=0.4025 | avg_MCT=22.82s | SRPT=62.5% | lam=0.24100
+  ep   2500 | avg_loss=-0.0978 | avg_H=0.4400 | avg_MCT=24.69s | SRPT=50.8% | lam=0.22625
+  ep   3000 | avg_loss=-0.0892 | avg_H=0.4282 | avg_MCT=19.59s | SRPT=57.1% | lam=0.21150
+  ep   3500 | avg_loss=-0.0994 | avg_H=0.5104 | avg_MCT=21.62s | SRPT=55.5% | lam=0.19675
+  ep   4000 | avg_loss=-0.0916 | avg_H=0.5115 | avg_MCT=21.84s | SRPT=56.3% | lam=0.18200
+  ep   4500 | avg_loss=-0.0869 | avg_H=0.5269 | avg_MCT=22.01s | SRPT=51.3% | lam=0.16725
+  ep   5000 | avg_loss=-0.0751 | avg_H=0.4974 | avg_MCT=26.77s | SRPT=51.2% | lam=0.15250
+  ep   5500 | avg_loss=-0.0812 | avg_H=0.5981 | avg_MCT=27.13s | SRPT=40.6% | lam=0.13775
+  ep   6000 | avg_loss=-0.0794 | avg_H=0.6526 | avg_MCT=27.68s | SRPT=45.2% | lam=0.12300
+  ep   6500 | avg_loss=-0.0712 | avg_H=0.6654 | avg_MCT=23.57s | SRPT=48.1% | lam=0.10825
+  ep   7000 | avg_loss=-0.0595 | avg_H=0.6475 | avg_MCT=24.72s | SRPT=48.8% | lam=0.09350
+  ep   7500 | avg_loss=-0.0470 | avg_H=0.6084 | avg_MCT=27.53s | SRPT=46.2% | lam=0.07875
+  ep   8000 | avg_loss=-0.0407 | avg_H=0.6459 | avg_MCT=25.52s | SRPT=50.2% | lam=0.06400
+  ep   8500 | avg_loss=-0.0275 | avg_H=0.5923 | avg_MCT=25.06s | SRPT=51.6% | lam=0.04925
+  ep   9000 | avg_loss=-0.0228 | avg_H=0.6868 | avg_MCT=24.46s | SRPT=51.0% | lam=0.03450
+  ep   9500 | avg_loss=-0.0128 | avg_H=0.6978 | avg_MCT=25.65s | SRPT=50.4% | lam=0.01975
+  ep  10000 | avg_loss=-0.0020 | avg_H=0.5814 | avg_MCT=22.74s | SRPT=55.9% | lam=0.00500
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/results/w11d_seed42.npz
+  Evaluating W11d seed=42 (N=500 test episodes, epsilon=0)...
+  Seed 42: MCT=25.90±20.04s  SRPT=44.6%  Starve=34.8%  Wall=6.5min
+
+--- W11d seed=123 ---
+  ep    500 | avg_loss=-0.0792 | avg_H=0.3275 | avg_MCT=20.82s | SRPT=63.3% | lam=0.28525
+  ep   1000 | avg_loss=-0.0885 | avg_H=0.3486 | avg_MCT=25.76s | SRPT=54.2% | lam=0.27050
+  ep   1500 | avg_loss=-0.1053 | avg_H=0.4198 | avg_MCT=25.03s | SRPT=52.2% | lam=0.25575
+  ep   2000 | avg_loss=-0.1022 | avg_H=0.4292 | avg_MCT=25.49s | SRPT=49.8% | lam=0.24100
+  ep   2500 | avg_loss=-0.1060 | avg_H=0.4727 | avg_MCT=25.73s | SRPT=41.3% | lam=0.22625
+  ep   3000 | avg_loss=-0.1021 | avg_H=0.4860 | avg_MCT=24.08s | SRPT=40.6% | lam=0.21150
+  ep   3500 | avg_loss=-0.1134 | avg_H=0.5830 | avg_MCT=25.70s | SRPT=35.3% | lam=0.19675
+  ep   4000 | avg_loss=-0.1105 | avg_H=0.6134 | avg_MCT=23.27s | SRPT=38.2% | lam=0.18200
+  ep   4500 | avg_loss=-0.1166 | avg_H=0.7041 | avg_MCT=29.21s | SRPT=36.5% | lam=0.16725
+  ep   5000 | avg_loss=-0.1068 | avg_H=0.7060 | avg_MCT=28.67s | SRPT=36.3% | lam=0.15250
+  ep   5500 | avg_loss=-0.0915 | avg_H=0.6669 | avg_MCT=27.36s | SRPT=39.2% | lam=0.13775
+  ep   6000 | avg_loss=-0.0910 | avg_H=0.7450 | avg_MCT=28.83s | SRPT=33.9% | lam=0.12300
+  ep   6500 | avg_loss=-0.0752 | avg_H=0.7034 | avg_MCT=27.79s | SRPT=34.6% | lam=0.10825
+  ep   7000 | avg_loss=-0.0671 | avg_H=0.7234 | avg_MCT=28.23s | SRPT=39.1% | lam=0.09350
+  ep   7500 | avg_loss=-0.0536 | avg_H=0.6913 | avg_MCT=27.20s | SRPT=41.9% | lam=0.07875
+  ep   8000 | avg_loss=-0.0452 | avg_H=0.7148 | avg_MCT=26.11s | SRPT=42.6% | lam=0.06400
+  ep   8500 | avg_loss=-0.0342 | avg_H=0.7105 | avg_MCT=27.51s | SRPT=40.4% | lam=0.04925
+  ep   9000 | avg_loss=-0.0238 | avg_H=0.7161 | avg_MCT=26.58s | SRPT=38.9% | lam=0.03450
+  ep   9500 | avg_loss=-0.0125 | avg_H=0.7012 | avg_MCT=27.84s | SRPT=37.9% | lam=0.01975
+  ep  10000 | avg_loss=-0.0023 | avg_H=0.6916 | avg_MCT=25.70s | SRPT=41.8% | lam=0.00500
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/results/w11d_seed123.npz
+  Evaluating W11d seed=123 (N=500 test episodes, epsilon=0)...
+  Seed 123: MCT=28.91±20.41s  SRPT=34.6%  Starve=44.8%  Wall=6.6min
+
+--- W11d seed=456 ---
+  ep    500 | avg_loss=-0.0350 | avg_H=0.3432 | avg_MCT=22.40s | SRPT=57.7% | lam=0.28525
+  ep   1000 | avg_loss=-0.0490 | avg_H=0.3854 | avg_MCT=22.69s | SRPT=57.2% | lam=0.27050
+  ep   1500 | avg_loss=-0.0593 | avg_H=0.3877 | avg_MCT=22.02s | SRPT=57.2% | lam=0.25575
+  ep   2000 | avg_loss=-0.0728 | avg_H=0.4290 | avg_MCT=22.67s | SRPT=56.1% | lam=0.24100
+  ep   2500 | avg_loss=-0.0810 | avg_H=0.4562 | avg_MCT=23.45s | SRPT=53.7% | lam=0.22625
+  ep   3000 | avg_loss=-0.0794 | avg_H=0.4719 | avg_MCT=22.05s | SRPT=52.9% | lam=0.21150
+  ep   3500 | avg_loss=-0.0818 | avg_H=0.5027 | avg_MCT=22.67s | SRPT=48.5% | lam=0.19675
+  ep   4000 | avg_loss=-0.0638 | avg_H=0.4392 | avg_MCT=23.93s | SRPT=51.3% | lam=0.18200
+  ep   4500 | avg_loss=-0.0728 | avg_H=0.5119 | avg_MCT=23.98s | SRPT=44.6% | lam=0.16725
+  ep   5000 | avg_loss=-0.0732 | avg_H=0.5642 | avg_MCT=23.01s | SRPT=44.5% | lam=0.15250
+  ep   5500 | avg_loss=-0.0671 | avg_H=0.5650 | avg_MCT=23.46s | SRPT=39.1% | lam=0.13775
+  ep   6000 | avg_loss=-0.0583 | avg_H=0.5713 | avg_MCT=26.82s | SRPT=41.3% | lam=0.12300
+  ep   6500 | avg_loss=-0.0596 | avg_H=0.6677 | avg_MCT=28.21s | SRPT=39.0% | lam=0.10825
+  ep   7000 | avg_loss=-0.0399 | avg_H=0.5554 | avg_MCT=25.86s | SRPT=36.2% | lam=0.09350
+  ep   7500 | avg_loss=-0.0311 | avg_H=0.5629 | avg_MCT=24.07s | SRPT=44.2% | lam=0.07875
+  ep   8000 | avg_loss=-0.0248 | avg_H=0.6025 | avg_MCT=23.71s | SRPT=40.2% | lam=0.06400
+  ep   8500 | avg_loss=-0.0180 | avg_H=0.6071 | avg_MCT=27.34s | SRPT=38.0% | lam=0.04925
+  ep   9000 | avg_loss=-0.0015 | avg_H=0.4258 | avg_MCT=23.28s | SRPT=46.1% | lam=0.03450
+  ep   9500 | avg_loss=0.0082 | avg_H=0.3939 | avg_MCT=20.33s | SRPT=50.8% | lam=0.01975
+  ep  10000 | avg_loss=0.0102 | avg_H=0.4322 | avg_MCT=23.92s | SRPT=42.3% | lam=0.00500
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/results/w11d_seed456.npz
+  Evaluating W11d seed=456 (N=500 test episodes, epsilon=0)...
+  Seed 456: MCT=24.24±17.71s  SRPT=42.7%  Starve=34.4%  Wall=6.3min
+
+================================================================
+AGENT: W12
+================================================================
+  D_CAND=7  arrived_flag_idx=6  reward=pbrs  W_CT=0.0
+
+--- W12 seed=42 ---
+  ep    500 | avg_loss=-0.0455 | avg_H=0.3234 | avg_MCT=20.20s | SRPT=65.2% | lam=0.28525
+  ep   1000 | avg_loss=-0.0413 | avg_H=0.2816 | avg_MCT=20.57s | SRPT=61.3% | lam=0.27050
+  ep   1500 | avg_loss=-0.0394 | avg_H=0.3036 | avg_MCT=21.50s | SRPT=63.7% | lam=0.25575
+  ep   2000 | avg_loss=-0.0391 | avg_H=0.3121 | avg_MCT=21.27s | SRPT=61.5% | lam=0.24100
+  ep   2500 | avg_loss=-0.0357 | avg_H=0.2967 | avg_MCT=21.74s | SRPT=65.6% | lam=0.22625
+  ep   3000 | avg_loss=-0.0408 | avg_H=0.3116 | avg_MCT=19.60s | SRPT=59.6% | lam=0.21150
+  ep   3500 | avg_loss=-0.0479 | avg_H=0.3427 | avg_MCT=20.75s | SRPT=56.2% | lam=0.19675
+  ep   4000 | avg_loss=-0.0432 | avg_H=0.3418 | avg_MCT=20.28s | SRPT=60.0% | lam=0.18200
+  ep   4500 | avg_loss=-0.0391 | avg_H=0.3261 | avg_MCT=20.24s | SRPT=66.9% | lam=0.16725
+  ep   5000 | avg_loss=-0.0425 | avg_H=0.3764 | avg_MCT=23.93s | SRPT=55.1% | lam=0.15250
+  ep   5500 | avg_loss=-0.0373 | avg_H=0.3866 | avg_MCT=22.19s | SRPT=55.4% | lam=0.13775
+  ep   6000 | avg_loss=-0.0346 | avg_H=0.3857 | avg_MCT=23.08s | SRPT=55.8% | lam=0.12300
+  ep   6500 | avg_loss=-0.0297 | avg_H=0.3808 | avg_MCT=20.76s | SRPT=57.9% | lam=0.10825
+  ep   7000 | avg_loss=-0.0283 | avg_H=0.4250 | avg_MCT=21.19s | SRPT=60.2% | lam=0.09350
+  ep   7500 | avg_loss=-0.0204 | avg_H=0.3885 | avg_MCT=24.67s | SRPT=56.0% | lam=0.07875
+  ep   8000 | avg_loss=-0.0136 | avg_H=0.4071 | avg_MCT=22.30s | SRPT=54.8% | lam=0.06400
+  ep   8500 | avg_loss=-0.0108 | avg_H=0.4463 | avg_MCT=22.53s | SRPT=53.4% | lam=0.04925
+  ep   9000 | avg_loss=-0.0042 | avg_H=0.4310 | avg_MCT=21.76s | SRPT=54.2% | lam=0.03450
+  ep   9500 | avg_loss=0.0019 | avg_H=0.4448 | avg_MCT=22.71s | SRPT=53.0% | lam=0.01975
+  ep  10000 | avg_loss=0.0072 | avg_H=0.4077 | avg_MCT=22.29s | SRPT=53.1% | lam=0.00500
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/results/w12_seed42.npz
+  Evaluating W12 seed=42 (N=500 test episodes, epsilon=0)...
+  Seed 42: MCT=21.87±14.08s  SRPT=53.3%  Starve=47.2%  Wall=5.9min
+
+--- W12 seed=123 ---
+  ep    500 | avg_loss=-0.0329 | avg_H=0.3013 | avg_MCT=20.18s | SRPT=64.2% | lam=0.28525
+  ep   1000 | avg_loss=-0.0434 | avg_H=0.3000 | avg_MCT=21.02s | SRPT=65.3% | lam=0.27050
+  ep   1500 | avg_loss=-0.0534 | avg_H=0.3219 | avg_MCT=22.04s | SRPT=63.6% | lam=0.25575
+  ep   2000 | avg_loss=-0.0484 | avg_H=0.3091 | avg_MCT=23.66s | SRPT=59.7% | lam=0.24100
+  ep   2500 | avg_loss=-0.0393 | avg_H=0.2915 | avg_MCT=22.24s | SRPT=58.2% | lam=0.22625
+  ep   3000 | avg_loss=-0.0491 | avg_H=0.3342 | avg_MCT=22.39s | SRPT=60.2% | lam=0.21150
+  ep   3500 | avg_loss=-0.0349 | avg_H=0.2781 | avg_MCT=21.74s | SRPT=59.8% | lam=0.19675
+  ep   4000 | avg_loss=-0.0472 | avg_H=0.3516 | avg_MCT=20.27s | SRPT=59.4% | lam=0.18200
+  ep   4500 | avg_loss=-0.0441 | avg_H=0.3633 | avg_MCT=24.04s | SRPT=57.1% | lam=0.16725
+  ep   5000 | avg_loss=-0.0494 | avg_H=0.4208 | avg_MCT=23.40s | SRPT=55.9% | lam=0.15250
+  ep   5500 | avg_loss=-0.0340 | avg_H=0.3706 | avg_MCT=20.72s | SRPT=59.1% | lam=0.13775
+  ep   6000 | avg_loss=-0.0341 | avg_H=0.4089 | avg_MCT=21.58s | SRPT=59.3% | lam=0.12300
+  ep   6500 | avg_loss=-0.0278 | avg_H=0.3714 | avg_MCT=22.23s | SRPT=55.9% | lam=0.10825
+  ep   7000 | avg_loss=-0.0204 | avg_H=0.3559 | avg_MCT=21.47s | SRPT=59.8% | lam=0.09350
+  ep   7500 | avg_loss=-0.0101 | avg_H=0.2997 | avg_MCT=20.68s | SRPT=59.2% | lam=0.07875
+  ep   8000 | avg_loss=-0.0115 | avg_H=0.3508 | avg_MCT=20.28s | SRPT=61.6% | lam=0.06400
+  ep   8500 | avg_loss=-0.0077 | avg_H=0.3652 | avg_MCT=21.47s | SRPT=57.4% | lam=0.04925
+  ep   9000 | avg_loss=0.0015 | avg_H=0.3536 | avg_MCT=20.26s | SRPT=62.4% | lam=0.03450
+  ep   9500 | avg_loss=0.0026 | avg_H=0.3266 | avg_MCT=23.00s | SRPT=59.3% | lam=0.01975
+  ep  10000 | avg_loss=0.0112 | avg_H=0.3269 | avg_MCT=21.79s | SRPT=63.2% | lam=0.00500
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/results/w12_seed123.npz
+  Evaluating W12 seed=123 (N=500 test episodes, epsilon=0)...
+  Seed 123: MCT=22.06±13.77s  SRPT=59.2%  Starve=48.0%  Wall=6.1min
+
+--- W12 seed=456 ---
+  ep    500 | avg_loss=-0.0751 | avg_H=0.3123 | avg_MCT=20.41s | SRPT=65.9% | lam=0.28525
+  ep   1000 | avg_loss=-0.0777 | avg_H=0.3080 | avg_MCT=21.09s | SRPT=66.7% | lam=0.27050
+  ep   1500 | avg_loss=-0.0702 | avg_H=0.2782 | avg_MCT=20.39s | SRPT=67.2% | lam=0.25575
+  ep   2000 | avg_loss=-0.0675 | avg_H=0.2812 | avg_MCT=21.75s | SRPT=67.6% | lam=0.24100
+  ep   2500 | avg_loss=-0.0570 | avg_H=0.2517 | avg_MCT=23.19s | SRPT=62.6% | lam=0.22625
+  ep   3000 | avg_loss=-0.0577 | avg_H=0.2720 | avg_MCT=21.09s | SRPT=67.1% | lam=0.21150
+  ep   3500 | avg_loss=-0.0514 | avg_H=0.2600 | avg_MCT=21.29s | SRPT=68.2% | lam=0.19675
+  ep   4000 | avg_loss=-0.0537 | avg_H=0.2937 | avg_MCT=23.43s | SRPT=61.0% | lam=0.18200
+  ep   4500 | avg_loss=-0.0576 | avg_H=0.3425 | avg_MCT=21.44s | SRPT=61.9% | lam=0.16725
+  ep   5000 | avg_loss=-0.0466 | avg_H=0.3040 | avg_MCT=19.86s | SRPT=66.5% | lam=0.15250
+  ep   5500 | avg_loss=-0.0330 | avg_H=0.2380 | avg_MCT=20.97s | SRPT=62.3% | lam=0.13775
+  ep   6000 | avg_loss=-0.0371 | avg_H=0.2999 | avg_MCT=22.37s | SRPT=60.5% | lam=0.12300
+  ep   6500 | avg_loss=-0.0424 | avg_H=0.3890 | avg_MCT=23.43s | SRPT=59.0% | lam=0.10825
+  ep   7000 | avg_loss=-0.0408 | avg_H=0.4312 | avg_MCT=21.92s | SRPT=57.6% | lam=0.09350
+  ep   7500 | avg_loss=-0.0309 | avg_H=0.3877 | avg_MCT=21.16s | SRPT=59.8% | lam=0.07875
+  ep   8000 | avg_loss=-0.0221 | avg_H=0.3413 | avg_MCT=21.50s | SRPT=58.5% | lam=0.06400
+  ep   8500 | avg_loss=-0.0147 | avg_H=0.2945 | avg_MCT=22.55s | SRPT=60.3% | lam=0.04925
+  ep   9000 | avg_loss=-0.0092 | avg_H=0.2622 | avg_MCT=21.45s | SRPT=60.1% | lam=0.03450
+  ep   9500 | avg_loss=-0.0053 | avg_H=0.2600 | avg_MCT=19.88s | SRPT=63.0% | lam=0.01975
+  ep  10000 | avg_loss=-0.0017 | avg_H=0.3151 | avg_MCT=22.06s | SRPT=57.0% | lam=0.00500
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/results/w12_seed456.npz
+  Evaluating W12 seed=456 (N=500 test episodes, epsilon=0)...
+  Seed 456: MCT=21.09±13.66s  SRPT=57.3%  Starve=50.4%  Wall=4.5min
+
+
+================================================================
+Per-Agent Cross-Seed Results
+================================================================
+
+W11:
+    Seed |      MCT (s) |    SRPT% |  Starve% | Wall(min)
+  -------------------------------------------------------
+      42 |        21.09 |     50.3 |     31.0 |       6.0
+     123 |        21.92 |     51.2 |     42.8 |       6.0
+     456 |        20.15 |     62.5 |     34.6 |       3.9
+  Mean±std: MCT=21.05±0.72s  SRPT=54.7±5.5%
+
+W11b:
+    Seed |      MCT (s) |    SRPT% |  Starve% | Wall(min)
+  -------------------------------------------------------
+      42 |        21.37 |     52.8 |     34.8 |       6.5
+     123 |        21.82 |     50.8 |     42.2 |       6.7
+     456 |        19.92 |     56.0 |     32.8 |       5.7
+  Mean±std: MCT=21.04±0.81s  SRPT=53.2±2.1%
+
+W11c:
+    Seed |      MCT (s) |    SRPT% |  Starve% | Wall(min)
+  -------------------------------------------------------
+      42 |        31.62 |     29.0 |     59.8 |       7.1
+     123 |        28.26 |     39.8 |     43.2 |      19.9
+     456 |        30.80 |     30.4 |     53.0 |       6.9
+  Mean±std: MCT=30.23±1.43s  SRPT=33.1±4.8%
+
+W11d:
+    Seed |      MCT (s) |    SRPT% |  Starve% | Wall(min)
+  -------------------------------------------------------
+      42 |        25.90 |     44.6 |     34.8 |       6.5
+     123 |        28.91 |     34.6 |     44.8 |       6.6
+     456 |        24.24 |     42.7 |     34.4 |       6.3
+  Mean±std: MCT=26.35±1.93s  SRPT=40.6±4.4%
+
+W12:
+    Seed |      MCT (s) |    SRPT% |  Starve% | Wall(min)
+  -------------------------------------------------------
+      42 |        21.87 |     53.3 |     47.2 |       5.9
+     123 |        22.06 |     59.2 |     48.0 |       6.1
+     456 |        21.09 |     57.3 |     50.4 |       4.5
+  Mean±std: MCT=21.67±0.42s  SRPT=56.6±2.5%
+
+
+================================================================
+Updated 2×2 Ablation Table (2018-trace, mean±std across 3 seeds)
+================================================================
+
+Factor removed                 Agent    MCT (mean±std)         SRPT (mean±std)
+--------------------------------------------------------------------------------
+Neither (baseline)             W10C     17.23±11.38s*          71.9%*
+Burst only (value-delta kept)  W12      21.67±0.42s            56.6±2.5%
+Reward only (burst kept)       W11d     26.35±1.93s            40.6±4.4%
+Both removed                   W11b     21.04±0.81s            53.2±2.1%
+
+* W10C: original checkpoint, N=1500 eval episodes
+
+
+================================================================
+Full Ablation Comparison Table
+================================================================
+
+Agent          MCT mean±std        SRPT% Description
+------------------------------------------------------------------------
+W10C          17.23±11.38s*       71.9%*  oracle burst + value-delta (N=1500)
+W11         21.05± 0.72s       54.7± 5.5%  no burst, 7-dim, equal composite (W_CT=0.2)
+W11b        21.04± 0.81s       53.2± 2.1%  no burst, 7-dim, CT-dominant composite (W_CT=0.6)
+W11c        30.23± 1.43s       33.1± 4.8%  no burst+noisy, 8-dim, CT-dominant composite (W_CT=0.6)
+W11d        26.35± 1.93s       40.6± 4.4%  true burst, 6-dim, CT-dominant composite (W_CT=0.6)
+W12         21.67± 0.42s       56.6± 2.5%  no burst, 7-dim, value-delta+PBRS
+
+Results saved → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/results/ablation_multiseed_results.json
+
+================================================================
+Ablation experiment complete.
+================================================================

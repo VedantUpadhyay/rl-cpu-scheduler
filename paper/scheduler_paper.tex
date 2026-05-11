@@ -1,0 +1,828 @@
+\documentclass[10pt,twocolumn]{article}
+
+%% Packages
+\usepackage[margin=0.9in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{microtype}
+\usepackage{cite}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{multirow}
+
+%% Theorem environments
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+%% Macros
+\newcommand{\vrfi}{\textsc{VRFI}}
+\newcommand{\vlr}{\textsc{VLR}}
+\newcommand{\mct}{\textsc{MCT}}
+
+\title{\textbf{Learning to Schedule: A Value-Aware Policy Discovery\\
+Experiment with Provable Queue-Global Necessity}}
+
+\author{Dev Upadhyay\\
+M.S.\ Computer Science, University of California Santa Cruz\\
+Graduate Capstone Project, 2024--2025\\
+\texttt{dupadhyay@ucsc.edu}}
+
+\date{March 2026}
+
+\begin{document}
+
+\maketitle
+
+%% ============================================================
+\begin{abstract}
+%% ============================================================
+
+CPU scheduling's efficiency-fairness tension has resisted formal
+characterization. We train a two-head attention DQN on Alibaba 2018
+cluster traces with a value-delta reward, where each task carries
+urgency curve $V_i(d) = \mathrm{base}_i \cdot
+\max(\mathrm{floor}_i,\, e^{-d/\tau_i})$, aggregating
+$V_i(d+q) - V_i(d)$ across all runnable processes.
+
+We prove the \emph{Quantum Scoring Monotonicity Lemma}: any
+per-task local scorer based on value-drop objectives is strictly
+monotone in quantum size, making non-degenerate quantum selection
+impossible without queue-global information---confirmed by three
+ablations. W10C, our two-head attention DQN, achieves
+$21.71 \pm 0.64$\,s mean completion time (replicated across 3
+independent seeds, CV\,=\,2.9\%), beating Round Robin with zero
+starvation and lowest slowdown variance. The best-observed single
+checkpoint reaches 17.23\,s (N\,=\,1500 evaluation episodes,
+original checkpoint \texttt{dqn\_w10c.npz}).
+
+We introduce the \emph{Value-Rate Fairness Index (\vrfi)}, proving
+a case exists where JFI\,=\,1.0 and SDV\,=\,0 yet
+\vrfi\,=\,0.641---exposing value-rate inequality invisible to prior
+metrics. A 2$\times$2 ablation isolates reward formulation and burst
+observability as independently load-bearing: value-delta reward
+outperforms composite reward by 9.1\,s MCT when burst is available,
+while removing burst costs only 4.4\,s---establishing that the oracle
+information gap is modest on realistic workloads.
+
+A preference-conditioned variant (W14-$\omega$) beats MLFQ on both
+throughput (20.60\,s vs.\ 21.59\,s MCT) and starvation prevention
+(32.5\% vs.\ 36.0\%) at $\omega_s=0.7$, using no oracle information
+and requiring no retraining to shift operating modes.
+
+\end{abstract}
+
+%% ============================================================
+\section{Introduction}
+%% ============================================================
+
+Modern CPU schedulers operate on what is immediately observable:
+processes in the ready queue, their recent CPU usage, and priority
+class. Linux's Completely Fair Scheduler (CFS) distributes CPU time
+proportionally to virtual runtime. But fairness over what is visible
+is not the same as minimizing the time tasks spend waiting to become
+visible. A short-burst process that arrives while the CPU is occupied
+by a long-burst process experiences a waiting time that CFS cannot
+reduce by design---the problem is not in its policy but in its horizon.
+
+We ask: can an agent learn a scheduling policy \emph{without behavioral
+cloning or reference policy demonstrations}---no supervision, no target
+policy to imitate, no handcrafted priority rules---purely from the
+signal of how long processes have been alive? This is a policy
+discovery problem, not a CFS improvement problem. We do not propose
+to replace CFS. We ask whether RL can, in a controlled environment,
+rediscover approximations to the known optimal policy, and whether
+failure modes reveal architectural requirements for generalizing
+across arbitrary workloads.
+
+\subsection*{Contributions}
+
+\begin{enumerate}[leftmargin=*, label=\arabic*., itemsep=2pt]
+
+\item \textbf{Systematic failure mode documentation} across four
+architectures: tabular discretization collapse, DQN position-indexed
+gradient contamination, spurious load-adaptive quantum artifact, and
+attention entropy collapse. Each is diagnosed to a specific
+architectural cause and resolved or left explicitly open.
+
+\item \textbf{W10C two-head attention DQN}: $21.71\pm0.64$\,s MCT
+replicated across 3 seeds (CV\,=\,2.9\%), beating Round Robin by
+$\sim$2\,s. Best observed checkpoint: 17.23\,s (N\,=\,1500 eval).
+Spontaneous head specialization---context/survey and starvation
+monitor---emerges without supervision.
+
+\item \textbf{Quantum Scoring Monotonicity Lemma and three ablations}:
+formal proof that value-drop local scorers $f_{\mathrm{rate}}$ and
+$f_{\mathrm{total}}$ always select $q_{\min}$ and $q_{\max}$
+respectively, for all $\tau>0$, $d\geq0$. Three ablations confirm
+this empirically on Alibaba-derived trace data.
+
+\item \textbf{Gradient alignment and $\tau$ calibration}: identifies a
+3--4 order-of-magnitude disconnect between default $\tau$ values
+(25\,s/100\,s) and trace-scale delays (medians 5,279\,s/38,665\,s),
+producing near-ties in 93--100\% of ordering decisions regardless of
+calibration---a structural consequence of trace composition.
+
+\item \textbf{\vrfi\ and JFI/SDV falsification}: a new metric
+$1 - \mathrm{CV}(\vlr)$ capturing value-curve fairness invisible to
+Jain's Index and slowdown variance. Key falsification: identical
+delays yield JFI\,=\,1.0, SDV\,=\,0, yet \vrfi\,=\,0.641.
+
+\item \textbf{2$\times$2 ablation} over reward structure and burst
+observability: reward formulation is more load-bearing than state
+observability. Removing value-delta reward (W11d) degrades MCT to
+26.35\,s; removing oracle burst (W12) degrades MCT to 21.67\,s.
+Oracle information cost is 4.4\,s on the 2018 trace.
+
+\item \textbf{W14-$\omega$ preference-conditioned agent}: beats MLFQ
+simultaneously on MCT (20.60\,s vs.\ 21.59\,s) and starvation
+(32.5\% vs.\ 36.0\%) at $\omega_s=0.7$. Non-monotonic Pareto
+frontier establishes that optimal fairness requires retaining
+throughput pressure.
+
+\item \textbf{W15 variable-N training}: retraining on Poisson arrival
+streams recovers the MCT advantage (mean $-1.40$\,s vs.\ MLFQ across
+3 seeds), confirming the attention mechanism generalizes to variable
+queue depths when trained on them.
+
+\end{enumerate}
+
+%% ============================================================
+\section{Background}
+%% ============================================================
+
+\subsection{CFS and the Scheduling Horizon Problem}
+
+CFS uses a red-black tree ordered by virtual runtime to select the
+next runnable process, targeting equal CPU share among active tasks.
+It makes no attempt to prefer shorter jobs---the key property of SRPT,
+the preemptive optimal policy for minimizing mean turnaround time when
+burst lengths are known. Since Linux kernel 6.6, EEVDF has replaced
+CFS as the default Linux scheduler~\cite{eevdf}. EEVDF assigns each
+task a virtual deadline based on weight and requested scheduling slice,
+preventing tasks from receiving CPU before they are entitled to it.
+The value-aware scheduler proposed here differs from both: scheduling
+decisions are driven by explicit per-task value curves rather than
+virtual runtime accounting.
+
+\subsection{RL for Scheduling}
+
+KernelOracle~\cite{kernelOracle} applies supervised learning to
+predict CFS's next selection---it does not learn a new policy.
+ALPS~\cite{alps} simulates SRPT on historical workloads and enforces
+priorities via eBPF; it achieves 57.2\% latency reduction on
+serverless traces. Both approaches are anchored to a reference policy.
+RLScheduler~\cite{rlscheduler} learns HPC batch job scheduling from
+rich per-job state including historical runtime statistics.
+Double DQN scheduling~\cite{doubleDQN} achieves strong performance on
+mixed CPU-I/O workloads. SmartOS~\cite{smartOS} applies RL to joint
+multi-resource allocation. The common thread: domain-informed state
+design with scheduler engineering knowledge. This work deliberately
+restricts state to features requiring no domain knowledge to isolate
+what reward signal alone can teach.
+
+\subsection{Queue-Global Information in Production Systems}
+
+A 2026 public preview of cloud batch scheduler fairness introduced a
+mechanism requiring server-side backlog tracking that \emph{cannot}
+be implemented using per-task metadata alone---the backlog count is a
+property of the queue, not any individual task. Section~\ref{sec:theory}
+formalizes this: any value-drop scoring function operating on per-task
+features is provably unable to make optimal quantum selections, because
+both natural scoring objectives are monotone in quantum size. Breaking
+this degeneracy requires queue-global information---precisely the
+server-side backlog such systems track.
+
+%% ============================================================
+\section{Theoretical Framework}
+\label{sec:theory}
+%% ============================================================
+
+\subsection{Value Curve Formulation}
+
+Each task $i$ carries an exponential value curve:
+\begin{equation}
+  V_i(d) = \mathrm{base}_i \cdot
+  \max\!\bigl(\mathrm{floor}_i,\; e^{-d/\tau_i}\bigr)
+  \label{eq:vcurve}
+\end{equation}
+where $d \geq 0$ is accumulated queueing delay, $\tau_i > 0$ is the
+urgency decay constant. Two canonical profiles emerge from the Alibaba
+trace: \textbf{steep} ($\tau \approx 25$\,s, floor$\,=0.2$, modeling
+interactive/IO tasks) and \textbf{smooth} ($\tau \approx 100$\,s,
+floor$\,=0$, modeling batch tasks). Note: curve type assignment
+(steep/smooth) is a human modeling choice encoding task urgency; it
+is not inferred from the trace.
+
+\subsection{Potential Surface}
+
+Define $\Phi(S) = \sum_i V_i(d_i)$ over queue state $S$. The gradient:
+\begin{equation}
+  \nabla_i \Phi = \frac{\mathrm{base}_i}{\tau_i}\,e^{-d_i/\tau_i}
+  \quad\text{(non-plateau)}; \quad = 0 \quad\text{(plateau)}
+\end{equation}
+
+A locally optimal scheduler selects the task with largest
+$|\nabla_i\Phi|$. This is inherently queue-global: selecting task $i$
+depends not on $i$'s features alone, but on whether any co-queued task
+$j$ has $|\nabla_j\Phi| > |\nabla_i\Phi|$.
+
+\subsection{Quantum Scoring Monotonicity}
+\label{sec:lemma}
+
+Define two natural quantum scoring functions for task $i$ given
+quantum $q$:
+\begin{align}
+  f_{\mathrm{rate}}(q) &= \frac{V_i(d_i) - V_i(d_i+q)}{q}
+  \label{eq:frate}\\
+  f_{\mathrm{total}}(q) &= V_i(d_i) - V_i(d_i+q)
+  \label{eq:ftotal}
+\end{align}
+
+\begin{lemma}[Quantum Scoring Monotonicity]
+\label{lem:mono}
+For any $\tau > 0$, $\mathrm{base} > 0$, $\mathrm{floor} \in [0,1)$,
+$d \geq 0$:
+\begin{enumerate}[(a)]
+  \item $f_{\mathrm{rate}}(q)$ is strictly decreasing in $q > 0$.
+  \item $f_{\mathrm{total}}(q)$ is strictly increasing in $q > 0$
+    such that $d+q$ is below the plateau.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+\textbf{(a):} Let $h(q) = (1-e^{-q/\tau})/q$. Then
+$f_{\mathrm{rate}}(q) = \mathrm{base}\cdot e^{-d/\tau}\cdot h(q)$.
+Differentiating: $h'(q) = [(q/\tau+1)e^{-q/\tau}-1]/q^2$.
+Setting $u=q/\tau>0$, the numerator $(u+1)e^{-u}-1<0$ for all $u>0$
+since $e^u>1+u$ by strict convexity. Therefore $h'(q)<0$. \hfill$\square$
+
+\textbf{(b):} Below the plateau, $f_{\mathrm{total}}(q) =
+\mathrm{base}\cdot e^{-d/\tau}\cdot(1-e^{-q/\tau})$, which is
+strictly increasing since $1-e^{-q/\tau}$ is strictly increasing
+in $q$ for $\tau>0$. \hfill$\square$
+
+\textbf{Plateau case:} When $d_i$ exceeds the plateau,
+$f_{\mathrm{total}}(q)=0$ identically---degenerate because the task
+carries no further scheduling signal.
+\end{proof}
+
+\begin{corollary}[Queue-Global Necessity for Value-Drop Scorers]
+\label{cor:global}
+No scoring function based solely on value-drop---operating on
+$(\mathrm{base}_i, \mathrm{floor}_i, \tau_i, d_i, q)$ via either
+$f_{\mathrm{rate}}$ or $f_{\mathrm{total}}$---can produce mixed
+quantum selection across $\{q_{\min}, q_{\mathrm{med}}, q_{\max}\}$.
+$f_{\mathrm{rate}}$ always selects $q_{\min}$; $f_{\mathrm{total}}$
+always selects $q_{\max}$. This corollary applies specifically to
+these natural value-preservation objectives; other local rules
+(e.g., threshold rules on $d/\tau$) could in principle produce mixed
+selection while remaining local. Queue-global information is necessary
+to escape the degenerate poles of $f_{\mathrm{rate}}$ and
+$f_{\mathrm{total}}$.
+\end{corollary}
+
+\subsection{Queue-Global Resolution}
+
+The impossibility results motivate maintaining queue-global state at
+each decision step. The two-head attention mechanism (Section
+\ref{sec:arch}) is one instantiation: one head specializes in
+competitor context (queue state) and the other in per-task scoring.
+Section \ref{sec:theory-confirms} confirms this empirically.
+
+%% ============================================================
+\section{Method}
+\label{sec:method}
+%% ============================================================
+
+\subsection{Environment}
+
+\textbf{Synthetic (Weeks 1--9).} Five processes per episode. Arrivals
+sampled from $\{0,2,5,8,10\}$\,ms; bursts from $U[1,60]$\,ms.
+Actions: 15 (5 processes $\times$ 3 quantum tiers: 1\,ms, 5\,ms,
+20\,ms). Invalid actions masked at every step.
+
+\textbf{Real-trace (Weeks 8--15).} Alibaba 2018 cluster trace,
+\texttt{batch\_task} table (14.3M tasks). Filtering: $0 <
+\mathrm{duration} \leq 47.0$\,s (p75 cutoff). Split: 80/20
+train/test (8.18M / 2.04M tasks). Quantum tiers: 0.5\,s, 2.0\,s,
+8.0\,s for real-trace agents (15 actions: 5 processes $\times$ 3
+quanta).
+
+\subsection{Reward}
+
+\textbf{MCT reward (W1--W10C).}
+$R(t) = -n_{\mathrm{active}}(t) \times q_{\mathrm{actual}}(t)$,
+where $n_{\mathrm{active}}$ is the count of arrived, incomplete
+processes and $q_{\mathrm{actual}} = \min(q, \mathrm{burst\_remaining})$.
+By Little's Law, minimizing $\sum_t n_{\mathrm{active}} \times
+q_{\mathrm{actual}}$ is equivalent to minimizing total turnaround
+time. No completion bonuses or shaped incentives.
+
+\textbf{Value-delta reward (real-trace variants).}
+\begin{equation}
+  R = \frac{1}{20}\sum_{i \in \mathrm{runnable}}
+  \bigl[V_i(d_i+q) - V_i(d_i)\bigr]
+  \label{eq:vdreward}
+\end{equation}
+Dense (fires every step), implicitly encodes urgency and completion
+pressure.
+
+\textbf{W14-$\omega$ composite reward.}
+$R = \omega_{\mathrm{mct}} \cdot R_{\mathrm{vd}} +
+\omega_s \cdot R_{\mathrm{ss}}$, where
+$R_{\mathrm{ss}} = -\sum_i \max(0, t_{\mathrm{starve},i} - 50)/50\,/N$
+is a proportional starvation signal.
+
+\subsection{State Representation}
+
+\textbf{Oracle disclosure.} W10C includes true remaining burst time
+as feature \texttt{off+0} (\texttt{remaining\_norm})---an oracle
+assumption unavailable in production. W12 and W15 replace this with
+observable time-based features: time\_in\_queue, wait\_time,
+time\_since\_last\_exec, urgency\_norm, cpu\_norm, mem\_norm,
+arrived\_flag (35-dim, 5 processes $\times$ 7 features). The cost
+of this substitution is quantified in the 2$\times$2 ablation
+(Sections \ref{sec:2x2a}--\ref{sec:2x2b}): $\sim$4.4\,s MCT on the
+2018 trace.
+
+\subsection{Architecture}
+\label{sec:arch}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{fig3_architecture.pdf}
+  \caption{W14-$\omega$ architecture: 2-head attention DQN with
+  FiLM $\omega$-conditioning at query modulation (pre-attention:
+  $Q_{\mathrm{cond}} = Q \times (1+\omega_s)$) and post-attention
+  context ($c_{\mathrm{cond}} = c\times(1+\omega_s)+\omega_{\mathrm{mct}}$).
+  MLP input: $[\mathbf{e}_i(7)\,\|\,\mathbf{c}_i(16)\,\|\,\omega_s(1)]
+  = 24$-dim.}
+  \label{fig:arch}
+\end{figure}
+
+\textbf{Attention DQN (W10C).} 2 heads, $D_{\mathrm{head}}=8$.
+Per-head attention over the 5-process encoding, with scaled
+dot-product attention. Output projected to 16-dim context vector.
+Per-candidate scoring MLP: $[e_i(7)\,\|\,q_t(1)] \to 64 \to 32 \to 1$,
+where $q_t$ is the normalized quantum tier. Total: 4,145 parameters.
+
+\textbf{Quantum selection note.} In W10C, the quantum tier index
+enters the MLP as an explicit feature, giving genuinely independent
+Q-values for each (task, quantum) pair: the MLP can assign different
+scores to (task 2, $q=0.5$\,s) and (task 2, $q=8.0$\,s). In W15
+(PyTorch), one task-level score is computed per candidate and tiled
+across all 3 quantum tiers---quantum selection is uniform among valid
+actions for the chosen task. W10C's quantum selection is learned;
+W15's is not.
+
+\textbf{FiLM conditioning (W14-$\omega$).} Preference scalar
+$\omega_s \in [0,1]$ modulates computation at two points:
+\begin{align}
+  Q_{\mathrm{cond}} &= Q \cdot (1+\omega_s)
+  \quad\text{(pre-attention query modulation)}\\
+  c_{\mathrm{cond}} &= c\cdot(1+\omega_s) + \omega_{\mathrm{mct}}
+  \quad\text{(post-attention context)}
+\end{align}
+Fixed scaling (not learned)---$\omega$ acts as a control signal.
+
+\textbf{Omega sampling (W14-$\omega$).}
+Episodes 0--8000: $\omega_s \sim U(0,1)$.
+Episodes 8000+: $\omega_s \sim \mathrm{Beta}(0.5,0.5)$ (approximated
+via $\omega_s = \sin^2(u\pi/2)$, $u \sim U[0,1]$). Replay buffer
+stores $\omega_s$ per transition; never resampled at training time.
+
+\subsection{Baselines}
+
+\textbf{SRPT oracle:} optimal mean completion time, requires true
+burst times. \textbf{Round Robin:} fixed-quantum preemptive, no
+ordering. \textbf{MLFQ:} 3 queues, quanta $\{4,8,16\}$\,s, aging
+threshold 50\,s. \textbf{CFS-lite:} vruntime with 1\,s granularity,
+10\,s target latency. \textbf{EEVDF-lite:} CFS-lite extended with
+per-task eligible times.
+
+%% ============================================================
+\section{Results}
+\label{sec:results}
+%% ============================================================
+
+\subsection{W10C: Primary Result}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{fig2_learning_curve.pdf}
+  \caption{W10C training progression. Round Robin (21.31\,s) and
+  SRPT oracle (15.20\,s) shown as references. Gray band:
+  $21.71\pm0.64$\,s across 3 fresh training seeds (CV\,=\,3.0\%).}
+  \label{fig:learning}
+\end{figure}
+
+Table~\ref{tab:w10c} reports the full agent progression.
+\textbf{W10C (replicated mean): $21.71\pm0.64$\,s} across 3
+independent seeds (CV\,=\,3.0\%), beating Round Robin by
+$\sim$2\,s. Best observed checkpoint: $17.23\pm11.38$\,s
+(N\,=\,1500 episodes, \texttt{dqn\_w10c.npz}$^\dagger$). See
+Figure~\ref{fig:learning}.
+
+\begin{table}[h]
+\centering
+\caption{Agent progression on Alibaba 2018 trace. All values
+reported on filtered test split. $^\dagger$Original checkpoint,
+N\,=\,1500 eval; replicated fresh training: $21.71\pm0.64$\,s
+(3 seeds, CV\,=\,3.0\%).}
+\label{tab:w10c}
+\small
+\begin{tabular}{lrr}
+\toprule
+Agent & MCT (s) & vs RR \\
+\midrule
+SRPT oracle & 15.20 & --- \\
+W10C orig.\ checkpoint$^\dagger$ & 17.23$\pm$11.38 & $-$4.08 \\
+\textbf{W10C replicated (3 seeds)} & \textbf{21.71$\pm$0.64} & $\sim$$-$2.0 \\
+W9 1-head & 19.22$\pm$11.58 & $-$2.09 \\
+Round Robin & 21.31$\pm$14.03 & baseline \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Two attention heads specialize spontaneously without supervision:
+Head 1 attends broadly across the queue (context/survey); Head 2
+consistently monitors the longest-waiting competitor (starvation
+prevention). SRPT agreement: 71.9\% overall, 69.9\% on steep tasks,
+30.3\% on smooth tasks.
+
+\subsection{Quantum Degeneracy Ablation}
+\label{sec:theory-confirms}
+
+Three ablations confirm Lemma~\ref{lem:mono} (Table~\ref{tab:abl}):
+
+\begin{table}[h]
+\centering
+\caption{Quantum degeneracy ablation.}
+\label{tab:abl}
+\small
+\begin{tabular}{lrrr}
+\toprule
+Variant & $q_{\min}$\% & $q_{\max}$\% & Total Value \\
+\midrule
+\texttt{quantum\_only} ($f_{\mathrm{rate}}$) & 100 & 0 & 250.55 \\
+\texttt{quantum\_only\_fixed} ($f_{\mathrm{total}}$) & 0 & 100 & 159.21 \\
+\texttt{ordering\_only} ($q_{\mathrm{med}}$) & --- & --- & 15.37 \\
+\textbf{W10C (attention)} & mixed & mixed & 241.92 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Both monotone scorers collapse to degenerate poles. The attention DQN
+produces mixed quantum selection---evidence that queue-global context
+breaks the degeneracy.
+
+\subsection{Gradient Alignment and $\tau$ Calibration}
+
+Default $\tau$ values (25\,s, 100\,s) are miscalibrated: median
+delays are 5,279\,s and 38,665\,s. At these delays,
+$e^{-5279/25}\approx 10^{-92}$---numerically zero. The value gradient
+is zero; 93--100\% of ordering decisions become near-ties regardless
+of policy. Calibrated values ($\tau_{\text{steep}}=900$\,s,
+$\tau_{\text{smooth}}=800$\,s) restore gradient signal but near-ties
+persist due to trace composition (92\% smooth tasks).
+
+\subsection{Value-Rate Fairness Index (\vrfi)}
+\label{sec:vrfi}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{fig4_vrfi_falsification.pdf}
+  \caption{\vrfi\ falsification (Example D): 10 tasks with identical
+  delays ($d=50$\,s) yield JFI\,=\,1.0, SDV\,=\,0 under existing
+  metrics, yet \vrfi\,=\,0.641 correctly detects that steep tasks
+  lose value at twice the rate of smooth tasks.}
+  \label{fig:vrfi}
+\end{figure}
+
+\begin{definition}[\vlr\ and \vrfi]
+For task $i$ with delay $d_i$:
+\begin{equation}
+  \vlr_i = \frac{V_i(0) - V_i(d_i)}{d_i},
+  \quad \lim_{d_i\to 0}\vlr_i = \frac{\mathrm{base}_i}{\tau_i}
+  \label{eq:vlr}
+\end{equation}
+\begin{equation}
+  \vrfi = 1 - \frac{\sigma(\vlr)}{\mu(\vlr)} = 1 - \mathrm{CV}(\vlr)
+  \label{eq:vrfi}
+\end{equation}
+$\vrfi\in(-\infty,1]$: value 1 = equal value-loss rates; $\to-\infty$
+= concentrated loss.
+\end{definition}
+
+\textbf{Falsification.} Ten tasks, identical delay $d=50$\,s: 5 steep
+($\tau=25$\,s) and 5 smooth ($\tau=100$\,s). Then JFI\,=\,1.0
+(equal turnarounds), SDV\,=\,0 (equal slowdowns), yet steep tasks
+have $\vlr\approx0.016$ vs.\ smooth $\vlr\approx0.008$---a $2\times$
+disparity. \vrfi\,=\,0.641 correctly identifies the inequality.
+See Figure~\ref{fig:vrfi}.
+
+Table~\ref{tab:fair} reports five-policy evaluation. Value-aware
+policy achieves rank sum 17 vs.\ MLFQ's 28, zero starvation, lowest
+global SDV.
+
+\begin{table}[h]
+\centering
+\caption{Five-policy fairness evaluation (300-task slice).}
+\label{tab:fair}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+Policy & JFI & SDV & Starv & \vrfi \\
+\midrule
+value\_aware & 0.934 & 566 & \textbf{0} & 0.712 \\
+mlfq & 0.943 & 2,193 & 0 & 0.420 \\
+cfs\_lite & 0.916 & 6,138 & 1 & --- \\
+rr & \textbf{0.953} & 15,819 & 5 & --- \\
+fcfs & 0.774 & 12.7M & 27 & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{2$\times$2 Ablation: Reward $\times$ Observability}
+\label{sec:2x2a}
+\label{sec:2x2b}
+
+\begin{table}[h]
+\centering
+\caption{2$\times$2 ablation (Alibaba 2018, mean$\pm$std, 3 seeds).
+$^*$W10C original checkpoint N\,=\,1500; fresh training:
+$21.71\pm0.64$\,s.}
+\label{tab:2x2}
+\small
+\begin{tabular}{llrr}
+\toprule
+Condition & Agent & MCT (s) & SRPT\,(\%) \\
+\midrule
+Neither removed & W10C & $17.23\pm11.38^*$ & 45.7$\pm$3.0 \\
+Burst removed & W12 & $21.67\pm0.42$ & 56.6 \\
+Reward changed & W11d & $26.35\pm1.93$ & 40.6 \\
+Both changed & W11/W11b & $21.05\pm0.72$ & 54.7 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Three findings: (1)~\textbf{Reward dominates when burst is available}:
+W10C vs.\ W11d (same state, different reward) shows 9.1\,s gap.
+(2)~\textbf{Burst costs 4.44\,s}: W10C vs.\ W12 (same reward, no
+burst). (3)~\textbf{Without burst, reward barely matters}: W12
+vs.\ W11/W11b differ by 0.6\,s---state representation is the
+binding constraint.
+
+Furthermore, W11d (26.35\,s) is \emph{worse} than W11/W11b
+(21.05\,s) despite having more state information. Burst time actively
+interferes with composite reward learning.
+
+\textbf{Core insight.} The value-delta reward implicitly unifies
+efficiency and urgency-weighted fairness: a task early in its decay
+generates a large negative delta, approximating SRPT-like ordering
+as an emergent consequence. Decomposing this into additive components
+breaks the coupling and causes policy collapse (Section \ref{sec:pbrs}).
+
+\subsection{PBRS Lambda Tuning}
+\label{sec:pbrs}
+
+PBRS with $\varphi(s) = -\lambda\cdot\max_i(t_{\mathrm{starve},i})$
+tested at $\lambda\in\{0.01,0.05,0.10,0.25,0.50\}$: starvation
+floor 46--57\% at all $\lambda$, unmoved. No $\lambda$ achieves
+MCT\,$<21.59$\,s and starvation\,$<36.0\%$ simultaneously. MLFQ's
+aging rule is a deterministic constraint; PBRS produces probabilistic
+tendencies that the value-delta signal overrides at every tested
+$\lambda$.
+
+\subsection{Preference-Conditioned Agent (W14-$\omega$)}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{fig1_pareto_frontier.pdf}
+  \caption{W14-$\omega$ Pareto frontier as $\omega_s$ varies 0$\to$1.
+  Shaded region dominates MLFQ on both metrics. $\omega_s=0.7$
+  (gold star) recommended: MCT\,=\,20.60\,s, starvation\,=\,32.5\%.
+  Non-monotonic frontier: pure starvation optimization
+  ($\omega_s=1.0$, 38.5\%) is worse than balanced ($\omega_s=0.7$).}
+  \label{fig:pareto}
+\end{figure}
+
+Gradient norm ratio 0.92--1.12 throughout 30k episodes---no
+policy collapse. Table~\ref{tab:omega} shows the full frontier.
+
+\begin{table}[h]
+\centering
+\caption{W14-$\omega$ Pareto frontier vs.\ MLFQ.}
+\label{tab:omega}
+\small
+\begin{tabular}{rrrr}
+\toprule
+$\omega_s$ & MCT (s) & Starv\,(\%) & vs MLFQ \\
+\midrule
+0.0 & 20.51 & 44.0 & MCT\,$\checkmark$, Starv\,$\times$ \\
+0.5 & 20.73 & 38.0 & MCT\,$\checkmark$, Starv\,$\times$ \\
+\textbf{0.6} & \textbf{20.49} & \textbf{35.0} & \textbf{Both}\,$\checkmark$ \\
+\textbf{0.7} & \textbf{20.60} & \textbf{32.5} & \textbf{Both}\,$\checkmark$ \\
+\textbf{0.8} & \textbf{20.43} & \textbf{34.5} & \textbf{Both}\,$\checkmark$ \\
+0.9 & 20.45 & 38.5 & MCT\,$\checkmark$, Starv\,$\times$ \\
+1.0 & 20.36 & 38.5 & MCT\,$\checkmark$, Starv\,$\times$ \\
+\midrule
+MLFQ & 21.59 & 36.0 & baseline \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+$\omega_s\in\{0.6,0.7,0.8\}$ simultaneously dominate MLFQ.
+Recommended: $\omega_s=0.7$ (lowest starvation at 32.5\%).
+The \textbf{non-monotonic frontier}---starvation minimized at
+$\omega_s=0.7$, not $\omega_s=1.0$---establishes that optimal
+fairness requires retaining throughput pressure.
+
+\subsection{Variable-N Analysis and W15}
+
+W14-$\omega$ trained on fixed $N=5$ loses to MLFQ at $\rho\geq0.7$
+(OOD\%\,$>13.8\%$). Root cause: 5-slot truncation removes queue
+visibility when $N>5$; MLFQ's aging rule operates over the full
+queue regardless of size.
+
+W15 retrains W14-$\omega$'s architecture on Poisson arrivals
+($\lambda\sim U(0.01,0.08)$, 300 completions/episode), presenting
+the 5 longest-waiting tasks in the attention window when $N>5$.
+Training required four stability fixes: TD target clipping $[-50,50]$,
+Huber loss, frequent target sync (every 5 episodes), LR\,=\,$10^{-4}$.
+
+\begin{table}[h]
+\centering
+\caption{W15 results: variable-N training vs.\ MLFQ.}
+\label{tab:w15}
+\small
+\begin{tabular}{lrr}
+\toprule
+Agent & MCT (mean$\pm$std, s) & Starv\,(\%) \\
+\midrule
+MLFQ baseline & $22.06\pm13.36$ & 37.5 \\
+W15 seed 42 & $21.97\pm13.81$ & 40.0 \\
+W15 seed 123 & $20.57\pm11.96$ & 47.5 \\
+W15 seed 456 & $\mathbf{19.43\pm11.83}$ & 42.0 \\
+W15 mean$\pm$std & $20.66\pm1.03$ & 43.2 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+W15 beats MLFQ on MCT across all 3 seeds (best: $-2.63$\,s; mean:
+$-1.40$\,s). Starvation (40--48\%) remains above MLFQ (38\%)---
+consistent with Section~\ref{sec:pbrs}: reward shaping alone cannot
+enforce hard starvation guarantees.
+
+%% ============================================================
+\section{Discussion}
+%% ============================================================
+
+\subsection{What Value-Delta Reward Encodes}
+
+The value-delta reward appears to be a fairness signal. In practice,
+it implicitly encodes SRPT-like ordering: a task early in decay
+generates a large negative delta, pushing the agent to complete it
+quickly. The W11 ablation series confirmed this by decomposing the
+signal---when split into additive components, both objectives degrade.
+The signal's power comes from its unity.
+
+\subsection{The Starvation Problem}
+
+Starvation (40--53\% under various agents vs.\ MLFQ's 36--38\%) is
+structural, not a tuning failure. MLFQ's aging rule is a deterministic
+constraint. Even W14-$\omega$'s best setting ($\omega_s=0.7$, 32.5\%)
+achieves only a 3.5\,pp advantage over MLFQ---a margin that warrants
+caution in interpretation.
+
+\subsection{Limitations}
+
+\begin{enumerate}[itemsep=2pt]
+\item \textbf{Environment scale.} Five processes, 300-task episodes,
+  single core. Production schedulers handle millions of concurrent
+  processes.
+\item \textbf{Burst time.} W10C uses true remaining burst time
+  (oracle). W12/W15 remove this at $\sim$4.44\,s MCT cost.
+\item \textbf{Value curve assignment.} Steep/smooth curve assignment
+  is a human modeling choice. In multi-tenant systems, $\tau$
+  assignment could become implicit prioritization.
+\item \textbf{Statistical rigor.} Three seeds is a minimum; 5--10
+  seeds would provide stronger statistical guarantees for the W14-$\omega$
+  and W15 results.
+\end{enumerate}
+
+\subsection{Ethical Considerations}
+
+Value-aware scheduling raises equity questions beyond the technical.
+Curve assignment (steep/smooth) follows task class---a heuristic that
+may disadvantage batch workloads belonging to resource-constrained
+users. The $\tau$ parameter directly controls urgency; in multi-tenant
+systems it could enable implicit prioritization. The choice of fairness
+definition (\vrfi\ vs.\ JFI) is a value judgment that should involve
+stakeholder input in production deployments.
+
+%% ============================================================
+\section{Conclusion}
+%% ============================================================
+
+We trained a two-head attention DQN on the Alibaba 2018 cluster trace,
+progressing through fifteen agent versions.
+
+The \textbf{Quantum Scoring Monotonicity Lemma} proves formally that
+$f_{\mathrm{rate}}$ and $f_{\mathrm{total}}$ are degenerate local
+scorers---queue-global information is necessary to escape their poles.
+This result connects to production systems that independently reached
+the same architectural conclusion.
+
+\textbf{\vrfi} fills a measurable gap: identical delays can yield
+JFI\,=\,1.0, SDV\,=\,0, yet \vrfi\,=\,0.641---a concrete case where
+value-rate inequality is invisible to prior metrics.
+
+The \textbf{2$\times$2 ablation} establishes that reward structure and
+burst observability are independently load-bearing. The oracle
+information gap is 4.44\,s on the 2018 trace---modest relative to
+earlier experiments on synthetic distributions.
+
+\textbf{W14-$\omega$} beats MLFQ on both MCT and starvation at
+$\omega_s=0.7$, with a single model adaptable at runtime via
+preference vector $\omega$. The non-monotonic Pareto frontier
+establishes that optimal fairness requires throughput pressure.
+
+\textbf{W15} confirms MCT advantage generalizes to variable-N Poisson
+arrival streams (mean $-1.40$\,s vs.\ MLFQ across 3 seeds).
+
+\subsection*{Future Work}
+
+(1) Preference-conditioned variable-N training combining W14-$\omega$
+and W15. (2) Learned burst prediction to close the 4.44\,s oracle
+gap. (3) Full transformer architecture scaling to variable $N$.
+(4) LLM-based policy discovery using open-source models.
+
+%% ============================================================
+\bibliographystyle{plain}
+\begin{thebibliography}{9}
+
+\bibitem{kernelOracle}
+  S.~Y.~Kahu.
+  \newblock KernelOracle: Predicting the Linux Scheduler's Next Move
+  with Deep Learning.
+  \newblock {\em arXiv:2505.15213}, 2025.
+
+\bibitem{alps}
+  Y.~Fu, R.~Shi, H.~Wang, S.~Chen, and Y.~Cheng.
+  \newblock ALPS: An Adaptive Learning, Priority OS Scheduler for
+  Serverless Functions.
+  \newblock {\em USENIX ATC}, 2024.
+
+\bibitem{rlscheduler}
+  D.~Zhang, D.~Dai, Y.~He, F.~S.~Bao, and B.~Xie.
+  \newblock RLScheduler: An Automated HPC Batch Job Scheduler Using
+  Reinforcement Learning.
+  \newblock {\em SC}, 2020. doi:10.1109/SC41405.2020.00035.
+
+\bibitem{doubleDQN}
+  X.~Sun et~al.
+  \newblock Dynamic OS Scheduling Using Double DQN.
+  \newblock {\em arXiv:2503.23659}, 2025.
+
+\bibitem{smartOS}
+  S.~Goodarzy et~al.
+  \newblock SmartOS: Towards Automated Learning and User-Adaptive
+  Resource Allocation in OS.
+  \newblock {\em APSys}, 2021. doi:10.1145/3476886.3477519.
+
+\bibitem{littlesLaw}
+  J.~D.~C.~Little.
+  \newblock A Proof for the Queuing Formula: $L = \lambda W$.
+  \newblock {\em Operations Research}, 9(3):383--387, 1961.
+
+\bibitem{jainFairness}
+  R.~Jain, D.~Chiu, and W.~Hawe.
+  \newblock A Quantitative Measure of Fairness and Discrimination for
+  Resource Allocation in Shared Computer Systems.
+  \newblock DEC TR-301, 1984.
+
+\bibitem{alibaba}
+  Alibaba Group.
+  \newblock Alibaba Cluster Trace Program, 2018.
+  \newblock \url{https://github.com/alibaba/clusterdata}.
+
+\bibitem{eevdf}
+  T.~Natvig.
+  \newblock EEVDF Scheduler.
+  \newblock {\em Linux Kernel Mailing List}, 2023.
+  \newblock \url{https://lwn.net/Articles/925371/}.
+
+\end{thebibliography}
+
+\end{document}

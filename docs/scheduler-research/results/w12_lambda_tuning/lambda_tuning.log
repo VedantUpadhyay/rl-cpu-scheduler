@@ -1,0 +1,372 @@
+====================================================================
+W12 PBRS Lambda Tuning Experiment
+Variants: ['W12-λ1', 'W12-λ2', 'W12-λ3', 'W12-λ4']  Seeds: [42, 123, 456]
+N_episodes=10000  N_eval=500
+====================================================================
+
+Loading TRAIN trace: /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/data/alibaba2018/trace_train_filtered.csv
+  TraceEpisodeSampler5: 7,925,241 tasks loaded.
+Loading TEST trace: /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/data/alibaba2018/trace_test_filtered.csv
+  TraceEpisodeSampler5: 1,981,175 tasks loaded.
+
+
+====================================================================
+VARIANT: W12-λ1  λ=0.05
+====================================================================
+
+--- W12-λ1 seed=42 ---
+  ep    500 | loss=-0.0592 | H=0.3396 | MCT=20.97s | SRPT=62.7%
+  ep   1000 | loss=-0.0485 | H=0.3208 | MCT=21.05s | SRPT=61.3%
+  ep   1500 | loss=-0.0425 | H=0.3565 | MCT=22.47s | SRPT=60.6%
+  ep   2000 | loss=-0.0108 | H=0.2732 | MCT=22.02s | SRPT=65.1%
+  ep   2500 | loss=-0.0011 | H=0.2718 | MCT=22.80s | SRPT=65.9%
+  ep   3000 | loss=-0.0085 | H=0.2782 | MCT=19.95s | SRPT=60.7%
+  ep   3500 | loss=-0.0181 | H=0.3122 | MCT=20.76s | SRPT=60.8%
+  ep   4000 | loss=-0.0089 | H=0.3178 | MCT=20.78s | SRPT=61.9%
+  ep   4500 | loss=0.0002 | H=0.3534 | MCT=20.48s | SRPT=58.4%
+  ep   5000 | loss=-0.0051 | H=0.3801 | MCT=23.97s | SRPT=57.1%
+  ep   5500 | loss=0.0010 | H=0.3688 | MCT=22.04s | SRPT=55.3%
+  ep   6000 | loss=-0.0080 | H=0.3954 | MCT=23.38s | SRPT=58.1%
+  ep   6500 | loss=0.0065 | H=0.3784 | MCT=20.27s | SRPT=59.9%
+  ep   7000 | loss=0.0085 | H=0.4001 | MCT=20.91s | SRPT=58.7%
+  ep   7500 | loss=-0.0010 | H=0.4190 | MCT=25.04s | SRPT=56.7%
+  ep   8000 | loss=0.0109 | H=0.3883 | MCT=22.19s | SRPT=56.6%
+  ep   8500 | loss=0.0086 | H=0.4144 | MCT=22.21s | SRPT=59.8%
+  ep   9000 | loss=0.0149 | H=0.4102 | MCT=21.62s | SRPT=56.9%
+  ep   9500 | loss=0.0173 | H=0.4382 | MCT=22.50s | SRPT=55.9%
+  ep  10000 | loss=0.0304 | H=0.4343 | MCT=22.52s | SRPT=52.3%
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w12_lambda_tuning/W12_l1_seed42.npz
+  Seed 42: MCT=21.69±14.16s  SRPT=50.7%  Starve=47.8%  VRFI=0.480  Wall=5.3min
+
+--- W12-λ1 seed=123 ---
+  ep    500 | loss=-0.0443 | H=0.3356 | MCT=20.42s | SRPT=61.4%
+  ep   1000 | loss=-0.0311 | H=0.3158 | MCT=20.74s | SRPT=66.3%
+  ep   1500 | loss=-0.0200 | H=0.2941 | MCT=22.21s | SRPT=63.0%
+  ep   2000 | loss=-0.0014 | H=0.2550 | MCT=23.11s | SRPT=61.3%
+  ep   2500 | loss=0.0012 | H=0.2493 | MCT=22.88s | SRPT=59.8%
+  ep   3000 | loss=-0.0207 | H=0.3105 | MCT=22.51s | SRPT=58.6%
+  ep   3500 | loss=-0.0225 | H=0.3257 | MCT=21.32s | SRPT=61.0%
+  ep   4000 | loss=-0.0243 | H=0.3860 | MCT=20.67s | SRPT=56.9%
+  ep   4500 | loss=-0.0170 | H=0.3155 | MCT=23.71s | SRPT=60.5%
+  ep   5000 | loss=-0.0251 | H=0.3904 | MCT=22.75s | SRPT=57.2%
+  ep   5500 | loss=-0.0189 | H=0.3476 | MCT=21.32s | SRPT=58.7%
+  ep   6000 | loss=-0.0298 | H=0.4110 | MCT=21.20s | SRPT=58.2%
+  ep   6500 | loss=-0.0246 | H=0.4024 | MCT=22.83s | SRPT=51.9%
+  ep   7000 | loss=-0.0147 | H=0.3755 | MCT=21.75s | SRPT=56.3%
+  ep   7500 | loss=-0.0087 | H=0.3988 | MCT=21.27s | SRPT=51.5%
+  ep   8000 | loss=0.0026 | H=0.3999 | MCT=21.16s | SRPT=56.0%
+  ep   8500 | loss=0.0147 | H=0.3697 | MCT=21.74s | SRPT=53.6%
+  ep   9000 | loss=0.0184 | H=0.3735 | MCT=21.03s | SRPT=56.1%
+  ep   9500 | loss=0.0190 | H=0.3800 | MCT=23.76s | SRPT=53.9%
+  ep  10000 | loss=0.0257 | H=0.3902 | MCT=22.67s | SRPT=52.6%
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w12_lambda_tuning/W12_l1_seed123.npz
+  Seed 123: MCT=22.21±14.21s  SRPT=51.5%  Starve=53.6%  VRFI=0.466  Wall=12.4min
+
+--- W12-λ1 seed=456 ---
+  ep    500 | loss=-0.0727 | H=0.3205 | MCT=20.33s | SRPT=66.7%
+  ep   1000 | loss=-0.0784 | H=0.3103 | MCT=21.94s | SRPT=61.3%
+  ep   1500 | loss=-0.0786 | H=0.3257 | MCT=20.61s | SRPT=65.5%
+  ep   2000 | loss=-0.0761 | H=0.3360 | MCT=21.86s | SRPT=65.7%
+  ep   2500 | loss=-0.0609 | H=0.2937 | MCT=22.79s | SRPT=65.8%
+  ep   3000 | loss=-0.0489 | H=0.2500 | MCT=20.91s | SRPT=71.3%
+  ep   3500 | loss=-0.0490 | H=0.2689 | MCT=22.09s | SRPT=66.2%
+  ep   4000 | loss=-0.0445 | H=0.2691 | MCT=23.76s | SRPT=67.3%
+  ep   4500 | loss=-0.0390 | H=0.2507 | MCT=21.74s | SRPT=63.9%
+  ep   5000 | loss=-0.0428 | H=0.2990 | MCT=20.27s | SRPT=70.2%
+  ep   5500 | loss=-0.0364 | H=0.2805 | MCT=21.15s | SRPT=69.9%
+  ep   6000 | loss=-0.0348 | H=0.2958 | MCT=22.30s | SRPT=67.6%
+  ep   6500 | loss=-0.0261 | H=0.2671 | MCT=24.53s | SRPT=65.3%
+  ep   7000 | loss=-0.0208 | H=0.2524 | MCT=22.17s | SRPT=66.6%
+  ep   7500 | loss=-0.0233 | H=0.3280 | MCT=21.21s | SRPT=68.2%
+  ep   8000 | loss=-0.0202 | H=0.3504 | MCT=21.01s | SRPT=64.6%
+  ep   8500 | loss=-0.0122 | H=0.3048 | MCT=23.19s | SRPT=61.1%
+  ep   9000 | loss=-0.0082 | H=0.3115 | MCT=21.80s | SRPT=64.0%
+  ep   9500 | loss=-0.0028 | H=0.2732 | MCT=20.19s | SRPT=65.8%
+  ep  10000 | loss=0.0013 | H=0.3318 | MCT=22.66s | SRPT=61.7%
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w12_lambda_tuning/W12_l1_seed456.npz
+  Seed 456: MCT=20.99±13.27s  SRPT=64.7%  Starve=50.4%  VRFI=0.259  Wall=4.1min
+
+====================================================================
+VARIANT: W12-λ2  λ=0.1
+====================================================================
+
+--- W12-λ2 seed=42 ---
+  ep    500 | loss=-0.0486 | H=0.3398 | MCT=20.38s | SRPT=63.1%
+  ep   1000 | loss=-0.0378 | H=0.3173 | MCT=21.07s | SRPT=64.6%
+  ep   1500 | loss=-0.0172 | H=0.3319 | MCT=22.27s | SRPT=64.2%
+  ep   2000 | loss=0.0060 | H=0.2509 | MCT=22.70s | SRPT=60.0%
+  ep   2500 | loss=0.0142 | H=0.2468 | MCT=22.24s | SRPT=62.7%
+  ep   3000 | loss=0.0141 | H=0.2689 | MCT=19.92s | SRPT=57.1%
+  ep   3500 | loss=0.0281 | H=0.2870 | MCT=20.88s | SRPT=65.5%
+  ep   4000 | loss=0.0256 | H=0.2811 | MCT=21.01s | SRPT=58.9%
+  ep   4500 | loss=-0.0020 | H=0.3441 | MCT=20.73s | SRPT=62.0%
+  ep   5000 | loss=-0.0010 | H=0.3612 | MCT=23.85s | SRPT=57.7%
+  ep   5500 | loss=-0.0026 | H=0.3877 | MCT=21.96s | SRPT=57.5%
+  ep   6000 | loss=-0.0030 | H=0.3606 | MCT=22.81s | SRPT=54.5%
+  ep   6500 | loss=0.0011 | H=0.3825 | MCT=20.27s | SRPT=59.5%
+  ep   7000 | loss=-0.0054 | H=0.3921 | MCT=21.48s | SRPT=57.0%
+  ep   7500 | loss=-0.0014 | H=0.4015 | MCT=25.15s | SRPT=55.1%
+  ep   8000 | loss=0.0141 | H=0.3421 | MCT=22.78s | SRPT=57.1%
+  ep   8500 | loss=0.0162 | H=0.3821 | MCT=22.67s | SRPT=56.3%
+  ep   9000 | loss=0.0218 | H=0.3512 | MCT=21.94s | SRPT=55.8%
+  ep   9500 | loss=0.0228 | H=0.4052 | MCT=22.17s | SRPT=57.1%
+  ep  10000 | loss=0.0299 | H=0.3369 | MCT=21.50s | SRPT=57.5%
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w12_lambda_tuning/W12_l2_seed42.npz
+  Seed 42: MCT=21.79±14.19s  SRPT=52.2%  Starve=47.8%  VRFI=0.514  Wall=9.7min
+
+--- W12-λ2 seed=123 ---
+  ep    500 | loss=-0.0329 | H=0.3252 | MCT=20.50s | SRPT=63.4%
+  ep   1000 | loss=-0.0275 | H=0.2995 | MCT=21.30s | SRPT=64.1%
+  ep   1500 | loss=-0.0113 | H=0.2671 | MCT=21.48s | SRPT=66.7%
+  ep   2000 | loss=-0.0063 | H=0.2372 | MCT=24.39s | SRPT=60.5%
+  ep   2500 | loss=0.0201 | H=0.2324 | MCT=23.03s | SRPT=62.4%
+  ep   3000 | loss=-0.0023 | H=0.2869 | MCT=21.78s | SRPT=62.7%
+  ep   3500 | loss=-0.0062 | H=0.2935 | MCT=22.02s | SRPT=63.3%
+  ep   4000 | loss=-0.0203 | H=0.3261 | MCT=20.60s | SRPT=60.7%
+  ep   4500 | loss=-0.0208 | H=0.3614 | MCT=23.59s | SRPT=64.9%
+  ep   5000 | loss=-0.0145 | H=0.3246 | MCT=23.00s | SRPT=61.9%
+  ep   5500 | loss=-0.0146 | H=0.3295 | MCT=21.27s | SRPT=60.7%
+  ep   6000 | loss=-0.0154 | H=0.3758 | MCT=21.63s | SRPT=59.5%
+  ep   6500 | loss=-0.0079 | H=0.4101 | MCT=22.66s | SRPT=57.3%
+  ep   7000 | loss=0.0057 | H=0.3335 | MCT=21.86s | SRPT=56.3%
+  ep   7500 | loss=0.0050 | H=0.3146 | MCT=21.92s | SRPT=57.5%
+  ep   8000 | loss=0.0094 | H=0.3785 | MCT=21.55s | SRPT=59.2%
+  ep   8500 | loss=0.0135 | H=0.3566 | MCT=21.82s | SRPT=59.8%
+  ep   9000 | loss=0.0189 | H=0.3720 | MCT=21.31s | SRPT=59.0%
+  ep   9500 | loss=0.0217 | H=0.3281 | MCT=23.50s | SRPT=62.6%
+  ep  10000 | loss=0.0284 | H=0.3003 | MCT=22.00s | SRPT=59.5%
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w12_lambda_tuning/W12_l2_seed123.npz
+  Seed 123: MCT=21.78±13.78s  SRPT=58.0%  Starve=53.4%  VRFI=0.381  Wall=5.4min
+
+--- W12-λ2 seed=456 ---
+  ep    500 | loss=-0.0610 | H=0.3244 | MCT=20.59s | SRPT=62.2%
+  ep   1000 | loss=-0.0673 | H=0.2955 | MCT=21.79s | SRPT=67.1%
+  ep   1500 | loss=-0.0484 | H=0.2844 | MCT=20.82s | SRPT=65.4%
+  ep   2000 | loss=-0.0516 | H=0.2994 | MCT=21.58s | SRPT=64.3%
+  ep   2500 | loss=-0.0449 | H=0.2921 | MCT=22.42s | SRPT=64.0%
+  ep   3000 | loss=-0.0371 | H=0.2517 | MCT=21.54s | SRPT=63.5%
+  ep   3500 | loss=-0.0449 | H=0.3035 | MCT=21.39s | SRPT=64.8%
+  ep   4000 | loss=-0.0626 | H=0.4020 | MCT=23.64s | SRPT=59.6%
+  ep   4500 | loss=-0.0440 | H=0.3322 | MCT=21.72s | SRPT=56.6%
+  ep   5000 | loss=-0.0327 | H=0.3068 | MCT=19.98s | SRPT=62.2%
+  ep   5500 | loss=-0.0401 | H=0.3599 | MCT=21.18s | SRPT=56.7%
+  ep   6000 | loss=-0.0321 | H=0.3429 | MCT=22.39s | SRPT=57.3%
+  ep   6500 | loss=-0.0191 | H=0.3042 | MCT=24.07s | SRPT=59.2%
+  ep   7000 | loss=-0.0219 | H=0.3456 | MCT=22.05s | SRPT=61.3%
+  ep   7500 | loss=-0.0194 | H=0.3430 | MCT=21.33s | SRPT=64.8%
+  ep   8000 | loss=-0.0211 | H=0.4298 | MCT=20.90s | SRPT=52.5%
+  ep   8500 | loss=-0.0113 | H=0.3622 | MCT=22.67s | SRPT=57.5%
+  ep   9000 | loss=-0.0010 | H=0.2894 | MCT=21.59s | SRPT=52.7%
+  ep   9500 | loss=0.0058 | H=0.3224 | MCT=20.86s | SRPT=62.3%
+  ep  10000 | loss=0.0144 | H=0.2543 | MCT=21.77s | SRPT=54.7%
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w12_lambda_tuning/W12_l2_seed456.npz
+  Seed 456: MCT=21.52±13.75s  SRPT=56.0%  Starve=56.6%  VRFI=0.424  Wall=4.6min
+
+====================================================================
+VARIANT: W12-λ3  λ=0.25
+====================================================================
+
+--- W12-λ3 seed=42 ---
+  ep    500 | loss=0.0062 | H=0.2808 | MCT=20.33s | SRPT=64.2%
+  ep   1000 | loss=-0.0015 | H=0.2472 | MCT=21.17s | SRPT=66.1%
+  ep   1500 | loss=0.0358 | H=0.1915 | MCT=21.92s | SRPT=66.0%
+  ep   2000 | loss=0.0767 | H=0.1535 | MCT=21.88s | SRPT=69.0%
+  ep   2500 | loss=0.0645 | H=0.1580 | MCT=22.64s | SRPT=56.8%
+  ep   3000 | loss=0.0474 | H=0.2351 | MCT=19.67s | SRPT=57.8%
+  ep   3500 | loss=0.0200 | H=0.2661 | MCT=20.48s | SRPT=59.5%
+  ep   4000 | loss=0.0166 | H=0.2622 | MCT=20.02s | SRPT=64.8%
+  ep   4500 | loss=0.0375 | H=0.2639 | MCT=20.48s | SRPT=60.3%
+  ep   5000 | loss=0.0353 | H=0.2941 | MCT=23.91s | SRPT=57.3%
+  ep   5500 | loss=0.0399 | H=0.2956 | MCT=21.95s | SRPT=54.2%
+  ep   6000 | loss=0.0402 | H=0.2965 | MCT=22.66s | SRPT=58.1%
+  ep   6500 | loss=0.0396 | H=0.2895 | MCT=20.17s | SRPT=61.3%
+  ep   7000 | loss=0.0379 | H=0.2940 | MCT=20.82s | SRPT=62.6%
+  ep   7500 | loss=0.0375 | H=0.3381 | MCT=24.87s | SRPT=54.8%
+  ep   8000 | loss=0.0521 | H=0.3198 | MCT=22.58s | SRPT=53.7%
+  ep   8500 | loss=0.0615 | H=0.2919 | MCT=21.75s | SRPT=59.3%
+  ep   9000 | loss=0.0522 | H=0.2851 | MCT=21.97s | SRPT=61.3%
+  ep   9500 | loss=0.0506 | H=0.3162 | MCT=22.67s | SRPT=59.1%
+  ep  10000 | loss=0.0632 | H=0.3085 | MCT=21.65s | SRPT=59.3%
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w12_lambda_tuning/W12_l3_seed42.npz
+  Seed 42: MCT=21.34±13.93s  SRPT=53.9%  Starve=50.0%  VRFI=0.282  Wall=4.6min
+
+--- W12-λ3 seed=123 ---
+  ep    500 | loss=0.0313 | H=0.2855 | MCT=21.01s | SRPT=59.9%
+  ep   1000 | loss=-0.0137 | H=0.2632 | MCT=20.36s | SRPT=63.3%
+  ep   1500 | loss=0.0133 | H=0.2262 | MCT=23.13s | SRPT=63.3%
+  ep   2000 | loss=0.0447 | H=0.1662 | MCT=24.30s | SRPT=63.7%
+  ep   2500 | loss=0.0808 | H=0.1512 | MCT=23.25s | SRPT=65.7%
+  ep   3000 | loss=0.0848 | H=0.1668 | MCT=23.42s | SRPT=64.1%
+  ep   3500 | loss=0.0744 | H=0.1602 | MCT=22.27s | SRPT=63.7%
+  ep   4000 | loss=0.1064 | H=0.1602 | MCT=20.26s | SRPT=65.5%
+  ep   4500 | loss=0.0826 | H=0.1734 | MCT=23.89s | SRPT=62.4%
+  ep   5000 | loss=0.0661 | H=0.1989 | MCT=23.36s | SRPT=62.7%
+  ep   5500 | loss=0.0623 | H=0.1764 | MCT=21.59s | SRPT=61.1%
+  ep   6000 | loss=0.0550 | H=0.1772 | MCT=21.84s | SRPT=64.0%
+  ep   6500 | loss=0.0520 | H=0.1814 | MCT=22.89s | SRPT=57.9%
+  ep   7000 | loss=0.0617 | H=0.1807 | MCT=21.27s | SRPT=62.4%
+  ep   7500 | loss=0.0495 | H=0.1980 | MCT=21.56s | SRPT=57.9%
+  ep   8000 | loss=0.0637 | H=0.2012 | MCT=21.09s | SRPT=63.9%
+  ep   8500 | loss=0.0624 | H=0.1862 | MCT=21.88s | SRPT=57.5%
+  ep   9000 | loss=0.0842 | H=0.2013 | MCT=21.03s | SRPT=60.0%
+  ep   9500 | loss=0.0749 | H=0.1464 | MCT=23.25s | SRPT=53.6%
+  ep  10000 | loss=0.0778 | H=0.1773 | MCT=22.25s | SRPT=53.2%
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w12_lambda_tuning/W12_l3_seed123.npz
+  Seed 123: MCT=22.22±13.87s  SRPT=51.6%  Starve=48.6%  VRFI=0.419  Wall=44.0min
+
+--- W12-λ3 seed=456 ---
+  ep    500 | loss=0.1060 | H=0.2713 | MCT=20.97s | SRPT=63.2%
+  ep   1000 | loss=-0.0237 | H=0.2523 | MCT=21.10s | SRPT=69.7%
+  ep   1500 | loss=-0.0003 | H=0.1987 | MCT=20.68s | SRPT=65.2%
+  ep   2000 | loss=0.0137 | H=0.1794 | MCT=21.08s | SRPT=65.2%
+  ep   2500 | loss=0.0109 | H=0.1459 | MCT=22.28s | SRPT=65.3%
+  ep   3000 | loss=0.0005 | H=0.1995 | MCT=20.17s | SRPT=72.1%
+  ep   3500 | loss=0.0039 | H=0.2056 | MCT=20.70s | SRPT=72.3%
+  ep   4000 | loss=0.0123 | H=0.1852 | MCT=23.01s | SRPT=67.0%
+  ep   4500 | loss=0.0141 | H=0.2239 | MCT=21.95s | SRPT=60.2%
+  ep   5000 | loss=0.0125 | H=0.2453 | MCT=20.52s | SRPT=62.6%
+  ep   5500 | loss=0.0053 | H=0.2816 | MCT=21.47s | SRPT=61.2%
+  ep   6000 | loss=0.0235 | H=0.2678 | MCT=22.17s | SRPT=64.7%
+  ep   6500 | loss=0.0013 | H=0.3465 | MCT=24.48s | SRPT=58.1%
+  ep   7000 | loss=0.0078 | H=0.3288 | MCT=23.27s | SRPT=55.4%
+  ep   7500 | loss=0.0131 | H=0.3692 | MCT=22.12s | SRPT=56.4%
+  ep   8000 | loss=0.0162 | H=0.3140 | MCT=21.60s | SRPT=60.7%
+  ep   8500 | loss=0.0365 | H=0.3341 | MCT=23.33s | SRPT=60.0%
+  ep   9000 | loss=0.0372 | H=0.2958 | MCT=22.30s | SRPT=57.7%
+  ep   9500 | loss=0.0527 | H=0.3213 | MCT=21.03s | SRPT=60.2%
+  ep  10000 | loss=0.0603 | H=0.2992 | MCT=22.73s | SRPT=58.2%
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w12_lambda_tuning/W12_l3_seed456.npz
+  Seed 456: MCT=21.28±13.68s  SRPT=59.5%  Starve=57.6%  VRFI=0.212  Wall=22.7min
+
+====================================================================
+VARIANT: W12-λ4  λ=0.5
+====================================================================
+
+--- W12-λ4 seed=42 ---
+  ep    500 | loss=0.2441 | H=0.2546 | MCT=20.71s | SRPT=62.5%
+  ep   1000 | loss=0.0428 | H=0.2401 | MCT=21.45s | SRPT=62.4%
+  ep   1500 | loss=0.0786 | H=0.1717 | MCT=21.37s | SRPT=67.9%
+  ep   2000 | loss=0.1443 | H=0.1472 | MCT=22.32s | SRPT=63.0%
+  ep   2500 | loss=0.1086 | H=0.1811 | MCT=22.29s | SRPT=58.2%
+  ep   3000 | loss=0.1322 | H=0.1660 | MCT=20.70s | SRPT=63.9%
+  ep   3500 | loss=0.1295 | H=0.1972 | MCT=20.92s | SRPT=56.4%
+  ep   4000 | loss=0.1283 | H=0.1825 | MCT=19.74s | SRPT=60.4%
+  ep   4500 | loss=0.1001 | H=0.2229 | MCT=20.76s | SRPT=57.8%
+  ep   5000 | loss=0.0821 | H=0.2140 | MCT=23.62s | SRPT=53.6%
+  ep   5500 | loss=0.0894 | H=0.1877 | MCT=22.17s | SRPT=57.6%
+  ep   6000 | loss=0.1154 | H=0.1653 | MCT=21.90s | SRPT=60.6%
+  ep   6500 | loss=0.1534 | H=0.1130 | MCT=20.16s | SRPT=66.9%
+  ep   7000 | loss=0.1608 | H=0.1447 | MCT=21.44s | SRPT=64.4%
+  ep   7500 | loss=0.1841 | H=0.1552 | MCT=24.26s | SRPT=57.4%
+  ep   8000 | loss=0.1894 | H=0.1690 | MCT=22.19s | SRPT=63.4%
+  ep   8500 | loss=0.1542 | H=0.1815 | MCT=21.04s | SRPT=57.9%
+  ep   9000 | loss=0.1692 | H=0.1935 | MCT=21.58s | SRPT=58.6%
+  ep   9500 | loss=0.1681 | H=0.1491 | MCT=22.62s | SRPT=63.9%
+  ep  10000 | loss=0.1530 | H=0.1459 | MCT=22.30s | SRPT=58.1%
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w12_lambda_tuning/W12_l4_seed42.npz
+  Seed 42: MCT=21.70±13.99s  SRPT=56.6%  Starve=54.4%  VRFI=0.237  Wall=4.7min
+
+--- W12-λ4 seed=123 ---
+  ep    500 | loss=0.2572 | H=0.2296 | MCT=20.62s | SRPT=61.6%
+  ep   1000 | loss=0.0222 | H=0.2635 | MCT=21.27s | SRPT=62.7%
+  ep   1500 | loss=0.0176 | H=0.2253 | MCT=21.97s | SRPT=64.4%
+  ep   2000 | loss=0.0302 | H=0.1743 | MCT=23.87s | SRPT=57.0%
+  ep   2500 | loss=0.0682 | H=0.1597 | MCT=22.55s | SRPT=60.5%
+  ep   3000 | loss=0.0674 | H=0.1594 | MCT=22.51s | SRPT=58.5%
+  ep   3500 | loss=0.0468 | H=0.1486 | MCT=21.32s | SRPT=63.2%
+  ep   4000 | loss=0.1365 | H=0.1055 | MCT=20.27s | SRPT=66.4%
+  ep   4500 | loss=0.1112 | H=0.1470 | MCT=23.02s | SRPT=63.8%
+  ep   5000 | loss=0.0894 | H=0.1866 | MCT=23.62s | SRPT=63.1%
+  ep   5500 | loss=0.1029 | H=0.1639 | MCT=21.06s | SRPT=67.9%
+  ep   6000 | loss=0.0907 | H=0.1988 | MCT=21.80s | SRPT=63.1%
+  ep   6500 | loss=0.1071 | H=0.1477 | MCT=22.67s | SRPT=61.5%
+  ep   7000 | loss=0.1401 | H=0.1450 | MCT=22.69s | SRPT=61.9%
+  ep   7500 | loss=0.2106 | H=0.1240 | MCT=21.50s | SRPT=65.4%
+  ep   8000 | loss=0.3056 | H=0.1337 | MCT=20.82s | SRPT=64.4%
+  ep   8500 | loss=0.2528 | H=0.1136 | MCT=22.50s | SRPT=65.8%
+  ep   9000 | loss=0.2237 | H=0.1232 | MCT=21.94s | SRPT=57.7%
+  ep   9500 | loss=0.2488 | H=0.1377 | MCT=23.71s | SRPT=53.7%
+  ep  10000 | loss=0.2216 | H=0.1816 | MCT=22.22s | SRPT=54.8%
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w12_lambda_tuning/W12_l4_seed123.npz
+  Seed 123: MCT=22.22±14.19s  SRPT=53.6%  Starve=55.8%  VRFI=0.243  Wall=4.3min
+
+--- W12-λ4 seed=456 ---
+  ep    500 | loss=0.3465 | H=0.1857 | MCT=20.20s | SRPT=67.0%
+  ep   1000 | loss=0.0580 | H=0.2230 | MCT=21.09s | SRPT=66.4%
+  ep   1500 | loss=0.1143 | H=0.1756 | MCT=20.45s | SRPT=66.3%
+  ep   2000 | loss=0.0993 | H=0.1573 | MCT=21.32s | SRPT=66.0%
+  ep   2500 | loss=0.0655 | H=0.1812 | MCT=22.35s | SRPT=64.2%
+  ep   3000 | loss=0.0671 | H=0.1813 | MCT=20.21s | SRPT=62.5%
+  ep   3500 | loss=0.0176 | H=0.2665 | MCT=20.53s | SRPT=61.7%
+  ep   4000 | loss=0.0152 | H=0.3346 | MCT=22.93s | SRPT=57.3%
+  ep   4500 | loss=0.0467 | H=0.2700 | MCT=22.04s | SRPT=59.8%
+  ep   5000 | loss=0.0966 | H=0.2084 | MCT=19.62s | SRPT=65.3%
+  ep   5500 | loss=0.1177 | H=0.2128 | MCT=21.27s | SRPT=58.3%
+  ep   6000 | loss=0.1236 | H=0.2105 | MCT=22.85s | SRPT=59.3%
+  ep   6500 | loss=0.1228 | H=0.2546 | MCT=24.89s | SRPT=56.1%
+  ep   7000 | loss=0.1242 | H=0.2012 | MCT=21.88s | SRPT=60.0%
+  ep   7500 | loss=0.1337 | H=0.2227 | MCT=21.41s | SRPT=61.8%
+  ep   8000 | loss=0.1127 | H=0.2083 | MCT=21.55s | SRPT=61.2%
+  ep   8500 | loss=0.1320 | H=0.1780 | MCT=22.62s | SRPT=60.6%
+  ep   9000 | loss=0.1162 | H=0.1656 | MCT=21.98s | SRPT=54.7%
+  ep   9500 | loss=0.1175 | H=0.1629 | MCT=20.62s | SRPT=61.4%
+  ep  10000 | loss=0.0895 | H=0.1967 | MCT=21.98s | SRPT=54.4%
+  Checkpoint → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w12_lambda_tuning/W12_l4_seed456.npz
+  Seed 456: MCT=20.69±12.78s  SRPT=57.8%  Starve=44.6%  VRFI=0.427  Wall=5.0min
+
+
+====================================================================
+CROSS-SEED SUMMARY
+====================================================================
+
+Variant          MCT mean±std   Starve%   SRPT%    VRFI
+---------------------------------------------------------
+W12-λ1         21.63±0.50  s     50.6%   55.6%   0.402
+W12-λ2         21.70±0.13  s     52.6%   55.4%   0.440
+W12-λ3         21.61±0.43  s     52.1%   55.0%   0.304
+W12-λ4         21.54±0.63  s     51.6%   56.0%   0.303
+
+Running MLFQ benchmark (N=500, fresh eval) ...
+  MLFQ: MCT=21.59s  Starve=36.0%  VRFI=0.419  SRPT=58.1%
+
+
+====================================================================
+FULL COMPARISON vs MLFQ (best-seed per variant, N=500 eval)
+====================================================================
+
+Policy                  MCT   Starve%    VRFI   SRPT%
+----------------------------------------------------
+MLFQ                 21.59s     36.0%   0.419   58.1%  ← baseline
+W12 (λ=0.01)         21.18s     53.2%   0.267   57.0%  MCT:✓ Starve:✗
+W12-λ1               21.17s     48.8%   0.254   66.0%  MCT:✓ Starve:✗
+W12-λ2               21.59s     56.6%   0.405   55.2%  MCT:✓ Starve:✗
+W12-λ3               21.52s     53.2%   0.209   62.0%  MCT:✓ Starve:✗
+W12-λ4               21.22s     46.4%   0.420   57.8%  MCT:✓ Starve:✗
+
+--- MCT vs λ (lower is better) ---
+  λ=0.01     ██████████████                           21.18s
+  λ=0.05     ██████████████                           21.17s
+  λ=0.10     █████████████████████████                21.59s
+  λ=0.25     ████████████████████████                 21.52s
+  λ=0.50     ███████████████                          21.22s
+  MLFQ       ░░░░░░░░░░░░░░░░░░░░░░░░░                21.59s  ← threshold
+
+--- Starvation% vs λ (lower is better) ---
+  λ=0.01     ███████████████████████████████████      53.2% ← above MLFQ
+  λ=0.05     ████████████████████████████████         48.8% ← above MLFQ
+  λ=0.10     █████████████████████████████████████    56.6% ← above MLFQ
+  λ=0.25     ███████████████████████████████████      53.2% ← above MLFQ
+  λ=0.50     ██████████████████████████████           46.4% ← above MLFQ
+  MLFQ       ░░░░░░░░░░░░░░░░░░░░░░░                  36.0%  ← threshold
+
+
+====================================================================
+VERDICT
+====================================================================
+
+No λ variant beats MLFQ on BOTH metrics simultaneously.
+
+Best trade-off: W12-λ4 (λ=0.5): MCT=21.22s, Starve=46.4%
+  Recommendation: use this λ and note the MCT/starvation trade-off in paper.
+
+Results saved → /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w12_lambda_tuning/lambda_tuning_results.json

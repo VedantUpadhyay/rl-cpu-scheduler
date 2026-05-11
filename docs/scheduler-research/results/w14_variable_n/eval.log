@@ -1,0 +1,93 @@
+========================================================================
+W14-ω Poisson Generalization Evaluation
+Checkpoint: /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w14_omega/w14_seed123_final.npz
+omega_s = 0.7  |  N_COMPLETE=100  |  N_EVAL=100
+Lambda values: [0.03, 0.07, 0.09]  (trace E[burst]~10s, stable threshold λ<0.10)
+  ρ values: [0.3, 0.7, 0.9]  (E[queue] via M/M/1: [0.43, 2.33, 9.0])
+Output: /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w14_variable_n
+========================================================================
+
+Loading test trace: /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/data/alibaba2018/trace_test_filtered.csv
+  2,044,645 test tasks loaded.
+
+Loading W14-ω checkpoint: /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w14_omega/w14_seed123_final.npz
+  Agent loaded.
+
+------------------------------------------------------------------------
+Running conditions...
+------------------------------------------------------------------------
+
+  λ=0.0  Agent=W14-ω(ω=0.7) ...
+    [W14-ω λ=0.0] seed=42 ep=20/34 MCT=14.6s
+    [W14-ω λ=0.0] seed=123 ep=20/33 MCT=14.9s
+    [W14-ω λ=0.0] seed=456 ep=20/33 MCT=10.8s
+    MCT=14.58±2.84s  Starve=100.0%  MeanQ=1.43  MaxQ=8  OOD%=0.2%  (21s)
+
+  λ=0.0  Agent=MLFQ ...
+    [MLFQ λ=0.0] seed=42 ep=20/34 MCT=15.2s
+    [MLFQ λ=0.0] seed=123 ep=20/33 MCT=15.5s
+    [MLFQ λ=0.0] seed=456 ep=20/33 MCT=11.0s
+    MCT=14.62±2.75s  Starve=100.0%  MeanQ=1.38  MaxQ=8  OOD%=0.2%  (0s)
+
+  λ=0.1  Agent=W14-ω(ω=0.7) ...
+    [W14-ω λ=0.1] seed=42 ep=20/34 MCT=27.4s
+    [W14-ω λ=0.1] seed=123 ep=20/33 MCT=22.0s
+    [W14-ω λ=0.1] seed=456 ep=20/33 MCT=20.4s
+    MCT=31.77±13.05s  Starve=100.0%  MeanQ=3.03  MaxQ=22  OOD%=13.8%  (21s)
+
+  λ=0.1  Agent=MLFQ ...
+    [MLFQ λ=0.1] seed=42 ep=20/34 MCT=28.5s
+    [MLFQ λ=0.1] seed=123 ep=20/33 MCT=24.0s
+    [MLFQ λ=0.1] seed=456 ep=20/33 MCT=21.5s
+    MCT=31.00±12.18s  Starve=99.0%  MeanQ=3.24  MaxQ=16  OOD%=17.9%  (0s)
+
+  λ=0.1  Agent=W14-ω(ω=0.7) ...
+    [W14-ω λ=0.1] seed=42 ep=20/34 MCT=43.4s
+    [W14-ω λ=0.1] seed=123 ep=20/33 MCT=32.2s
+    [W14-ω λ=0.1] seed=456 ep=20/33 MCT=44.9s
+    MCT=58.19±34.67s  Starve=100.0%  MeanQ=5.99  MaxQ=36  OOD%=38.0%  (21s)
+
+  λ=0.1  Agent=MLFQ ...
+    [MLFQ λ=0.1] seed=42 ep=20/34 MCT=42.4s
+    [MLFQ λ=0.1] seed=123 ep=20/33 MCT=37.2s
+    [MLFQ λ=0.1] seed=456 ep=20/33 MCT=46.4s
+    MCT=51.73±25.41s  Starve=83.0%  MeanQ=6.30  MaxQ=31  OOD%=46.8%  (0s)
+
+Total wall time: 1.1 min
+
+========================================================================================
+RESULTS TABLE
+========================================================================================
+Setting                Agent                  MCT  Starve%   MeanQ  MaxQ   OOD%
+----------------------------------------------------------------------------------------
+Fixed N=5              W14-ω                20.60     32.5    5.00     5    0.0
+Fixed N=5              MLFQ                 21.59     36.0    5.00     5    0.0
+Poisson λ=0.0          W14-ω                14.58    100.0    1.43     8    0.2%
+Poisson λ=0.0          MLFQ                 14.62    100.0    1.38     8    0.2%
+Poisson λ=0.1          W14-ω                31.77    100.0    3.03    22   13.8%
+Poisson λ=0.1          MLFQ                 31.00     99.0    3.24    16   17.9%
+Poisson λ=0.1          W14-ω                58.19    100.0    5.99    36   38.0%
+Poisson λ=0.1          MLFQ                 51.73     83.0    6.30    31   46.8%
+========================================================================================
+
+========================================================================
+RESEARCH QUESTIONS
+========================================================================
+
+Q2. At what λ does OOD% become significant (>20%)?
+    λ=0.0: OOD%=0.2%
+    λ=0.1: OOD%=13.8%
+    λ=0.1: OOD%=38.0% ← exceeds 20%
+
+Q3. Graceful degradation or cliff-drop at N>5?
+    λ=0.0: W14-ω ΔMCT=-6.02s  MLFQ ΔMCT=-6.97s
+    λ=0.1: W14-ω ΔMCT=+11.17s  MLFQ ΔMCT=+9.41s
+    λ=0.1: W14-ω ΔMCT=+37.59s  MLFQ ΔMCT=+30.14s
+
+Q4. Is retraining with variable N necessary?
+    λ=0.0: beats canonical MLFQ on both metrics? NO
+    λ=0.1: beats canonical MLFQ on both metrics? NO
+    λ=0.1: beats canonical MLFQ on both metrics? NO
+    → Architecture does not generalize. Retraining with variable N is necessary.
+
+Results saved to: /Users/vedantupadhyay/Library/CloudStorage/OneDrive-Personal/GRAD - FALL 23/UCSC/Capstone/docs/RL-Claude/results/w14_variable_n/w14_variable_n_results.json
