@@ -1,17 +1,26 @@
 """RL CPU Scheduler — top-level training entry point.
 
 Usage:
-    python train.py --n_processes 5 --n_episodes 10 --seed 42
+    python train.py --n_processes 5  --n_episodes 10    --seed 42
+    python train.py --n_processes 10 --n_episodes 20000 --seed 123 \\
+                    --trace_path /data/alibaba2018/ \\
+                    --output_dir /outputs/n10_seed123/
 
 N_PROCESSES flows as:
   CLI --n_processes
        └─▶ W15Trainer(n_processes)  ─▶ W15OmegaDQN.n_processes / n_actions
-       └─▶ SchedEnv(procs)          ─▶  env.n_processes / n_actions  (inferred from list length)
+       └─▶ SchedEnv(procs)          ─▶  env.n_processes / n_actions (inferred)
        └─▶ OmegaReplayBuffer(state_dim = N * D_CAND)
+       └─▶ TraceEpisodeSamplerN(n_processes)
+
+Trace file convention:
+  --trace_path may be a directory (train.py appends trace_train_filtered.csv)
+  or a full file path.  Defaults to project_config.TRACE_PATH.
 """
 from __future__ import annotations
 import argparse
-import math
+import csv
+import json
 import os
 import random
 import sys
@@ -39,7 +48,63 @@ def _parse_args() -> argparse.Namespace:
                    help="Training episodes (default: 10 000)")
     p.add_argument("--seed",        type=int, default=42,
                    help="RNG seed (default: 42)")
+    p.add_argument("--trace_path",  type=str, default=None,
+                   help="Path to trace file or directory containing "
+                        "trace_train_filtered.csv  (default: project_config.TRACE_PATH)")
+    p.add_argument("--output_dir",  type=str, default=None,
+                   help="Directory for checkpoint and results JSON "
+                        "(default: results/train_n<N>_seed<SEED>/)")
     return p.parse_args()
+
+
+# ---------------------------------------------------------------------------
+# Generalised trace sampler — works for any N >= 1
+# ---------------------------------------------------------------------------
+
+_BURST_P95_FILT = 36.0   # matches w9_train.BURST_P95_FILT
+
+
+class TraceEpisodeSamplerN:
+    """Sample N-task episodes from the Alibaba trace for any N >= 1.
+
+    Arrival slots are evenly spaced 2 s apart: (0, 2, 4, ..., 2*(N-1)).
+    For N == 5 this matches TraceEpisodeSampler5._ARRIVE_SLOTS = (0,2,5,8,10)
+    in spirit (same spread), with the difference that slots are uniform
+    rather than the original hand-picked values.
+    """
+
+    def __init__(self, trace_file: str, n_processes: int) -> None:
+        self.n_processes   = n_processes
+        self._arrive_slots = tuple(i * 2 for i in range(n_processes))
+
+        records = []
+        with open(trace_file, newline="") as f:
+            for row in csv.DictReader(f):
+                try:
+                    dur = float(row["end_time"]) - float(row["start_time"])
+                    cpu = float(row["plan_cpu"])
+                    mem = float(row["plan_mem"])
+                    if 0 < dur <= _BURST_P95_FILT * 1.1:
+                        records.append((dur, cpu, mem))
+                except (ValueError, TypeError, KeyError):
+                    pass
+        self._data = np.array(records, dtype=np.float32)
+        print(f"  TraceEpisodeSamplerN(N={n_processes}): {len(self._data):,} tasks loaded.")
+
+    def sample_episode(self, rng: np.random.Generator) -> list[dict]:
+        idx   = rng.integers(0, len(self._data), size=self.n_processes)
+        tasks = self._data[idx]
+        order = rng.permutation(self.n_processes)
+        slots = self._arrive_slots
+        return [
+            {
+                "burst_ms":   float(tasks[i, 0]),
+                "arrival_ms": float(slots[order[k]]),
+                "plan_cpu":   float(tasks[i, 1]),
+                "plan_mem":   float(tasks[i, 2]),
+            }
+            for k, i in enumerate(range(self.n_processes))
+        ]
 
 
 # ---------------------------------------------------------------------------
@@ -79,12 +144,11 @@ def main() -> None:
 
     # --- Late imports (network module uses N_PROCESSES as default only) ----
     import torch
-    from project_config import TRACE_PATH, N_PROCESSES as _CFG_DEFAULT
-    from schedsim.env    import SchedEnv, N_QUANTUM_TIERS
-    from schedsim.process import Process
+    from project_config import TRACE_PATH as _CFG_TRACE, get_agent_dir
+    from schedsim.env    import SchedEnv
     from w15_network_torch import W15Trainer, device
     from w9_train import (
-        TraceEpisodeSampler5, _make_procs, _valid_actions,
+        _make_procs, _valid_actions,
         N_QT, _norm_time_log, _urgency_norm, _norm_cpu, _norm_mem,
         WAIT_NORM,
     )
@@ -97,20 +161,32 @@ def main() -> None:
     STATE_DIM = N * D_CAND
     N_ACTIONS  = N * N_QT
 
+    # --- Resolve trace file path -------------------------------------------
+    if args.trace_path is not None:
+        tp = args.trace_path
+        # Accept both a directory and a direct file path
+        if os.path.isdir(tp):
+            trace_file = os.path.join(tp, "trace_train_filtered.csv")
+        else:
+            trace_file = tp
+    else:
+        trace_file = _CFG_TRACE
+
+    # --- Resolve output directory ------------------------------------------
+    if args.output_dir is not None:
+        out_dir = args.output_dir
+    else:
+        out_dir = get_agent_dir(f"train_n{N}_seed{args.seed}")
+    os.makedirs(out_dir, exist_ok=True)
+
     print(f"n_processes={N}  state_dim={STATE_DIM}  n_actions={N_ACTIONS}")
     print(f"n_episodes={args.n_episodes}  seed={args.seed}  device={device}")
+    print(f"trace_file={trace_file}")
+    print(f"output_dir={out_dir}")
 
-    # Sampler — TraceEpisodeSampler5 has exactly 5 fixed arrival slots.
-    # For N == 5 use it directly; other values require a generalized sampler.
-    if N != 5:
-        raise NotImplementedError(
-            f"TraceEpisodeSampler5 encodes exactly 5 arrival slots; "
-            f"a generalized sampler for N={N} is not yet implemented. "
-            f"Use --n_processes 5 for now."
-        )
-    sampler = TraceEpisodeSampler5(TRACE_PATH)
+    # --- Sampler -----------------------------------------------------------
+    sampler = TraceEpisodeSamplerN(trace_file, n_processes=N)
 
-    # Helpers for state encoding
     norm_fns = {
         "time":      _norm_time_log,
         "wait_norm": WAIT_NORM,
@@ -119,27 +195,27 @@ def main() -> None:
         "mem":       _norm_mem,
     }
 
-    # Seed
+    # --- Seed --------------------------------------------------------------
     random.seed(args.seed)
     np.random.seed(args.seed)
     rng = np.random.default_rng(args.seed)
 
-    # Agent + replay buffer — both parameterised by N
+    # --- Agent + replay buffer — both parameterised by N ------------------
     agent  = W15Trainer(n_processes=N)
     buffer = OmegaReplayBuffer(capacity=BUF_CAPACITY, state_dim=STATE_DIM)
 
     total_transitions = 0
+    ep_mcts: list[float] = []
     print(f"\nTraining ({args.n_episodes} episodes)…")
 
     for ep in range(1, args.n_episodes + 1):
-        # Anneal entropy coefficient
         agent.lambda_ent = (LAMBDA_START
                             - (LAMBDA_START - LAMBDA_END) * ep / args.n_episodes)
         omega_s = random.random()
 
         tasks = sampler.sample_episode(rng)
         procs = _make_procs(tasks)
-        env   = SchedEnv(procs)          # env.n_processes == N (asserted internally)
+        env   = SchedEnv(procs)
         env.reset()
         sv    = _encode_state(env, tasks, N, norm_fns)
         done  = False
@@ -149,14 +225,13 @@ def main() -> None:
         while not done:
             valid  = _valid_actions(env)
             action = agent.select_action(sv, valid, omega_s)
-            _, reward, done, _ = env.step(action)
+            _, reward, done, info = env.step(action)
             sv_next = _encode_state(env, tasks, N, norm_fns)
 
-            # Use env step-reward as value-delta proxy; starvation component = 0
             buffer.store(sv, action, float(reward), 0.0, sv_next, done, omega_s)
             total_transitions += 1
 
-            if (total_transitions >= WARMUP and len(buffer) >= BATCH_SIZE):
+            if total_transitions >= WARMUP and len(buffer) >= BATCH_SIZE:
                 s_b, a_b, rv_b, rs_b, ns_b, d_b, om_b = buffer.sample(BATCH_SIZE)
                 loss, _ent = agent.update(s_b, a_b, rv_b, rs_b, ns_b, d_b, om_b)
                 ep_loss_sum += loss
@@ -168,32 +243,46 @@ def main() -> None:
             agent.update_target()
         agent.decay_epsilon(ep, n_eps=args.n_episodes)
 
-        log_every = max(1, args.n_episodes // 5)
+        mct = info.get("mean_completion_time_so_far") or 0.0
+        ep_mcts.append(mct)
+
+        log_every = max(1, args.n_episodes // 10)
         if ep % log_every == 0 or ep == args.n_episodes:
             mean_loss = ep_loss_sum / ep_loss_n if ep_loss_n else float("nan")
-            print(f"  ep {ep:>5} | loss={mean_loss:.4f} | eps={agent.epsilon:.3f} "
-                  f"| transitions={total_transitions}")
+            mean_mct  = float(np.mean(ep_mcts[-100:]))
+            print(f"  ep {ep:>6} | loss={mean_loss:.4f} | eps={agent.epsilon:.3f} "
+                  f"| MCT={mean_mct:.2f}s | transitions={total_transitions}")
 
-    # -----------------------------------------------------------------------
-    # Q-value smoke check — run a forward pass with a synthetic valid state
-    # -----------------------------------------------------------------------
-    print("\n--- Q-value smoke check ---")
-    # Build a state where process 0 is valid (arrived_flag = 1) and others are not
+    # --- Save checkpoint ---------------------------------------------------
+    ckpt_path = os.path.join(out_dir, "final.pt")
+    agent.save(ckpt_path)
+    print(f"\nCheckpoint → {ckpt_path}")
+
+    # --- Save results summary ----------------------------------------------
+    results = {
+        "n_processes":       N,
+        "n_episodes":        args.n_episodes,
+        "seed":              args.seed,
+        "total_transitions": total_transitions,
+        "final_mct_mean":    float(np.mean(ep_mcts[-100:])) if ep_mcts else None,
+        "final_mct_std":     float(np.std(ep_mcts[-100:]))  if ep_mcts else None,
+    }
+    results_path = os.path.join(out_dir, "results.json")
+    with open(results_path, "w") as f:
+        json.dump(results, f, indent=2)
+    print(f"Results    → {results_path}")
+
+    # --- Q-value smoke check -----------------------------------------------
     s_check = np.zeros(STATE_DIM, dtype=np.float32)
-    s_check[AFI] = 1.0                 # process 0 arrived_flag = 1
-
-    s_t  = torch.from_numpy(s_check).float().unsqueeze(0).to(device)
-    o_t  = torch.tensor([0.5], dtype=torch.float32, device=device)
+    s_check[AFI] = 1.0   # process 0 arrived_flag = 1
+    s_t = torch.from_numpy(s_check).float().unsqueeze(0).to(device)
+    o_t = torch.tensor([0.5], dtype=torch.float32, device=device)
     with torch.no_grad():
         q = agent.online(s_t, o_t).squeeze(0).cpu().numpy()
-
-    valid_q = q[:N_QT]                 # first N_QT actions (process 0, all quanta)
-    print(f"  n_processes={N}  state_dim={STATE_DIM}  n_actions={N_ACTIONS}")
-    print(f"  Q-values for process-0 actions (quanta 0,1,2): {valid_q}")
-    print(f"  Q-values shape: {q.shape}  finite: {np.all(np.isfinite(valid_q))}")
+    valid_q = q[:N_QT]
     assert q.shape == (N_ACTIONS,), f"expected ({N_ACTIONS},), got {q.shape}"
     assert np.all(np.isfinite(valid_q)), "NaN/Inf in valid-action Q-values"
-    print("Smoke test PASSED.")
+    print(f"\nQ-values (p0, omega=0.5): {valid_q}  shape={q.shape}  ✓")
 
 
 if __name__ == "__main__":

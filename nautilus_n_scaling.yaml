@@ -1,0 +1,163 @@
+# nautilus_n_scaling.yaml
+# ─────────────────────────────────────────────────────────────────────────────
+# N-scaling experiment: 4 process-counts × 5 seeds = 20 runs
+#
+#   N  ∈ {5, 10, 20, 50}   ×   seed ∈ {42, 123, 456, 789, 999}
+#
+# Uses an Indexed Job (completionMode: Indexed, k8s ≥ 1.21).
+# Kubernetes injects JOB_COMPLETION_INDEX (0–19) into each pod;
+# the entrypoint shell script maps it to (N_PROCS, SEED):
+#
+#   Index   N_PROCS   SEED
+#   ──────────────────────
+#    0        5        42
+#    1        5       123
+#    2        5       456
+#    3        5       789
+#    4        5       999
+#    5       10        42
+#    6       10       123
+#    7       10       456
+#    8       10       789
+#    9       10       999
+#   10       20        42
+#   11       20       123
+#   12       20       456
+#   13       20       789
+#   14       20       999
+#   15       50        42
+#   16       50       123
+#   17       50       456
+#   18       50       789
+#   19       50       999
+#
+# Required PVCs (create before deploying):
+#   alibaba-trace-pvc   — trace data mounted read-only at /data/alibaba2018/
+#   n-scaling-out-pvc   — results/checkpoints mounted read-write at /outputs/
+#
+# Deploy:
+#   kubectl apply -f nautilus_n_scaling.yaml -n <your-namespace>
+#
+# Monitor:
+#   kubectl get pods -l experiment=n-scaling -n <your-namespace> -w
+#   kubectl logs -l experiment=n-scaling -n <your-namespace> --prefix
+# ─────────────────────────────────────────────────────────────────────────────
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: rl-scheduler-n-scaling
+  labels:
+    experiment: n-scaling
+    version: "1"
+spec:
+  completions: 20
+  parallelism: 20
+  completionMode: Indexed     # pods receive JOB_COMPLETION_INDEX 0–19
+  backoffLimit: 2             # retry failed pods up to 2 times
+  ttlSecondsAfterFinished: 86400   # auto-clean after 24 h
+
+  template:
+    metadata:
+      labels:
+        experiment: n-scaling
+    spec:
+      restartPolicy: Never
+
+      # ── Clone source repo before training starts ────────────────────────
+      initContainers:
+      - name: clone-repo
+        image: alpine/git:2.43.0
+        args:
+        - clone
+        - --depth=1
+        # TODO: replace with your actual repository URL
+        - https://github.com/YOUR_USERNAME/YOUR_REPO.git
+        - /workspace/capstone
+        volumeMounts:
+        - name: workspace
+          mountPath: /workspace
+
+      # ── Training container ───────────────────────────────────────────────
+      containers:
+      - name: trainer
+        image: pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime
+
+        command: ["/bin/bash", "-c"]
+        args:
+        - |
+          set -euo pipefail
+
+          # ── Map JOB_COMPLETION_INDEX → (N_PROCS, SEED) ──────────────────
+          # Layout: 4 N-values × 5 seeds, N changes every 5 indices
+          N_VALS=(5 5 5 5 5  10 10 10 10 10  20 20 20 20 20  50 50 50 50 50)
+          S_VALS=(42 123 456 789 999  42 123 456 789 999  42 123 456 789 999  42 123 456 789 999)
+
+          N_PROCS=${N_VALS[$JOB_COMPLETION_INDEX]}
+          SEED=${S_VALS[$JOB_COMPLETION_INDEX]}
+
+          echo "======================================================"
+          echo " idx=$JOB_COMPLETION_INDEX  N_PROCS=$N_PROCS  SEED=$SEED"
+          echo "======================================================"
+
+          # ── Run training ─────────────────────────────────────────────────
+          cd /workspace/capstone
+
+          python train.py \
+            --n_processes "$N_PROCS" \
+            --n_episodes  20000 \
+            --seed        "$SEED" \
+            --trace_path  /data/alibaba2018/ \
+            --output_dir  "/outputs/n${N_PROCS}_seed${SEED}/"
+
+        env:
+        # N_PROCS and SEED are set inside the shell script above and passed
+        # as CLI arguments; they are not pre-set here because Kubernetes env
+        # entries cannot reference JOB_COMPLETION_INDEX at spec time.
+        - name: PYTHONUNBUFFERED
+          value: "1"
+        - name: OMP_NUM_THREADS    # cap intra-op threads to match CPU request
+          value: "4"
+        - name: TOKENIZERS_PARALLELISM
+          value: "false"
+
+        resources:
+          requests:
+            cpu: "4"
+            memory: 16Gi
+            nvidia.com/gpu: "1"
+          limits:
+            cpu: "4"
+            memory: 16Gi
+            nvidia.com/gpu: "1"
+
+        volumeMounts:
+        - name: workspace
+          mountPath: /workspace
+        - name: trace-data
+          mountPath: /data/alibaba2018
+          readOnly: true
+        - name: outputs
+          mountPath: /outputs
+
+      # ── Volumes ─────────────────────────────────────────────────────────
+      volumes:
+      - name: workspace
+        emptyDir: {}                     # shared between initContainer + trainer
+
+      - name: trace-data
+        persistentVolumeClaim:
+          claimName: alibaba-trace-pvc   # read-only trace data
+          readOnly: true
+
+      - name: outputs
+        persistentVolumeClaim:
+          claimName: n-scaling-out-pvc   # results written here; must be RWX
+                                          # (ReadWriteMany) so all 20 pods can
+                                          # write to separate subdirectories
+
+      # ── GPU scheduling ──────────────────────────────────────────────────
+      tolerations:
+      - key: nvidia.com/gpu
+        operator: Exists
+        effect: NoSchedule
