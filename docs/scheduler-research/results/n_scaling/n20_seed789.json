@@ -1,0 +1,8 @@
+{
+  "n_processes": 20,
+  "n_episodes": 20000,
+  "seed": 789,
+  "total_transitions": 2640002,
+  "final_mct_mean": 74.15225000000001,
+  "final_mct_std": 26.070620460347694
+}
