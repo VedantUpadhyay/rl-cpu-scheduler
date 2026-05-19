@@ -1,0 +1,211 @@
+# nautilus_transformer.yaml
+# ─────────────────────────────────────────────────────────────────────────────
+# Transformer scheduler training: 25 jobs across 5 conditions × 5 seeds.
+#
+# Condition mapping (JOB_COMPLETION_INDEX // 5):
+#   0  → variable-N curriculum  (N sampled from {5,10,20,50} each episode)
+#   1  → fixed N=5
+#   2  → fixed N=10
+#   3  → fixed N=20
+#   4  → fixed N=50
+#
+# Seed mapping (JOB_COMPLETION_INDEX % 5):
+#   position 0→42  1→123  2→456  3→789  4→999
+#
+#   Index  Condition        N          Seed  Output dir
+#   ──────────────────────────────────────────────────────
+#    0     variable         {5,10,20,50}  42   variable_seed42/
+#    1     variable         {5,10,20,50} 123   variable_seed123/
+#    2     variable         {5,10,20,50} 456   variable_seed456/
+#    3     variable         {5,10,20,50} 789   variable_seed789/
+#    4     variable         {5,10,20,50} 999   variable_seed999/
+#    5     fixed N=5                5     42   n5_seed42/
+#    6     fixed N=5                5    123   n5_seed123/
+#    7     fixed N=5                5    456   n5_seed456/
+#    8     fixed N=5                5    789   n5_seed789/
+#    9     fixed N=5                5    999   n5_seed999/
+#   10     fixed N=10              10     42   n10_seed42/
+#   11     fixed N=10              10    123   n10_seed123/
+#   12     fixed N=10              10    456   n10_seed456/
+#   13     fixed N=10              10    789   n10_seed789/
+#   14     fixed N=10              10    999   n10_seed999/
+#   15     fixed N=20              20     42   n20_seed42/
+#   16     fixed N=20              20    123   n20_seed123/
+#   17     fixed N=20              20    456   n20_seed456/
+#   18     fixed N=20              20    789   n20_seed789/
+#   19     fixed N=20              20    999   n20_seed999/
+#   20     fixed N=50              50     42   n50_seed42/
+#   21     fixed N=50              50    123   n50_seed123/
+#   22     fixed N=50              50    456   n50_seed456/
+#   23     fixed N=50              50    789   n50_seed789/
+#   24     fixed N=50              50    999   n50_seed999/
+#
+# Required PVCs (create before deploying):
+#   alibaba-trace-pvc    — trace data mounted read-only  at /data/alibaba2018/
+#   transformer-out-pvc  — results mounted read-write    at /outputs/
+#   (see transformer_pvc.yaml for the latter)
+#
+# Deploy:
+#   kubectl apply -f transformer_pvc.yaml    -n systems-research-lab
+#   kubectl apply -f nautilus_transformer.yaml -n systems-research-lab
+#
+# Monitor:
+#   kubectl get pods -l experiment=transformer-scheduler -n systems-research-lab -w
+#   kubectl logs -l experiment=transformer-scheduler -n systems-research-lab --prefix
+#
+# Fetch results after completion (example for variable-N runs):
+#   kubectl apply -f - <<EOF
+#   apiVersion: v1
+#   kind: Pod
+#   metadata:
+#     name: results-pod
+#     namespace: systems-research-lab
+#   spec:
+#     containers:
+#     - name: reader
+#       image: alpine
+#       command: ["sleep", "600"]
+#       volumeMounts:
+#       - name: outputs
+#         mountPath: /outputs
+#     volumes:
+#     - name: outputs
+#       persistentVolumeClaim:
+#         claimName: transformer-out-pvc
+#   EOF
+#   for tag in variable_seed42 variable_seed123 n5_seed42 ...; do
+#     kubectl cp systems-research-lab/results-pod:/outputs/${tag}/results.json \
+#       docs/scheduler-research/results/transformer/${tag}.json
+#   done
+#   kubectl delete pod results-pod -n systems-research-lab
+# ─────────────────────────────────────────────────────────────────────────────
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: transformer-scheduler
+  namespace: systems-research-lab
+  labels:
+    experiment: transformer-scheduler
+    version: "1"
+spec:
+  completions: 25
+  parallelism: 25
+  completionMode: Indexed      # pods receive JOB_COMPLETION_INDEX 0–24
+  backoffLimit: 2
+  ttlSecondsAfterFinished: 86400   # auto-clean after 24 h
+
+  template:
+    metadata:
+      labels:
+        experiment: transformer-scheduler
+    spec:
+      restartPolicy: Never
+
+      # ── Clone source repo ────────────────────────────────────────────────
+      initContainers:
+      - name: clone-repo
+        image: alpine/git:2.43.0
+        args:
+        - clone
+        - --depth=1
+        - https://github.com/VedantUpadhyay/rl-cpu-scheduler.git
+        - /workspace/capstone
+        volumeMounts:
+        - name: workspace
+          mountPath: /workspace
+
+      # ── Training container ───────────────────────────────────────────────
+      containers:
+      - name: trainer
+        image: pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime
+
+        command: ["/bin/bash", "-c"]
+        args:
+        - |
+          set -euo pipefail
+
+          # ── Map JOB_COMPLETION_INDEX → (condition, seed) ─────────────────
+          # condition = index // 5 : 0=variable, 1=N5, 2=N10, 3=N20, 4=N50
+          # seed_pos  = index %  5 : 0→42, 1→123, 2→456, 3→789, 4→999
+          SEEDS=(42 123 456 789 999)
+          N_VALS=(0 5 10 20 50)   # 0 signals variable-N mode
+
+          CONDITION=$((JOB_COMPLETION_INDEX / 5))
+          SEED_POS=$((JOB_COMPLETION_INDEX % 5))
+
+          SEED=${SEEDS[$SEED_POS]}
+          N=${N_VALS[$CONDITION]}
+
+          if [ "$N" -eq 0 ]; then
+            MODE_FLAG="--variable_n"
+            OUT_TAG="variable"
+          else
+            MODE_FLAG="--fixed_n $N"
+            OUT_TAG="n${N}"
+          fi
+
+          echo "============================================================"
+          echo " idx=$JOB_COMPLETION_INDEX  condition=$CONDITION  N=$N  seed=$SEED"
+          echo " mode_flag=$MODE_FLAG  output_dir=/outputs/${OUT_TAG}_seed${SEED}/"
+          echo "============================================================"
+
+          # ── Install dependencies not in base image ────────────────────────
+          pip install --quiet numpy
+
+          # ── Run training ──────────────────────────────────────────────────
+          cd /workspace/capstone
+
+          python transformer_train.py \
+            $MODE_FLAG \
+            --n_episodes  20000 \
+            --seed        "$SEED" \
+            --trace_path  /data/alibaba2018/ \
+            --output_dir  "/outputs/${OUT_TAG}_seed${SEED}/"
+
+        env:
+        - name: PYTHONUNBUFFERED
+          value: "1"
+        - name: OMP_NUM_THREADS
+          value: "4"
+        - name: TOKENIZERS_PARALLELISM
+          value: "false"
+
+        resources:
+          requests:
+            cpu: "4"
+            memory: 16Gi
+            nvidia.com/gpu: "1"
+          limits:
+            cpu: "4"
+            memory: 16Gi
+            nvidia.com/gpu: "1"
+
+        volumeMounts:
+        - name: workspace
+          mountPath: /workspace
+        - name: trace-data
+          mountPath: /data/alibaba2018
+          readOnly: true
+        - name: outputs
+          mountPath: /outputs
+
+      # ── Volumes ─────────────────────────────────────────────────────────
+      volumes:
+      - name: workspace
+        emptyDir: {}
+
+      - name: trace-data
+        persistentVolumeClaim:
+          claimName: alibaba-trace-pvc
+          readOnly: true
+
+      - name: outputs
+        persistentVolumeClaim:
+          claimName: transformer-out-pvc   # must be ReadWriteMany (rook-cephfs)
+
+      # ── GPU scheduling ───────────────────────────────────────────────────
+      tolerations:
+      - key: nvidia.com/gpu
+        operator: Exists
+        effect: NoSchedule

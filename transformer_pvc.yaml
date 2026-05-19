@@ -1,0 +1,23 @@
+# transformer_pvc.yaml
+# ─────────────────────────────────────────────────────────────────────────────
+# PersistentVolumeClaim for transformer training outputs.
+#
+# Create before deploying nautilus_transformer.yaml:
+#   kubectl apply -f transformer_pvc.yaml -n systems-research-lab
+#
+# Verify:
+#   kubectl get pvc transformer-out-pvc -n systems-research-lab
+# ─────────────────────────────────────────────────────────────────────────────
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: transformer-out-pvc
+  namespace: systems-research-lab
+spec:
+  accessModes:
+    - ReadWriteMany          # required: 25 pods write concurrently
+  storageClassName: rook-cephfs
+  resources:
+    requests:
+      storage: 30Gi          # ~1 MB/checkpoint × 10 ckpts × 25 runs + headroom
