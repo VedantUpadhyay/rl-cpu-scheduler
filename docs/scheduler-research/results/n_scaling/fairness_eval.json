@@ -1,0 +1,82 @@
+{
+  "5": {
+    "VA-DQN": {
+      "starve_pct": 15.840000000000002,
+      "vrfi": 0.5162082397469744,
+      "n_episodes": 2500,
+      "n_tasks": 12500
+    },
+    "MLFQ": {
+      "starve_pct": 31.72,
+      "vrfi": 0.46149618096591793,
+      "n_episodes": 2500,
+      "n_tasks": 12500
+    },
+    "Round Robin": {
+      "starve_pct": 0.0,
+      "vrfi": 0.6458327082872658,
+      "n_episodes": 2500,
+      "n_tasks": 12500
+    }
+  },
+  "10": {
+    "VA-DQN": {
+      "starve_pct": 67.08,
+      "vrfi": 0.632256555981594,
+      "n_episodes": 2500,
+      "n_tasks": 25000
+    },
+    "MLFQ": {
+      "starve_pct": 48.96,
+      "vrfi": 0.5809567152385053,
+      "n_episodes": 2500,
+      "n_tasks": 25000
+    },
+    "Round Robin": {
+      "starve_pct": 1.92,
+      "vrfi": 0.7239492612174862,
+      "n_episodes": 2500,
+      "n_tasks": 25000
+    }
+  },
+  "20": {
+    "VA-DQN": {
+      "starve_pct": 84.92,
+      "vrfi": 0.6750929570877517,
+      "n_episodes": 2500,
+      "n_tasks": 50000
+    },
+    "MLFQ": {
+      "starve_pct": 23.56,
+      "vrfi": 0.6822431634161704,
+      "n_episodes": 2500,
+      "n_tasks": 50000
+    },
+    "Round Robin": {
+      "starve_pct": 12.920000000000002,
+      "vrfi": 0.7701367874395683,
+      "n_episodes": 2500,
+      "n_tasks": 50000
+    }
+  },
+  "50": {
+    "VA-DQN": {
+      "starve_pct": 99.83999999999999,
+      "vrfi": 0.7555207826173742,
+      "n_episodes": 2500,
+      "n_tasks": 125000
+    },
+    "MLFQ": {
+      "starve_pct": 56.00000000000001,
+      "vrfi": 0.757824531850005,
+      "n_episodes": 2500,
+      "n_tasks": 125000
+    },
+    "Round Robin": {
+      "starve_pct": 65.0,
+      "vrfi": 0.7961712555836733,
+      "n_episodes": 2500,
+      "n_tasks": 125000
+    }
+  }
+}

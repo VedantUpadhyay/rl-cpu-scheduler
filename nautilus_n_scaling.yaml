@@ -72,7 +72,7 @@ spec:
         - clone
         - --depth=1
         # TODO: replace with your actual repository URL
-        - https://github.com/YOUR_USERNAME/YOUR_REPO.git
+        - https://github.com/VedantUpadhyay/rl-cpu-scheduler.git
         - /workspace/capstone
         volumeMounts:
         - name: workspace
