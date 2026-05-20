@@ -10,6 +10,9 @@ Differences from train.py:
   - omega_s: fixed scalar via --omega_s (default 0.5) instead of random per episode
   - Checkpoints: saved every 2000 episodes + final.pt
   - results.json: same format + n_mode and omega_s fields; per-N MCT for variable mode
+  - reward_lambda / wait_threshold: optional starvation penalty added to env reward
+      reward = value_delta - lambda * sum(max(0, wait_i - threshold) for i in queue)
+      When reward_lambda=0.0 (default), behavior is identical to the original.
 
 Usage:
   # Fixed N — comparable to train.py results:
@@ -17,6 +20,10 @@ Usage:
 
   # Variable N curriculum:
   python transformer_train.py --variable_n --n_episodes 20000 --seed 42
+
+  # With starvation penalty:
+  python transformer_train.py --fixed_n 5 --n_episodes 20000 --seed 42 \\
+    --reward_lambda 0.05 --wait_threshold 100.0
 
   # Smoke test:
   python transformer_train.py --fixed_n 5 --n_episodes 100 --seed 42 \\
@@ -66,6 +73,12 @@ def _parse_args() -> argparse.Namespace:
     # Transformer-specific
     p.add_argument("--omega_s", type=float, default=0.5,
                    help="Fixed omega conditioning scalar in [0,1] (default: 0.5)")
+
+    # Reward shaping
+    p.add_argument("--reward_lambda", type=float, default=0.0,
+                   help="Weight of starvation penalty term (0.0 = original reward)")
+    p.add_argument("--wait_threshold", type=float, default=100.0,
+                   help="Wait-time threshold in seconds for starvation penalty (default: 100.0)")
 
     return p.parse_args()
 
@@ -132,6 +145,7 @@ def main() -> None:
           + (f"  (options={N_OPTIONS})" if n_mode == "variable"
              else f"  (N={default_n})"))
     print(f"omega_s    : {args.omega_s} (fixed)")
+    print(f"reward_lambda : {args.reward_lambda}  wait_threshold : {args.wait_threshold}s")
     print(f"n_episodes : {args.n_episodes}  seed={args.seed}  device={device}")
     print(f"trace_file : {trace_file}")
     print(f"output_dir : {out_dir}")
@@ -182,8 +196,21 @@ def main() -> None:
         while not done:
             valid  = _valid_actions(env)
             action = trainer.select_action(sv, valid, args.omega_s)
-            _, reward, done, info = env.step(action)
+            _, value_delta, done, info = env.step(action)
             sv_next = _encode_state(env, tasks, N_ep, norm_fns)
+
+            # Optional starvation penalty over the post-step queue.
+            # When reward_lambda=0.0 this branch is skipped entirely,
+            # preserving identical behavior to the original reward.
+            if args.reward_lambda > 0.0:
+                queue = env._get_runnable()
+                penalty = args.reward_lambda * sum(
+                    max(0.0, p.wait_time - args.wait_threshold)
+                    for p in queue
+                )
+                reward = value_delta - penalty
+            else:
+                reward = value_delta
 
             # store() pads sv / sv_next to STATE_DIM_MAX internally
             trainer.store(sv, action, float(reward), 0.0, sv_next, done,
@@ -232,6 +259,8 @@ def main() -> None:
         "n_processes":       "variable" if n_mode == "variable" else default_n,
         "n_mode":            n_mode,
         "omega_s":           args.omega_s,
+        "reward_lambda":     args.reward_lambda,
+        "wait_threshold":    args.wait_threshold,
         "n_episodes":        args.n_episodes,
         "seed":              args.seed,
         "total_transitions": total_transitions,
