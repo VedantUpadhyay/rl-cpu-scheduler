@@ -1,0 +1,210 @@
+# nautilus_reward_revision.yaml
+# ─────────────────────────────────────────────────────────────────────────────
+# Reward-revision experiment: 27 jobs across 3 lambdas × 3 thresholds × 3 seeds.
+# All runs use fixed N=50 and 20 000 episodes.
+#
+# Index mapping (JOB_COMPLETION_INDEX 0–26):
+#   lambda_idx    = index // 9   : 0→0.01  1→0.05  2→0.10
+#   threshold_idx = (index % 9) // 3 : 0→50.0  1→100.0  2→200.0
+#   seed_idx      = index % 3    : 0→42    1→123   2→456
+#
+#   Index  Lambda  Threshold  Seed  Output dir
+#   ────────────────────────────────────────────────────────────────
+#    0     0.01    50.0        42   lambda0.01_thresh50.0_seed42/
+#    1     0.01    50.0       123   lambda0.01_thresh50.0_seed123/
+#    2     0.01    50.0       456   lambda0.01_thresh50.0_seed456/
+#    3     0.01   100.0        42   lambda0.01_thresh100.0_seed42/
+#    4     0.01   100.0       123   lambda0.01_thresh100.0_seed123/
+#    5     0.01   100.0       456   lambda0.01_thresh100.0_seed456/
+#    6     0.01   200.0        42   lambda0.01_thresh200.0_seed42/
+#    7     0.01   200.0       123   lambda0.01_thresh200.0_seed123/
+#    8     0.01   200.0       456   lambda0.01_thresh200.0_seed456/
+#    9     0.05    50.0        42   lambda0.05_thresh50.0_seed42/
+#   10     0.05    50.0       123   lambda0.05_thresh50.0_seed123/
+#   11     0.05    50.0       456   lambda0.05_thresh50.0_seed456/
+#   12     0.05   100.0        42   lambda0.05_thresh100.0_seed42/
+#   13     0.05   100.0       123   lambda0.05_thresh100.0_seed123/
+#   14     0.05   100.0       456   lambda0.05_thresh100.0_seed456/
+#   15     0.05   200.0        42   lambda0.05_thresh200.0_seed42/
+#   16     0.05   200.0       123   lambda0.05_thresh200.0_seed123/
+#   17     0.05   200.0       456   lambda0.05_thresh200.0_seed456/
+#   18     0.10    50.0        42   lambda0.10_thresh50.0_seed42/
+#   19     0.10    50.0       123   lambda0.10_thresh50.0_seed123/
+#   20     0.10    50.0       456   lambda0.10_thresh50.0_seed456/
+#   21     0.10   100.0        42   lambda0.10_thresh100.0_seed42/
+#   22     0.10   100.0       123   lambda0.10_thresh100.0_seed123/
+#   23     0.10   100.0       456   lambda0.10_thresh100.0_seed456/
+#   24     0.10   200.0        42   lambda0.10_thresh200.0_seed42/
+#   25     0.10   200.0       123   lambda0.10_thresh200.0_seed123/
+#   26     0.10   200.0       456   lambda0.10_thresh200.0_seed456/
+#
+# Required PVCs (create before deploying):
+#   alibaba-trace-pvc        — trace data mounted read-only  at /data/alibaba2018/
+#   reward-revision-out-pvc  — results mounted read-write    at /outputs/
+#   (see reward_revision_pvc.yaml for the latter)
+#
+# Deploy:
+#   kubectl apply -f reward_revision_pvc.yaml      -n systems-research-lab
+#   kubectl apply -f nautilus_reward_revision.yaml -n systems-research-lab
+#
+# Monitor:
+#   kubectl get pods -l experiment=reward-revision -n systems-research-lab -w
+#   kubectl logs -l experiment=reward-revision -n systems-research-lab --prefix
+#
+# Fetch results after completion:
+#   kubectl apply -f - <<EOF
+#   apiVersion: v1
+#   kind: Pod
+#   metadata:
+#     name: results-pod
+#     namespace: systems-research-lab
+#   spec:
+#     containers:
+#     - name: reader
+#       image: alpine
+#       command: ["sleep", "600"]
+#       volumeMounts:
+#       - name: outputs
+#         mountPath: /outputs
+#     volumes:
+#     - name: outputs
+#       persistentVolumeClaim:
+#         claimName: reward-revision-out-pvc
+#   EOF
+#   for tag in lambda0.01_thresh50.0_seed42 lambda0.05_thresh100.0_seed42 ...; do
+#     kubectl cp systems-research-lab/results-pod:/outputs/${tag}/results.json \
+#       docs/scheduler-research/results/reward_revision/${tag}.json
+#   done
+#   kubectl delete pod results-pod -n systems-research-lab
+# ─────────────────────────────────────────────────────────────────────────────
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: reward-revision
+  namespace: systems-research-lab
+  labels:
+    experiment: reward-revision
+    version: "1"
+spec:
+  completions: 27
+  parallelism: 27
+  completionMode: Indexed      # pods receive JOB_COMPLETION_INDEX 0–26
+  backoffLimit: 2
+  ttlSecondsAfterFinished: 86400   # auto-clean after 24 h
+
+  template:
+    metadata:
+      labels:
+        experiment: reward-revision
+    spec:
+      restartPolicy: Never
+
+      # ── Clone source repo ────────────────────────────────────────────────
+      initContainers:
+      - name: clone-repo
+        image: alpine/git:2.43.0
+        args:
+        - clone
+        - --depth=1
+        - https://github.com/VedantUpadhyay/rl-cpu-scheduler.git
+        - /workspace/capstone
+        volumeMounts:
+        - name: workspace
+          mountPath: /workspace
+
+      # ── Training container ───────────────────────────────────────────────
+      containers:
+      - name: trainer
+        image: pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime
+
+        command: ["/bin/bash", "-c"]
+        args:
+        - |
+          set -euo pipefail
+
+          # ── Map JOB_COMPLETION_INDEX → (lambda, threshold, seed) ─────────
+          # lambda_idx    = index // 9   : 0→0.01  1→0.05  2→0.10
+          # threshold_idx = (index % 9) // 3 : 0→50.0  1→100.0  2→200.0
+          # seed_idx      = index % 3    : 0→42    1→123   2→456
+          LAMBDAS=(0.01 0.05 0.10)
+          THRESHOLDS=(50.0 100.0 200.0)
+          SEEDS=(42 123 456)
+
+          LAMBDA_IDX=$((JOB_COMPLETION_INDEX / 9))
+          THRESH_IDX=$(((JOB_COMPLETION_INDEX % 9) / 3))
+          SEED_IDX=$((JOB_COMPLETION_INDEX % 3))
+
+          LAMBDA=${LAMBDAS[$LAMBDA_IDX]}
+          THRESHOLD=${THRESHOLDS[$THRESH_IDX]}
+          SEED=${SEEDS[$SEED_IDX]}
+
+          OUT_TAG="lambda${LAMBDA}_thresh${THRESHOLD}_seed${SEED}"
+
+          echo "============================================================"
+          echo " idx=$JOB_COMPLETION_INDEX"
+          echo " lambda=$LAMBDA  threshold=$THRESHOLD  seed=$SEED"
+          echo " output_dir=/outputs/${OUT_TAG}/"
+          echo "============================================================"
+
+          # ── Install dependencies not in base image ────────────────────────
+          pip install --quiet numpy
+
+          # ── Run training ──────────────────────────────────────────────────
+          cd /workspace/capstone
+
+          python transformer_train.py \
+            --fixed_n 50 \
+            --n_episodes 20000 \
+            --seed "$SEED" \
+            --reward_lambda "$LAMBDA" \
+            --wait_threshold "$THRESHOLD" \
+            --trace_path /data/alibaba2018/trace_train_filtered.csv \
+            --output_dir "/outputs/${OUT_TAG}/"
+
+        env:
+        - name: PYTHONUNBUFFERED
+          value: "1"
+        - name: OMP_NUM_THREADS
+          value: "4"
+        - name: TOKENIZERS_PARALLELISM
+          value: "false"
+
+        resources:
+          requests:
+            cpu: "4"
+            memory: 16Gi
+            nvidia.com/gpu: "1"
+          limits:
+            cpu: "4"
+            memory: 16Gi
+            nvidia.com/gpu: "1"
+
+        volumeMounts:
+        - name: workspace
+          mountPath: /workspace
+        - name: trace-data
+          mountPath: /data/alibaba2018
+          readOnly: true
+        - name: outputs
+          mountPath: /outputs
+
+      # ── Volumes ─────────────────────────────────────────────────────────
+      volumes:
+      - name: workspace
+        emptyDir: {}
+
+      - name: trace-data
+        persistentVolumeClaim:
+          claimName: alibaba-trace-pvc
+          readOnly: true
+
+      - name: outputs
+        persistentVolumeClaim:
+          claimName: reward-revision-out-pvc   # must be ReadWriteMany (rook-cephfs)
+
+      # ── GPU scheduling ───────────────────────────────────────────────────
+      tolerations:
+      - key: nvidia.com/gpu
+        operator: Exists
+        effect: NoSchedule

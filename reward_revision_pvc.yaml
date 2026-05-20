@@ -1,0 +1,23 @@
+# reward_revision_pvc.yaml
+# ─────────────────────────────────────────────────────────────────────────────
+# PersistentVolumeClaim for reward-revision training outputs.
+#
+# Create before deploying nautilus_reward_revision.yaml:
+#   kubectl apply -f reward_revision_pvc.yaml -n systems-research-lab
+#
+# Verify:
+#   kubectl get pvc reward-revision-out-pvc -n systems-research-lab
+# ─────────────────────────────────────────────────────────────────────────────
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: reward-revision-out-pvc
+  namespace: systems-research-lab
+spec:
+  accessModes:
+    - ReadWriteMany          # required: 27 pods write concurrently
+  storageClassName: rook-cephfs
+  resources:
+    requests:
+      storage: 15Gi          # ~1 MB/checkpoint × 10 ckpts × 27 runs + headroom
